@@ -8,7 +8,21 @@ namespace Formacao
 {
     class Program
     {
+        public static string Dec2bin(int dec)
+        // returns an array of integers 
+        {
 
+
+            if (dec == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return Dec2bin(dec / 2) + (dec % 2);
+            }
+
+        }
         // exemplo de recursividade
         public static int Soma1aN(int vinicial, int n)
         {
@@ -57,9 +71,11 @@ namespace Formacao
             int sec = 0;
             Console.WriteLine("Indique um numero");
             pri = int.Parse(Console.ReadLine());
-            Console.WriteLine("Indique outro numero");
-            sec = int.Parse(Console.ReadLine());
-            Console.WriteLine("O Factorial de {0} é {1} e a multiplicação de {0} por {2} é {3}", pri, Fatorial(pri), sec, Multiplicacao(pri, sec));
+            Console.WriteLine("o binario de {0} é {1}", pri, Dec2bin(pri));
+            //    Console.WriteLine("Indique outro numero");
+            //    sec = int.Parse(Console.ReadLine());
+            //    Console.WriteLine("O Factorial de {0} é {1} e a multiplicação de {0} por {2} é {3}", pri, Fatorial(pri), sec, Multiplicacao(pri, sec));
+            //
         }
     }
 }
