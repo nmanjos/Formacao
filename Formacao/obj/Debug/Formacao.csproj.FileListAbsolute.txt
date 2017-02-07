@@ -1,0 +1,6 @@
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\bin\Debug\Formacao.exe.config
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\bin\Debug\Formacao.exe
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\bin\Debug\Formacao.pdb
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\obj\Debug\Formacao.csprojResolveAssemblyReference.cache
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\obj\Debug\Formacao.exe
+C:\Users\nanjos\Documents\GitHub\Formacao\Formacao\obj\Debug\Formacao.pdb

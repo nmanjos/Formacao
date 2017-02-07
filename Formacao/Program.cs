@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Formacao
+{
+    class Program
+    {
+
+        // exemplo de recursividade
+        public static int Soma1aN(int vinicial, int n)
+        {
+            if(vinicial == n)
+            {
+                return vinicial;
+            }
+            else
+            {
+                return vinicial + Soma1aN(++vinicial, n);
+            }
+        }
+        public static int Fatorial(int n)
+        {
+            int resultado = 1;
+            if (n == 1)
+            {
+                return resultado;
+                
+            }
+            else
+            {
+               
+                return n = n * Fatorial(--n); ;
+            }
+            
+        }
+
+        public static int Multiplicacao(int n, int m)
+        {
+                      
+            if (n == 1)
+            {
+                return m;
+            }
+            else
+            {
+
+                return m + Multiplicacao(--n, m);
+
+            }
+        }
+        static void Main(string[] args)
+        {
+            int pri = 0;
+            int sec = 0;
+            Console.WriteLine("Indique um numero");
+            pri = int.Parse(Console.ReadLine());
+            Console.WriteLine("Indique outro numero");
+            sec = int.Parse(Console.ReadLine());
+            Console.WriteLine("O Factorial de {0} é {1} e a multiplicação de {0} por {2} é {3}", pri, Fatorial(pri), sec, Multiplicacao(pri, sec));
+        }
+    }
+}
