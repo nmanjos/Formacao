@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Emgu.CV;
 
 namespace ocrexample
 {
@@ -21,7 +21,12 @@ namespace ocrexample
 
         private void button1_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
+            OpenFileDialog Openfile = new OpenFileDialog();
+            if (Openfile.ShowDialog() == DialogResult.OK)
+            {
+                Image<Bgr, Byte> My_Image = new Image<Bgr, byte>(Openfile.FileName);
+                pictureBox1.Image = My_Image.ToBitmap();
+            }
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
