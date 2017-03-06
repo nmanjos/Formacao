@@ -30,7 +30,7 @@ namespace mastermind
         */
         public static void MostraCores()
         {
-            Console.WriteLine("Lista de cores: \r\n 1 – Azul \r\n 2 –  \r\n 3 – Verde \r\n 4 – Cor - de - rosa \r\n 5 – Roxo \r\n 6 – Laranja");
+            Console.WriteLine("Lista de cores: \r\n1 – Azul \r\n2 – Amarelo  \r\n3 – Verde \r\n4 – Cor - de - rosa \r\n5 – Roxo \r\n6 – Laranja");
         }
         /*
         Devolve um char diferente consoante o índice escolha:
@@ -44,6 +44,32 @@ namespace mastermind
         8 – devolve P (PRETO)
         9 – devolve N (NADA)
         */
+        public static string EscreveCor(char escolha)
+        {
+            switch (escolha)
+            {
+                case 'U':
+                    return "AZUL";
+                case 'A':
+                    return "AMARELO";
+                case 'V':
+                    return "VERDE";
+                case 'R':
+                    return "ROSA";
+                case 'O':
+                    return "ROXO";
+                case 'L':
+                    return "LARANJA";
+                case 'B':
+                    return "BRANCO";
+                case 'P':
+                    return "PRETO";
+                case 'N':
+                    return "NADA";
+                default:
+                    return "NADA";
+            }
+        }
         public static char EscolheCor(int escolha)
         {
             switch (escolha)
@@ -99,35 +125,36 @@ namespace mastermind
                 Escolha[i] = cor;
             }
             return Escolha;
-         }
-            
-    
+        }
 
-//Devolve uma tabela unidimensional com 4 cores escolhidas pelo utilizador pelos métodos
-//MostraCores e EscolheCor
-public static char[] Apostas()
+
+
+        //Devolve uma tabela unidimensional com 4 cores escolhidas pelo utilizador pelos métodos
+        //MostraCores e EscolheCor
+        public static char[] Apostas()
         {
             char[] aposta = new char[4];
-            for (int i = 0; i < 4; i++)
+
+            for (int i = 0; i < aposta.Length; i++)
             {
-                Console.WriteLine("Indique a cor que quer para o furo {0}", i);
+                Console.Clear();
+                Console.WriteLine("Indique a cor que quer para o pino {0}", i+1);
                 MostraCores();
-                resposta [i]= EscolheCor(int.Parse(Console.ReadLine()));
-                Console.Clear;
+                aposta[i] = EscolheCor(int.Parse(Console.ReadLine()));
             }
             return aposta;
         }
-//Devolve TRUE caso o conteúdo das posições das tabelas coincidam naquele índice
-public static bool ValidaBrancos(int index, char[] apostas, char[] escolhas)
+        //Devolve TRUE caso o conteúdo das posições das tabelas coincidam naquele índice
+        public static bool ValidaBrancos(int index, char[] apostas, char[] escolhas)
         {
-            if (apostas[i] == escolhas[i])
+            if (apostas[index] == escolhas[index])
             {
                 return true;
             }
             return false;
         }
-//Devolve TRUE caso a aposta exista na tabela escolhas
-public static bool ValidaPretos(char aposta, char[] escolhas)
+        //Devolve TRUE caso a aposta exista na tabela escolhas
+        public static bool ValidaPretos(char aposta, char[] escolhas)
         {
             for (int i = 0; i < escolhas.Length; i++)
             {
@@ -145,19 +172,19 @@ public static bool ValidaPretos(char aposta, char[] escolhas)
             char[] result = new char[4];
             for (int i = 0; i < aposta.Length; i++)
             {
-                if (ValidaBrancos(i,aposta,escolhas ))
+                if (ValidaBrancos(i, aposta, escolhas))
                 {
                     result[i] = EscolheCor(BRANCO);
                 }
-                else
+                else if (ValidaPretos(aposta[i], escolhas))
                 {
-                    ValidaPretos(aposta[i], escolhas);
+                    result[i] = EscolheCor(PRETO);
                 }
             }
             return result;
         }
-//Devolve TRUE caso só existam brancos
-public static bool ValidaGanhou(char[] resposta)
+        //Devolve TRUE caso só existam brancos
+        public static bool ValidaGanhou(char[] resposta)
         {
             bool result = false;
             for (int i = 0; i < resposta.Length; i++)
@@ -169,80 +196,160 @@ public static bool ValidaGanhou(char[] resposta)
                 else
                 {
                     result = false;
+                    return result;
                 }
             }
+            return result;
         }
 
         //Devolve uma string com o conteúdo da tabela
         //Exemplo: [O | O | O | O]
-        public static MostraTabela(char[] tabela)
+        public static void MostraTabela(char[] tabela)
         {
-            Console.BackgroundColor = ConsoleColor.DarkGray
-            string result;
-            Console.Write = "[ ";
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write("[ ");
             for (int i = 0; i < tabela.Length; i++)
             {
                 switch (tabela[i])
                 {
-
-
                     case 'U':
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'A':
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'V':
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'R':
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'O':
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'L':
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'B':
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                     case 'P':
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.Write("O");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(" | ");
+                        break;
                 }
+                Console.ForegroundColor = ConsoleColor.White;
+                if (i == tabela.Length - 1)
+                {
+                    Console.Write(" ] \r\n");
+                }
+                else
+                {
+                    Console.Write(" | ");
+                }
+
             }
-            Console.WriteLine 
             Console.ResetColor();
         }
-//Controla todas as funções anteriores de modo a arrancar o jogo
-public static void ControlaJogo()
-        {
-            char[] escolha = new char[4];
-            escolha = Escolhas();
-            ValidaGanhou(Resposta(Apostas(), escolha));
-        }
 
- 
-        static void Main(string[] args)
+        public static string pergunta(string mens)
         {
-            ControlaJogo();
+            Console.WriteLine("P:" + mens);
+            return Console.ReadLine();
         }
+        //Controla todas as funções anteriores de modo a arrancar o jogo
+        public static void ajuda(char[] resposta, char[] escolha)
+        {
+            Console.WriteLine("Vamos lhe dar uma ajuda com base na sua ultima resposta! \r\n Vamos lhe revelar a cor do primeiro pino desconhecido!");
+
+            for (int i = 0; i < escolha.Length; i++)
+            {
+                if (!(resposta[i] == EscolheCor(BRANCO)))
+                {
+                    Console.WriteLine("A Cor do pino {0} é {1}, Carregue em qualquer tecla para continuar!", i+1, EscreveCor(escolha[i]));
+                    Console.ReadLine();
+                    return;
+                }
+            }
+            Console.WriteLine("Algo correu mal não devia ter chegado a este ponto do código, valide a lógica da função ajuda!");
+            Console.ReadLine();
+            return;
+        }
+        public static void ControlaJogo()
+        {
+
+
+            char[] escolha = new char[4];
+            char[] resp = new char[4];
+            bool continua = false;  
+
+            int ajudas = 2; // contador das ajudas
+            do
+            {
+                continua = false;
+                escolha = Escolhas();
+                MostraTabela(escolha);
+                Console.WriteLine("Vamos jogar ao MasterMind ........ \r\n Regras:  \r\n Tem 4 pinos para escolher 10 tentativas e 2 ajudas, quando chegar ás 5 tentativas passa a só ter 1 ajuda");
+                Console.ReadLine();
+                for (int i = 0; i < 10; i++)
+                {
+                    resp = Resposta(Apostas(), escolha);
+                    if (!ValidaGanhou(resp))
+                    {
+                        Console.WriteLine("Acabou de Jogar a Tentativa {0}", i + 1);
+                        MostraTabela(resp);
+                        if (pergunta("Quer uma ajuda ? (S/N)") == "S")
+                        {
+                            if (ajudas > 0)
+                            {
+                                if (i > 4)
+                                {
+                                    ajudas = ajudas - 1;
+                                }
+                                else
+                                {
+                                    ajudas = 0;
+                                }
+                            }
+
+                            ajuda(resp, escolha);
+                        }
+                    }
+                    else if (ValidaGanhou(resp))
+                                        {
+                        MostraTabela(escolha);
+                        MostraTabela(resp);
+                        i = 11;
+                        if (pergunta("Ganhou !!!! quer continuar a jogar ? (S/N)") == "S")
+                        {
+                            continua = true;
+                        }
+                    }
+
+                }
+                if (continua == false && pergunta("Acabaram as 10 tentativas, quer continuar a jogar ? (S/N)") == "S")
+                {
+                    continua = true;
+                }
+
+            } while (continua);
+            }
+
+
+
+         
+
+    static void Main(string[] args)
+    {
+        ControlaJogo();
     }
 }
+}
+
