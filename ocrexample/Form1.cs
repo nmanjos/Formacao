@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Drawing.Imaging;
+using ocrlib;
 
 namespace ocrexample
 {
@@ -22,12 +24,10 @@ namespace ocrexample
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog Openfile = new OpenFileDialog();
-            if (Openfile.ShowDialog() == DialogResult.OK)
-            {
-                Image<Bgr, Byte> My_Image = new Image<Bgr, byte>(Openfile.FileName);
-                pictureBox1.Image = My_Image.ToBitmap();
-            }
+            Bitmap imgorig = ScreenCapturer.Capture();
+            imgorig.Save("imageorig.jpg", ImageFormat.Jpeg);
+            Bitmap imgresized = ScreenCapturer.imageresizer(imgorig);
+            imgresized.Save("imgresized.jpg", ImageFormat.Jpeg);
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace MosaiqPerformanceMonitor
+namespace ocrlib
 {
     public enum CaptureMode
     {
@@ -20,7 +23,12 @@ namespace MosaiqPerformanceMonitor
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
 
+
+
         [StructLayout(LayoutKind.Sequential)]
+
+
+ 
         private struct Rect
         {
             public int Left;
@@ -85,6 +93,21 @@ namespace MosaiqPerformanceMonitor
 
         /// <summary> Capture a specific window and return it as a bitmap </summary>
         /// <param name="handle">hWnd (handle) of the window to capture</param>
+        /// 
+
+        public static Bitmap imageresizer(Bitmap bitmap)
+        {
+
+            int width = 1024, height = 768;
+
+            Bitmap imgbmp = bitmap; //This is your bitmap
+            Image<Bgr, byte> imageCV = new Image<Bgr, byte>(imgbmp); //Image Class from Emgu.CV
+            Mat frame = imageCV.Mat; //This is your Image converted to Mat
+            
+            CvInvoke.Resize(frame, frame, new Size(width, height), 0, 0, Inter.Linear);    //This resizes the image into your specified width and height
+
+            return frame.Bitmap;
+        }
         public static Bitmap Capture(IntPtr handle)
         {
             Rectangle bounds;
