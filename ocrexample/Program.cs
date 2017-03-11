@@ -27,13 +27,13 @@ namespace ocrexample
 
         static void Main()
         {
+
+            //Get image
+            //Resize to 1024x768
             // example  
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
-
-
         }
     }
 }

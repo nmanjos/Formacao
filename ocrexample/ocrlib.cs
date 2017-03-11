@@ -8,11 +8,58 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+
 namespace ocrlib
 {
     public enum CaptureMode
     {
         Screen, Window
+    }
+
+    public static class ImageProcessor {
+
+
+        public static Size AspectRacio(Bitmap image) {
+
+            int h = image.Height;
+            int w = image.Width;
+            Size new_size = new Size();
+
+            switch ((int)(w * 100.0 / h))
+            {
+                case 160:
+                    new_size.Width = 16;
+                    new_size.Height = 10;
+                    break;
+                case 170:
+                    new_size.Width = 16;
+                    new_size.Height = 9;
+                    break;
+                default:
+                    break;
+
+            }
+
+            return new_size;
+
+        }
+
+        public static Bitmap imageresizer(Bitmap bitmap)
+        {
+            double racio = 1920 / bitmap.Width;
+
+            int width = 1920;
+            int height = (int)(bitmap.Height*racio);
+
+            Bitmap imgbmp = bitmap; //This is your bitmap
+            Image<Bgr, byte> imageCV = new Image<Bgr, byte>(imgbmp); //Image Class from Emgu.CV
+            Mat frame = imageCV.Mat; //This is your Image converted to Mat
+
+            CvInvoke.Resize(frame, frame, new Size(width, height), 0, 0, Inter.Linear);    //This resizes the image into your specified width and height
+
+            return frame.Bitmap;
+        }
+
     }
 
     public static class ScreenCapturer
@@ -95,19 +142,11 @@ namespace ocrlib
         /// <param name="handle">hWnd (handle) of the window to capture</param>
         /// 
 
-        public static Bitmap imageresizer(Bitmap bitmap)
-        {
 
-            int width = 1024, height = 768;
 
-            Bitmap imgbmp = bitmap; //This is your bitmap
-            Image<Bgr, byte> imageCV = new Image<Bgr, byte>(imgbmp); //Image Class from Emgu.CV
-            Mat frame = imageCV.Mat; //This is your Image converted to Mat
-            
-            CvInvoke.Resize(frame, frame, new Size(width, height), 0, 0, Inter.Linear);    //This resizes the image into your specified width and height
 
-            return frame.Bitmap;
-        }
+
+
         public static Bitmap Capture(IntPtr handle)
         {
             Rectangle bounds;
