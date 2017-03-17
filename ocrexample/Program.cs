@@ -33,7 +33,7 @@ namespace ocrexample
             // example  
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new image_load());
         }
     }
 }

@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using matrix 
+
 
 namespace matrizes
 {
     class Program
     {
  
-        
-        public Matrix  
+
         public static int[,] PreencheMatriz(int[,] mat)
         {
             Random r = new Random();
@@ -18,7 +17,7 @@ namespace matrizes
             {
                 for (int j = 0; j < mat.GetLength(1); j++)
                 {
-                    mat(i, j) = r.Next(1, 10);
+                    mat[i, j] = r.Next(1, 10);
                 }
             }
             return mat;
@@ -26,9 +25,9 @@ namespace matrizes
 
         //Preenche a matriz com valores aleatórios de 1 a 9
 
-        Exemplo: | 7 | 0 | 6 |
-            | 0 | 9 | 5 |
-            | 3 | 0 | 8 |
+        //Exemplo: | 7 | 0 | 6 |
+        //    | 0 | 9 | 5 |
+        //    | 3 | 0 | 8 |
             public static string MostraMatriz(int[,] mat)
         {
             string matriz = "";
@@ -108,9 +107,55 @@ namespace matrizes
             return matC;
         }
         //Calcula o determinante (Método de Sarrus)
-        public static int[,] Determinante(int[,] matA)
+        public static int Determinante(int[,] matA)
         {
 
+
+            int[,] mat1 = new int[5, 3];
+            int det1 = 1; int det2 = 1; int det3 = 1; int det = 1;
+           
+            if ((matA.GetLength(0) == matA.GetLength(1)) && matA.GetLength(1) == 3){
+                mat1 = matA;
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        mat1[i + 3, j] = matA[i, j];
+                    }
+                }
+                for (int d = 0; d < 3; d++)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < mat1.GetLength(1); j++)
+                        {
+                            det1 = det1 * mat1[i, j];
+                            det2 = det2 * mat1[i + d, j];
+                            det3 = det3 * mat1[i + d + 1,j];
+                        }
+                    }
+                }
+                det = det1 + det2 + det3;
+                det1 = 1;
+                det2 = 1;
+                det3 = 1;
+                
+                for (int d = 0; d < 3; d++)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 2; j >= 0; j++)
+                        {
+                            det1 = det1 * mat1[i, j];
+                            det2 = det2 * mat1[i + d, j];
+                            det3 = det3 * mat1[i + d + 1, j];
+                        }
+                    }
+                }
+                det = det - det1 - det2 - det3;
+            }
+
+            return det;
         }
 
 
