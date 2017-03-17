@@ -196,7 +196,14 @@ namespace jogodogalo
                         default:
                             break;
                     }
-                    Console.Write(" | ");
+                    if (j < mat.GetLength(1) - 1)
+                    {
+                        Console.Write(" | ");
+                    }
+                }
+                for (int l = 0; l < mat.GetLength(1); l++)
+                {
+                    Console.Write("_");
                 }
                 Console.Write("\n");
             }
@@ -262,6 +269,8 @@ namespace jogodogalo
                 {
                     Console.Clear();
                     ImprimeGrelha(grelha);
+
+
                     Console.WriteLine("Jogador {0} indique um numero disponivel da grelha para jogar", jogador);
                     pos = int.Parse(Console.ReadLine());
                     int idLinha = indiceLinha(grelha, pos);
@@ -284,9 +293,19 @@ namespace jogodogalo
                     {
                         jogador = 1;
                     }
-
+                    if (MatrizIguais(grelha)){
+                        Console.Clear();
+                        Console.WriteLine("GANHOU !!!!");
+                        ImprimeGrelha(grelha);
+                        jogada = grelha.GetLength(0);
+                    }
                 }
 
+            }
+            Console.Write("Quer Jogar de novo ?  (S/N)");
+            if (Console.ReadLine() == "S")
+            {
+                ControlaJogo();
             }
         }
 
