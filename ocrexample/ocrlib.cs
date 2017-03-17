@@ -7,7 +7,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-
+using System.Diagnostics;
+using System.Threading;
 
 namespace ocrlib
 {
@@ -16,46 +17,53 @@ namespace ocrlib
         Screen, Window
     }
 
-    public static class ImageProcessor {
 
 
-        public static Size AspectRacio(Bitmap image) {
 
-            int h = image.Height;
-            int w = image.Width;
-            Size new_size = new Size();
-
-            switch ((int)(w * 100.0 / h))
+        public class ProcessHelper
+        {
+            public static void SetFocusToExternalApp(string strProcessName)
             {
-                case 160:
-                    new_size.Width = 16;
-                    new_size.Height = 10;
-                    break;
-                case 170:
-                    new_size.Width = 16;
-                    new_size.Height = 9;
-                    break;
-                default:
-                    break;
+                Process[] arrProcesses = Process.GetProcessesByName(strProcessName);
+                if (arrProcesses.Length > 0)
+                {
 
+                    IntPtr ipHwnd = arrProcesses[0].MainWindowHandle;
+                    Thread.Sleep(100);
+                    SetForegroundWindow(ipHwnd);
+
+                }
             }
 
-            return new_size;
+            //API-declaration
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         }
 
+
+
+    public static class ImageProcessor
+    {
+
+
+
+
         public static Bitmap imageresizer(Bitmap bitmap)
         {
-            double racio = 1920 / bitmap.Width;
 
-            int width = 1920;
-            int height = (int)(bitmap.Height*racio);
 
             Bitmap imgbmp = bitmap; //This is your bitmap
             Image<Bgr, byte> imageCV = new Image<Bgr, byte>(imgbmp); //Image Class from Emgu.CV
             Mat frame = imageCV.Mat; //This is your Image converted to Mat
 
-            CvInvoke.Resize(frame, frame, new Size(width, height), 0, 0, Inter.Linear);    //This resizes the image into your specified width and height
+            Size approxSize = new Size(1920, 1080);
+            double scale = Math.Min(approxSize.Width / frame.Size.Width, approxSize.Height / frame.Size.Height);
+            Size newSize = new Size((int)Math.Round(frame.Size.Width * scale), (int)Math.Round(frame.Size.Height * scale));
+
+
+
+            CvInvoke.Resize(frame, frame, newSize, 0, 0, Inter.Cubic);    //This resizes the image into your specified width and height
 
             return frame.Bitmap;
         }
@@ -75,7 +83,7 @@ namespace ocrlib
         [StructLayout(LayoutKind.Sequential)]
 
 
- 
+
         private struct Rect
         {
             public int Left;
@@ -124,6 +132,7 @@ namespace ocrlib
         }
         /// <summary> Capture the active window (default) or the desktop and return it as a bitmap </summary>
         /// <param name="mode">Optional. The default value is CaptureMode.Window.</param>
+
         public static Bitmap Capture(CaptureMode mode = CaptureMode.Window)
         {
             return Capture(mode == CaptureMode.Screen ? GetDesktopWindow() : GetForegroundWindow());
@@ -138,15 +147,12 @@ namespace ocrlib
         }
 
 
-        /// <summary> Capture a specific window and return it as a bitmap </summary>
-        /// <param name="handle">hWnd (handle) of the window to capture</param>
+
+
+
+        /// <summary> Capture a specific window and return it as a bitmap</summary>
+        /// <param name = "handle" > hWnd(handle) of the window to capture</param>
         /// 
-
-
-
-
-
-
         public static Bitmap Capture(IntPtr handle)
         {
             Rectangle bounds;
@@ -186,5 +192,7 @@ namespace ocrlib
             filename = filename.Replace("%NOW%", DateTime.Now.ToString("yyyy-MM-dd@hh.mm.ss"));
             image.Save(filename, format);
         }
+
+
     }
 }
