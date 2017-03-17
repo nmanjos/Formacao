@@ -26,7 +26,7 @@ namespace ocrexample
         {
             Bitmap imgorig = ScreenCapturer.Capture();
             imgorig.Save("imageorig.jpg", ImageFormat.Jpeg);
-            Bitmap imgresized = ScreenCapturer.imageresizer(imgorig);
+            Bitmap imgresized = ImageProcessor.imageresizer(imgorig);
             imgresized.Save("imgresized.jpg", ImageFormat.Jpeg);
         }
 
