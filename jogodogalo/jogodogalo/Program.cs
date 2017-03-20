@@ -13,6 +13,7 @@ namespace jogodogalo
     {
 
         //Verifica se uma posição esta dentro da matriz
+        
 
         public static bool ExistePosicao(int linha, int coluna, int[,] mat)
         {
@@ -107,7 +108,7 @@ namespace jogodogalo
         public static void GanhaDiagonalDireita(int[,] mat)
         {
             int j = 0;
-            for (int i = mat.GetLength(0); i <= 0; --i)
+            for (int i = mat.GetLength(0); i >= 0; --i)
             {
                 AdicionaNaPosicao(i, j, mat[i, j++] + 2, mat);
             }
@@ -124,7 +125,7 @@ namespace jogodogalo
                 }
                 else
                 {
-                    result = false;
+                    return false;
                 }
 
             }
@@ -167,33 +168,43 @@ namespace jogodogalo
         {
             int counter = 0;
             for (int i = 0; i < mat.GetLength(0); i++)
+
             {
+                Console.Write(" ");
                 for (int j = 0; j < mat.GetLength(1); j++)
                 {
                     counter++;
                     switch (mat[i, j])
                     {
                         case 0:
-                            Console.Write(counter);
+                            if (counter < 10)
+                            {
+                                Console.Write("0"+ counter);
+                            }
+                            else
+                            {
+                                Console.Write(counter);
+                            }
                             break;
                         case 1:
-                            Console.Write("X");
+                            Console.Write(" X");
                             break;
                         case 2:
-                            Console.Write("O");
+                            Console.Write(" O");
                             break;
                         case 3:
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("X");
+                            Console.Write(" X");
                             Console.ForegroundColor = ConsoleColor.White;
                             break;
 
                         case 4:
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("O");
+                            Console.Write(" O");
                             Console.ForegroundColor = ConsoleColor.White;
                             break;
                         default:
+                            Console.Write(" ");
                             break;
                     }
                     if (j < mat.GetLength(1) - 1)
@@ -201,10 +212,12 @@ namespace jogodogalo
                         Console.Write(" | ");
                     }
                 }
-                for (int l = 0; l < mat.GetLength(1); l++)
+                Console.Write("\n");
+                for (int l = 0; l < (mat.GetLength(1)); l++)
                 {
-                    Console.Write("_");
+                    Console.Write("-----");
                 }
+
                 Console.Write("\n");
             }
         }
@@ -255,12 +268,16 @@ namespace jogodogalo
         //Controla todas as funções anteriores de modo a arrancar o jogo
         public static void ControlaJogo()
         {
+            Console.Clear();
             Console.WriteLine("Vamos Jogar ao Jogo do Galo, O jogo é jogado por dois jogadores, a grelha pode ser de 3,5,7,9 linhas por colunas");
             Console.WriteLine("Escolha o tamanho da grelha indique um numero Impar entre 3 e 9");
             int dificuldade = int.Parse(Console.ReadLine());
+            int[,] grelha = new int[dificuldade, dificuldade];
+            int gamestate = 0; // game not started
             if (dificuldade % 2 != 0 && dificuldade >=3 && dificuldade <= 9)
+            
             {
-                int[,] grelha = new int [dificuldade, dificuldade];
+                gamestate = 1; // game started
                 Console.WriteLine("Tem {0} Jogadas", grelha.Length);
                 int jogador = 1;
                 int pos = 1;
@@ -285,6 +302,15 @@ namespace jogodogalo
                         Console.WriteLine("A posição que acabou de indicar não é uma posição válida da grelha, acabou de desperdiçar uma jogada!");
                         Console.ReadLine();
                     }
+                    if (MatrizIguais(grelha))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("O Jogador {0} GANHOU !!!!", jogador);
+                        ImprimeGrelha(grelha);
+                        jogada = grelha.Length + 5;
+                        gamestate = 2; // game Won
+
+                    }
                     if (jogador == 1)
                     {
                         jogador = 2;
@@ -293,17 +319,19 @@ namespace jogodogalo
                     {
                         jogador = 1;
                     }
-                    if (MatrizIguais(grelha)){
-                        Console.Clear();
-                        Console.WriteLine("GANHOU !!!!");
-                        ImprimeGrelha(grelha);
-                        jogada = grelha.GetLength(0);
-                    }
+
                 }
+                if (gamestate != 2) Console.WriteLine("O Jogo Ficou empatado !!!");
+            }
+            else
+            {
+                Console.WriteLine("Tem de introduzir um numero Impar de 3 as 9");
 
             }
-            Console.Write("Quer Jogar de novo ?  (S/N)");
-            if (Console.ReadLine() == "S")
+                
+                Console.Write("Quer Jogar de novo ?  (S/N)");
+                      
+            if (Console.ReadLine().ToUpper() == "S")
             {
                 ControlaJogo();
             }
