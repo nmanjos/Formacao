@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Calculator
 {
@@ -17,6 +18,7 @@ namespace Calculator
         public Stack<string> histb = new Stack<string>();
         public string Operador = "";
         public double valor = 0;
+        public string sinal = "+";
 
         public bool nonNumberEntered = false;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -62,48 +64,114 @@ namespace Calculator
             }
             else
             {
-                Numeric.Text = Numeric.Text + e.KeyChar.ToString();
+                FazNumero( e.KeyChar.ToString());
             }
         }
 
         private void FazOperador(string op)
         {
-            switch (op)
-            {
-                case "+":
-                    if (Operador != "")
-                    {
-                        valor = valor + double.Parse(Numeric.Text);
+                FazIgual();
 
-                    }
-                    Operador = op;
-                    History.Text = Numeric.Text + " " + op;
-                    Numeric.Text = "";
+            History.Text = History.Text + " " + op;
+            Operador = op;
 
-                    break;
-                default:
-                    break;
-            }
         }
         public void FazNumero(string num)
         {
+            histf.Push(Numeric.Text);
+            if (Numeric.Text != "0" || Numeric.Text != "-0")
+            {
+                Numeric.Text = Numeric.Text + num;
 
+            }
+            else
+            {
+                if (num != ",")
+                {
+                    Numeric.Text = num;
+                }
+                else
+                {
+                    Numeric.Text = "0,";
+                }
+
+
+            }
         }
         public void FazIgual()
         {
+            if (Operador != "")
+            {
+                switch (Operador)
+                {
 
+                    case "+":
+                        valor = valor + double.Parse(Numeric.Text);
+                        break;
+                    case "-":
+                        valor = valor - double.Parse(Numeric.Text);
+                        break;
+                    case "X":
+                        valor = valor * double.Parse( Numeric.Text);
+                        break;
+                    case "/":
+                        valor = valor / double.Parse( Numeric.Text);
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            else
+            {
+                if (Numeric.Text != "0") valor = double.Parse(Numeric.Text);
+
+            }
+            
+            History.Text = valor.ToString();
+            FazClearVal();
+            Operador = "";
         }
         public void FazPonto()
         {
-
+            FazNumero(",");
         }
-        public void FazUndu()
+        public void FazUndo()
         {
+            if (histf.Count > 0)
+            {
+                histb.Push(Numeric.Text);
+                Numeric.Text = histf.Peek();
+                histf.Pop();
+            }else
+            {
+                SystemSounds.Asterisk.Play();
+            }
 
         }
         public void FazRedo()
         {
-
+            if (histb.Count > 0)
+            {
+                histf.Push(Numeric.Text);
+                Numeric.Text = histb.Peek();
+                histb.Pop();
+            }else
+            {
+                SystemSounds.Asterisk.Play();
+            }
+        }
+        public void FazClear()
+        {
+            FazClearVal();
+            History.Text = "";
+            valor = 0;
+        }
+        public void FazClearVal()
+        {
+            Numeric.Text = "0";
+            histf.Clear();
+            histb.Clear();
         }
 
         public Calculador()
@@ -128,7 +196,7 @@ namespace Calculator
 
         private void EqualBt_Click(object sender, EventArgs e)
         {
-
+            FazIgual();
         }
 
         private void Calculador_Load(object sender, EventArgs e)
@@ -161,11 +229,46 @@ namespace Calculator
 
         private void ONOFF_Click(object sender, EventArgs e)
         {
-            Numeric.Text = "";
-            History.Text = "";
-            histf.Clear();
-            histb.Clear();
+            FazClear();
+        }
 
+        private void Undo_Click(object sender, EventArgs e)
+        {
+            FazUndo();
+        }
+
+        private void Redo_Click(object sender, EventArgs e)
+        {
+            FazRedo();
+        }
+
+        private void Fraction_Click(object sender, EventArgs e)
+        {
+            FazPonto();
+        }
+
+        private void ClearValBt_Click(object sender, EventArgs e)
+        {
+            FazClearVal();
+        }
+
+        private void ClearBt_Click(object sender, EventArgs e)
+        {
+            FazClear();
+        }
+
+        private void SignalShift_Click(object sender, EventArgs e)
+        {
+            if(sinal == "+")
+            {
+                sinal = "-";
+                Numeric.Text = sinal + Numeric.Text;
+            }
+            else
+            {
+                sinal = "+";
+                Numeric.Text = Numeric.Text.Substring(2); 
+            }
         }
     }
 }

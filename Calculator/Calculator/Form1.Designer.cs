@@ -80,6 +80,7 @@
             // 
             // Undo
             // 
+            this.Undo.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Undo.Location = new System.Drawing.Point(5, 64);
             this.Undo.Name = "Undo";
             this.Undo.Size = new System.Drawing.Size(65, 59);
@@ -87,9 +88,11 @@
             this.Undo.TabStop = false;
             this.Undo.Text = "Undo";
             this.Undo.UseVisualStyleBackColor = true;
+            this.Undo.Click += new System.EventHandler(this.Undo_Click);
             // 
             // SignalShift
             // 
+            this.SignalShift.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SignalShift.Location = new System.Drawing.Point(147, 324);
             this.SignalShift.Name = "SignalShift";
             this.SignalShift.Size = new System.Drawing.Size(65, 59);
@@ -97,9 +100,11 @@
             this.SignalShift.TabStop = false;
             this.SignalShift.Text = "+/-";
             this.SignalShift.UseVisualStyleBackColor = true;
+            this.SignalShift.Click += new System.EventHandler(this.SignalShift_Click);
             // 
             // Redo
             // 
+            this.Redo.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Redo.Location = new System.Drawing.Point(76, 64);
             this.Redo.Name = "Redo";
             this.Redo.Size = new System.Drawing.Size(65, 59);
@@ -107,9 +112,11 @@
             this.Redo.TabStop = false;
             this.Redo.Text = "Redo";
             this.Redo.UseVisualStyleBackColor = true;
+            this.Redo.Click += new System.EventHandler(this.Redo_Click);
             // 
             // ClearBt
             // 
+            this.ClearBt.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearBt.Location = new System.Drawing.Point(218, 64);
             this.ClearBt.Name = "ClearBt";
             this.ClearBt.Size = new System.Drawing.Size(65, 59);
@@ -117,9 +124,11 @@
             this.ClearBt.TabStop = false;
             this.ClearBt.Text = "C";
             this.ClearBt.UseVisualStyleBackColor = true;
+            this.ClearBt.Click += new System.EventHandler(this.ClearBt_Click);
             // 
             // Add
             // 
+            this.Add.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Add.Location = new System.Drawing.Point(218, 129);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(65, 59);
@@ -131,6 +140,7 @@
             // 
             // Num2
             // 
+            this.Num2.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num2.Location = new System.Drawing.Point(76, 129);
             this.Num2.Name = "Num2";
             this.Num2.Size = new System.Drawing.Size(65, 59);
@@ -142,6 +152,7 @@
             // 
             // Num3
             // 
+            this.Num3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num3.Location = new System.Drawing.Point(147, 129);
             this.Num3.Name = "Num3";
             this.Num3.Size = new System.Drawing.Size(65, 59);
@@ -153,6 +164,7 @@
             // 
             // Num1
             // 
+            this.Num1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num1.Location = new System.Drawing.Point(5, 129);
             this.Num1.Name = "Num1";
             this.Num1.Size = new System.Drawing.Size(65, 59);
@@ -164,6 +176,7 @@
             // 
             // Subtract
             // 
+            this.Subtract.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Subtract.Location = new System.Drawing.Point(218, 194);
             this.Subtract.Name = "Subtract";
             this.Subtract.Size = new System.Drawing.Size(65, 59);
@@ -175,6 +188,7 @@
             // 
             // Num5
             // 
+            this.Num5.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num5.Location = new System.Drawing.Point(76, 194);
             this.Num5.Name = "Num5";
             this.Num5.Size = new System.Drawing.Size(65, 59);
@@ -186,6 +200,7 @@
             // 
             // Num6
             // 
+            this.Num6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num6.Location = new System.Drawing.Point(147, 194);
             this.Num6.Name = "Num6";
             this.Num6.Size = new System.Drawing.Size(65, 59);
@@ -197,6 +212,7 @@
             // 
             // Num4
             // 
+            this.Num4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num4.Location = new System.Drawing.Point(5, 194);
             this.Num4.Name = "Num4";
             this.Num4.Size = new System.Drawing.Size(65, 59);
@@ -208,6 +224,7 @@
             // 
             // Multiply
             // 
+            this.Multiply.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Multiply.Location = new System.Drawing.Point(218, 259);
             this.Multiply.Name = "Multiply";
             this.Multiply.Size = new System.Drawing.Size(65, 59);
@@ -219,6 +236,7 @@
             // 
             // Num8
             // 
+            this.Num8.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num8.Location = new System.Drawing.Point(76, 259);
             this.Num8.Name = "Num8";
             this.Num8.Size = new System.Drawing.Size(65, 59);
@@ -230,6 +248,7 @@
             // 
             // Num9
             // 
+            this.Num9.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num9.Location = new System.Drawing.Point(147, 259);
             this.Num9.Name = "Num9";
             this.Num9.Size = new System.Drawing.Size(65, 59);
@@ -241,6 +260,7 @@
             // 
             // Num7
             // 
+            this.Num7.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num7.Location = new System.Drawing.Point(5, 259);
             this.Num7.Name = "Num7";
             this.Num7.Size = new System.Drawing.Size(65, 59);
@@ -252,6 +272,7 @@
             // 
             // Devide
             // 
+            this.Devide.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Devide.Location = new System.Drawing.Point(218, 324);
             this.Devide.Name = "Devide";
             this.Devide.Size = new System.Drawing.Size(65, 59);
@@ -263,6 +284,7 @@
             // 
             // Fraction
             // 
+            this.Fraction.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Fraction.Location = new System.Drawing.Point(76, 324);
             this.Fraction.Name = "Fraction";
             this.Fraction.Size = new System.Drawing.Size(65, 59);
@@ -270,9 +292,11 @@
             this.Fraction.TabStop = false;
             this.Fraction.Text = ".";
             this.Fraction.UseVisualStyleBackColor = true;
+            this.Fraction.Click += new System.EventHandler(this.Fraction_Click);
             // 
             // ClearValBt
             // 
+            this.ClearValBt.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearValBt.Location = new System.Drawing.Point(147, 64);
             this.ClearValBt.Name = "ClearValBt";
             this.ClearValBt.Size = new System.Drawing.Size(65, 59);
@@ -280,9 +304,11 @@
             this.ClearValBt.TabStop = false;
             this.ClearValBt.Text = "CE";
             this.ClearValBt.UseVisualStyleBackColor = true;
+            this.ClearValBt.Click += new System.EventHandler(this.ClearValBt_Click);
             // 
             // Num0
             // 
+            this.Num0.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Num0.Location = new System.Drawing.Point(5, 324);
             this.Num0.Name = "Num0";
             this.Num0.Size = new System.Drawing.Size(65, 59);
@@ -294,6 +320,7 @@
             // 
             // EqualBt
             // 
+            this.EqualBt.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EqualBt.Location = new System.Drawing.Point(289, 64);
             this.EqualBt.Name = "EqualBt";
             this.EqualBt.Size = new System.Drawing.Size(79, 189);
@@ -305,12 +332,13 @@
             // 
             // ONOFF
             // 
+            this.ONOFF.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ONOFF.Location = new System.Drawing.Point(289, 259);
             this.ONOFF.Name = "ONOFF";
             this.ONOFF.Size = new System.Drawing.Size(79, 124);
             this.ONOFF.TabIndex = 23;
             this.ONOFF.TabStop = false;
-            this.ONOFF.Text = "    ON      OFF";
+            this.ONOFF.Text = " ON   OFF";
             this.ONOFF.UseVisualStyleBackColor = true;
             this.ONOFF.Click += new System.EventHandler(this.ONOFF_Click);
             // 
