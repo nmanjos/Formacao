@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Media;
 
 namespace CSV_info
 {
     public partial class frmRegisto : Form
     {
-
+        
         private const string TODOS = "TODOS";
         private const string CLIENTES = "CLIENTES";
         private const string VISITANTES = "VISITANTES";
@@ -29,53 +30,149 @@ namespace CSV_info
 
         public void loadlistview(string tipo)
         {
-            List<string[]> RegistoAux = new List<string[]>();
-            if (tipo != RegType)
-            {
 
+                lstRegisto.Clear();
                 switch (tipo)
                 {
                     case CLIENTES:
-                        Registo.AddRange(ReadCSVFile(CLIENTES));
+                        lstRegisto.Columns.Add("NOME");
+                        lstRegisto.Columns.Add("MORADA");
+                        lstRegisto.Columns.Add("CONTACTO");
+                        lstRegisto.Columns.Add("PROFISSÃO");
+                        foreach (string[] item in Registo)
+                        {
+                            if (item[0] == CLIENTES)
+                            {
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                    lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }
+                        }
+
                         break;
                     case VISITANTES:
 
+                        lstRegisto.Columns.Add("NOME");
+                        lstRegisto.Columns.Add("CONTACTO");
+                        lstRegisto.Columns.Add("MOTIVO");
+                        foreach (string[] item in Registo)
+                        {
+                            if (item[0] == VISITANTES)
+                            {
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                    lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }
+                        }
+
                         break;
                     case TODOS:
+                        lstRegisto.Columns.Add("NOME");
+                        lstRegisto.Columns.Add("MORADA");
+                        lstRegisto.Columns.Add("CONTACTO");
+                        lstRegisto.Columns.Add("PROFISSÃO");
+                        lstRegisto.Columns.Add("MOTIVO");
+                        foreach (string[] item in Registo)
+                        {
+                            if (item[0] == VISITANTES)
+                            {
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                    lvi.SubItems.Add("");
+                                    lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }else if (item[0] == CLIENTES)
+                            {
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                        lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }
+                        }
 
                         break;
                     case SORTED:
+
+                    if (RegType == CLIENTES)
+                    {
                         foreach (string[] item in Registo)
                         {
-                            if (RegType == CLIENTES)
+                            if (item[4].Contains(txtProfissao.Text))
                             {
-                                if (item[4].Contains(txtProfissaoC.Text))
+                                lstRegisto.Clear();
+                                lstRegisto.Columns.Add("NOME");
+                                lstRegisto.Columns.Add("MORADA");
+                                lstRegisto.Columns.Add("CONTACTO");
+                                lstRegisto.Columns.Add("PROFISSÃO");
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
                                 {
-                                    RegistoAux.Add(item);
+                                    lvi.SubItems.Add(item[i]);
                                 }
-                            } 
-                            
+                                lstRegisto.Items.Add(lvi);
+                            }
                         }
-                        break;
+                    }
+                    else if (RegType == VISITANTES)
+                    {
+                        foreach (string[] item in Registo)
+                        {
+                            if (item[3].Contains(cbxMotivo.Text))
+                            {
+                                lstRegisto.Clear();
+                                lstRegisto.Columns.Add("NOME");
+                                lstRegisto.Columns.Add("CONTACTO");
+                                lstRegisto.Columns.Add("MOTIVO");
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                    lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }
+                        }
+                    }
+                    else if (RegType == TODOS)
+                    {
+                        foreach (string[] item in Registo)
+                        {
+                            if (item[0].Text = C   item[3].Contains(cbxMotivo.Text) )
+                            {
+                                lstRegisto.Clear();
+                                lstRegisto.Columns.Add("NOME");
+                                lstRegisto.Columns.Add("MORADA");
+                                lstRegisto.Columns.Add("CONTACTO");
+                                lstRegisto.Columns.Add("PROFISSÃO");
+                                lstRegisto.Columns.Add("MOTIVO");
+                                ListViewItem lvi = new ListViewItem(item[1]);
+                                for (int i = 2; i < item.Length; i++)
+                                {
+                                    lvi.SubItems.Add(item[i]);
+                                }
+                                lstRegisto.Items.Add(lvi);
+                            }
+                        }
+
+                    }
+
+                    break;
+
                     default:
-                        break;
+                    break;
                 }
 
-            }
+            
 
-            foreach (string[] item in Registo)
-            {
-                for (int i = 0; i < length; i++)
-                {
-
-                }
-                ListViewItem lvi = new ListViewItem(item[1]);
-                lvi.SubItems.Add(item[2]);
-                lvi.SubItems.Add(item[3]);
-                lvi.SubItems.Add(item[4]);
-                lvi.SubItems.Add(item[5]);
-                lstRegisto.Items.Add(lvi);
-            }
         }
         public List<string[]> ReadCSVFile(string tipo)
         {
@@ -89,27 +186,25 @@ namespace CSV_info
                 case VISITANTES:
             while (!reader.EndOfStream)
             {
-                //Decidir consoante o tipo os registos que interessam
-                string line = reader.ReadLine();
-                string[] values = line.Split(';');
-                if (values[0]==VISITANTES) list.Add(values);
+                        //Decidir consoante o tipo os registos que interessam
+                        string[] values = reader.ReadLine().Split(';');
+                        if (values[0]==VISITANTES) list.Add(values);
             }
             break;
                 case CLIENTES:
             while (!reader.EndOfStream)
             {
-                //Decidir consoante o tipo os registos que interessam
-                string line = reader.ReadLine();
-                string[] values = line.Split(';');
-                if (values[0] == CLIENTES) list.Add(values);
+                        //Decidir consoante o tipo os registos que interessam
+                        string[] values = reader.ReadLine().Split(';');
+                        if (values[0] == CLIENTES) list.Add(values);
             }
             break;
                 case TODOS:
             while (!reader.EndOfStream)
             {
-                //Decidir consoante o tipo os registos que interessam
-                string line = reader.ReadLine();
-                string[] values = line.Split(';');
+               // Carrega todos
+                
+                string[] values = reader.ReadLine().Split(';');
                 list.Add(values);
             }
             break;
@@ -130,10 +225,10 @@ namespace CSV_info
             {
                 string[] cliente = new string[5];
                 cliente[0] = tipo;
-                cliente[1] = txtNomeC.Text;
-                cliente[2] = txtMoradaC.Text;
-                cliente[3] = txtContactoC.Text;
-                cliente[4] = txtProfissaoC.Text;
+                cliente[1] = txtNome.Text;
+                cliente[2] = txtMorada.Text;
+                cliente[3] = txtContacto.Text;
+                cliente[4] = txtProfissao.Text;
                 WriteCSVFile(cliente);
 
             }
@@ -141,13 +236,12 @@ namespace CSV_info
             {
                 string[] Visitante = new string[4];
                 Visitante[0] = tipo;
-                Visitante[1] = txtNomeC.Text;
-                Visitante[2] = txtMoradaC.Text;
-                Visitante[3] = txtContactoC.Text;
-                Visitante[4] = txtProfissaoC.Text;
+                Visitante[1] = txtNome.Text;
+                Visitante[2] = txtContacto.Text;
+                Visitante[3] = cbxMotivo.Text;
                 WriteCSVFile(Visitante);
             }
-            Registo.AddRange(ReadCSVFile(tipo));
+            Registo.Clear();
         }
         public void WriteCSVFile(string[] dados)
         {
@@ -174,16 +268,97 @@ namespace CSV_info
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-            if (Registo.Count == 0)
+            if (Registo.Count == 0 || RegType != TODOS )
             {
+                Registo.Clear();
                 Registo.AddRange(ReadCSVFile(TODOS));
             }
+            loadlistview(TODOS);
 
         }
 
         private void btnADD_Click(object sender, EventArgs e)
         {
+            if (txtNome.Text != "")
+            {
+                if (rbClientes.Checked)
+                {
+                    WriteRecord(CLIENTES);
+                    Registo.Clear();
+                    Registo.AddRange(ReadCSVFile(CLIENTES));
+                    loadlistview(CLIENTES);
+                }
+                else if (rbVisitantes.Checked)
+                {
+                    WriteRecord(VISITANTES);
+                    Registo.Clear();
+                    Registo.AddRange(ReadCSVFile(VISITANTES));
+                    loadlistview(VISITANTES);
+                }
+            }else
+            {
+                SystemSounds.Beep.Play();
+            }
+            txtNome.Text = "";
+            txtMorada.Text = "";
+            txtContacto.Text = "";
+            txtProfissao.Text = "";
+            cbxMotivo.Text = "";
+        }
 
+        //private void btnADDV_Click(object sender, EventArgs e)
+        //{
+
+        //}
+
+        private void btnRead_Click_1(object sender, EventArgs e)
+        {
+            loadlistview(SORTED);
+        }
+
+        private void rbVisitantes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbVisitantes.Checked)
+            {
+                lblMorada.Enabled = false;
+                lblProfissao.Enabled = false;
+                txtMorada.Enabled = false;
+                txtProfissao.Enabled = false;
+                lblMotivo.Enabled = true;
+                cbxMotivo.Enabled = true;
+                Registo.Clear();
+                Registo.AddRange(ReadCSVFile(VISITANTES));
+                loadlistview(VISITANTES);
+            }
+        }
+
+        private void rbClientes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbClientes.Checked)
+            {
+                lblMorada.Enabled = true;
+                lblProfissao.Enabled = true;
+                txtMorada.Enabled = true;
+                txtProfissao.Enabled = true;
+                lblMotivo.Enabled = false;
+                cbxMotivo.Enabled = false;
+                Registo.Clear();
+                Registo.AddRange(ReadCSVFile(CLIENTES));
+                loadlistview(CLIENTES);
+            }
+        }
+
+        private void frmRegisto_Load(object sender, EventArgs e)
+        {
+            lblMorada.Enabled = false;
+            lblProfissao.Enabled = false;
+            txtMorada.Enabled = false;
+            txtProfissao.Enabled = false;
+            lblMotivo.Enabled = true;
+            cbxMotivo.Enabled = true;
+            Registo.Clear();
+            Registo.AddRange(ReadCSVFile(VISITANTES));
+            loadlistview(VISITANTES);
         }
     }
 }

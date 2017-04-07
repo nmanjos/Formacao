@@ -31,24 +31,17 @@
             this.btnReadAll = new System.Windows.Forms.Button();
             this.btnADD = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtNomeC = new System.Windows.Forms.TextBox();
-            this.txtMoradaC = new System.Windows.Forms.TextBox();
-            this.txtContactoV = new System.Windows.Forms.TextBox();
-            this.txtNomeV = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblNome = new System.Windows.Forms.Label();
-            this.btnADDV = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtProfissaoC = new System.Windows.Forms.TextBox();
-            this.txtContactoC = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblMorada = new System.Windows.Forms.Label();
+            this.txtNome = new System.Windows.Forms.TextBox();
+            this.txtMorada = new System.Windows.Forms.TextBox();
+            this.txtProfissao = new System.Windows.Forms.TextBox();
+            this.txtContacto = new System.Windows.Forms.TextBox();
+            this.lblProfissao = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblMotivo = new System.Windows.Forms.Label();
             this.btnRead = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbVisitantes = new System.Windows.Forms.RadioButton();
+            this.rbClientes = new System.Windows.Forms.RadioButton();
             this.lstRegisto = new System.Windows.Forms.ListView();
             this.cbxMotivo = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -71,157 +64,96 @@
             this.btnADD.Name = "btnADD";
             this.btnADD.Size = new System.Drawing.Size(309, 28);
             this.btnADD.TabIndex = 3;
-            this.btnADD.Text = "ADD TO CSV";
+            this.btnADD.Text = "ADD RECORD";
             this.btnADD.UseVisualStyleBackColor = true;
             this.btnADD.Click += new System.EventHandler(this.btnADD_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 203);
+            this.label1.Location = new System.Drawing.Point(38, 204);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "NOME";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label2
+            // lblMorada
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 248);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "MORADA";
+            this.lblMorada.AutoSize = true;
+            this.lblMorada.Location = new System.Drawing.Point(23, 237);
+            this.lblMorada.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMorada.Name = "lblMorada";
+            this.lblMorada.Size = new System.Drawing.Size(54, 13);
+            this.lblMorada.TabIndex = 5;
+            this.lblMorada.Text = "MORADA";
+            this.lblMorada.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtNomeC
+            // txtNome
             // 
-            this.txtNomeC.Location = new System.Drawing.Point(5, 224);
-            this.txtNomeC.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNomeC.Name = "txtNomeC";
-            this.txtNomeC.Size = new System.Drawing.Size(311, 20);
-            this.txtNomeC.TabIndex = 6;
+            this.txtNome.Location = new System.Drawing.Point(81, 201);
+            this.txtNome.Margin = new System.Windows.Forms.Padding(2);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(548, 20);
+            this.txtNome.TabIndex = 6;
             // 
-            // txtMoradaC
+            // txtMorada
             // 
-            this.txtMoradaC.Location = new System.Drawing.Point(5, 266);
-            this.txtMoradaC.Margin = new System.Windows.Forms.Padding(2);
-            this.txtMoradaC.Name = "txtMoradaC";
-            this.txtMoradaC.Size = new System.Drawing.Size(311, 20);
-            this.txtMoradaC.TabIndex = 7;
+            this.txtMorada.Location = new System.Drawing.Point(81, 234);
+            this.txtMorada.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMorada.Name = "txtMorada";
+            this.txtMorada.Size = new System.Drawing.Size(548, 20);
+            this.txtMorada.TabIndex = 7;
             // 
-            // txtContactoV
+            // txtProfissao
             // 
-            this.txtContactoV.Location = new System.Drawing.Point(320, 266);
-            this.txtContactoV.Margin = new System.Windows.Forms.Padding(2);
-            this.txtContactoV.Name = "txtContactoV";
-            this.txtContactoV.Size = new System.Drawing.Size(311, 20);
-            this.txtContactoV.TabIndex = 13;
+            this.txtProfissao.Location = new System.Drawing.Point(81, 300);
+            this.txtProfissao.Margin = new System.Windows.Forms.Padding(2);
+            this.txtProfissao.Name = "txtProfissao";
+            this.txtProfissao.Size = new System.Drawing.Size(548, 20);
+            this.txtProfissao.TabIndex = 19;
             // 
-            // txtNomeV
+            // txtContacto
             // 
-            this.txtNomeV.Location = new System.Drawing.Point(320, 224);
-            this.txtNomeV.Margin = new System.Windows.Forms.Padding(2);
-            this.txtNomeV.Name = "txtNomeV";
-            this.txtNomeV.Size = new System.Drawing.Size(311, 20);
-            this.txtNomeV.TabIndex = 12;
+            this.txtContacto.Location = new System.Drawing.Point(81, 267);
+            this.txtContacto.Margin = new System.Windows.Forms.Padding(2);
+            this.txtContacto.Name = "txtContacto";
+            this.txtContacto.Size = new System.Drawing.Size(548, 20);
+            this.txtContacto.TabIndex = 18;
             // 
-            // label3
+            // lblProfissao
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(318, 248);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "CONTACTO";
-            // 
-            // lblNome
-            // 
-            this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(319, 203);
-            this.lblNome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(39, 13);
-            this.lblNome.TabIndex = 10;
-            this.lblNome.Text = "NOME";
-            // 
-            // btnADDV
-            // 
-            this.btnADDV.Location = new System.Drawing.Point(320, 385);
-            this.btnADDV.Margin = new System.Windows.Forms.Padding(2);
-            this.btnADDV.Name = "btnADDV";
-            this.btnADDV.Size = new System.Drawing.Size(309, 28);
-            this.btnADDV.TabIndex = 9;
-            this.btnADDV.Text = "ADD TO CSV";
-            this.btnADDV.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 180);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "CLIENTES";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(319, 180);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "VISITANTES";
-            // 
-            // txtProfissaoC
-            // 
-            this.txtProfissaoC.Location = new System.Drawing.Point(5, 356);
-            this.txtProfissaoC.Margin = new System.Windows.Forms.Padding(2);
-            this.txtProfissaoC.Name = "txtProfissaoC";
-            this.txtProfissaoC.Size = new System.Drawing.Size(311, 20);
-            this.txtProfissaoC.TabIndex = 19;
-            // 
-            // txtContactoC
-            // 
-            this.txtContactoC.Location = new System.Drawing.Point(5, 311);
-            this.txtContactoC.Margin = new System.Windows.Forms.Padding(2);
-            this.txtContactoC.Name = "txtContactoC";
-            this.txtContactoC.Size = new System.Drawing.Size(311, 20);
-            this.txtContactoC.TabIndex = 18;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 338);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(68, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "PROFISSÃO";
+            this.lblProfissao.AutoSize = true;
+            this.lblProfissao.Location = new System.Drawing.Point(9, 303);
+            this.lblProfissao.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblProfissao.Name = "lblProfissao";
+            this.lblProfissao.Size = new System.Drawing.Size(68, 13);
+            this.lblProfissao.TabIndex = 17;
+            this.lblProfissao.Text = "PROFISSÃO";
+            this.lblProfissao.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(4, 293);
+            this.label8.Location = new System.Drawing.Point(11, 270);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(66, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "CONTACTO";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label9
+            // lblMotivo
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(318, 293);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(49, 13);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "MOTIVO";
+            this.lblMotivo.AutoSize = true;
+            this.lblMotivo.Location = new System.Drawing.Point(28, 337);
+            this.lblMotivo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMotivo.Name = "lblMotivo";
+            this.lblMotivo.Size = new System.Drawing.Size(49, 13);
+            this.lblMotivo.TabIndex = 20;
+            this.lblMotivo.Text = "MOTIVO";
+            this.lblMotivo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnRead
             // 
@@ -230,40 +162,45 @@
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(139, 28);
             this.btnRead.TabIndex = 23;
-            this.btnRead.Text = "READ CSV";
+            this.btnRead.Text = "PESQUISAR";
             this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click_1);
             // 
-            // radioButton1
+            // rbVisitantes
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(463, 141);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(88, 17);
-            this.radioButton1.TabIndex = 24;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "VISITANTES";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbVisitantes.AutoSize = true;
+            this.rbVisitantes.Checked = true;
+            this.rbVisitantes.Location = new System.Drawing.Point(463, 141);
+            this.rbVisitantes.Margin = new System.Windows.Forms.Padding(2);
+            this.rbVisitantes.Name = "rbVisitantes";
+            this.rbVisitantes.Size = new System.Drawing.Size(88, 17);
+            this.rbVisitantes.TabIndex = 24;
+            this.rbVisitantes.TabStop = true;
+            this.rbVisitantes.Text = "VISITANTES";
+            this.rbVisitantes.UseVisualStyleBackColor = true;
+            this.rbVisitantes.CheckedChanged += new System.EventHandler(this.rbVisitantes_CheckedChanged);
             // 
-            // radioButton2
+            // rbClientes
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(553, 141);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(77, 17);
-            this.radioButton2.TabIndex = 25;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "CLIENTES";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbClientes.AutoSize = true;
+            this.rbClientes.Location = new System.Drawing.Point(553, 141);
+            this.rbClientes.Margin = new System.Windows.Forms.Padding(2);
+            this.rbClientes.Name = "rbClientes";
+            this.rbClientes.Size = new System.Drawing.Size(77, 17);
+            this.rbClientes.TabIndex = 25;
+            this.rbClientes.Text = "CLIENTES";
+            this.rbClientes.UseVisualStyleBackColor = true;
+            this.rbClientes.CheckedChanged += new System.EventHandler(this.rbClientes_CheckedChanged);
             // 
             // lstRegisto
             // 
+            this.lstRegisto.FullRowSelect = true;
             this.lstRegisto.Location = new System.Drawing.Point(5, 8);
             this.lstRegisto.Name = "lstRegisto";
             this.lstRegisto.Size = new System.Drawing.Size(625, 122);
             this.lstRegisto.TabIndex = 26;
             this.lstRegisto.UseCompatibleStateImageBehavior = false;
+            this.lstRegisto.View = System.Windows.Forms.View.Details;
             // 
             // cbxMotivo
             // 
@@ -274,42 +211,36 @@
             "Cinema",
             "Comer",
             "Compras"});
-            this.cbxMotivo.Location = new System.Drawing.Point(322, 309);
+            this.cbxMotivo.Location = new System.Drawing.Point(81, 333);
             this.cbxMotivo.Name = "cbxMotivo";
-            this.cbxMotivo.Size = new System.Drawing.Size(307, 21);
+            this.cbxMotivo.Size = new System.Drawing.Size(548, 21);
             this.cbxMotivo.TabIndex = 28;
             // 
             // frmRegisto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(631, 421);
+            this.ClientSize = new System.Drawing.Size(642, 459);
             this.Controls.Add(this.cbxMotivo);
             this.Controls.Add(this.lstRegisto);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.rbClientes);
+            this.Controls.Add(this.rbVisitantes);
             this.Controls.Add(this.btnRead);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtProfissaoC);
-            this.Controls.Add(this.txtContactoC);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblMotivo);
+            this.Controls.Add(this.txtProfissao);
+            this.Controls.Add(this.txtContacto);
+            this.Controls.Add(this.lblProfissao);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtContactoV);
-            this.Controls.Add(this.txtNomeV);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblNome);
-            this.Controls.Add(this.btnADDV);
-            this.Controls.Add(this.txtMoradaC);
-            this.Controls.Add(this.txtNomeC);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtMorada);
+            this.Controls.Add(this.txtNome);
+            this.Controls.Add(this.lblMorada);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnADD);
             this.Controls.Add(this.btnReadAll);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmRegisto";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.frmRegisto_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -319,24 +250,17 @@
         private System.Windows.Forms.Button btnReadAll;
         private System.Windows.Forms.Button btnADD;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtNomeC;
-        private System.Windows.Forms.TextBox txtMoradaC;
-        private System.Windows.Forms.TextBox txtContactoV;
-        private System.Windows.Forms.TextBox txtNomeV;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblNome;
-        private System.Windows.Forms.Button btnADDV;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtProfissaoC;
-        private System.Windows.Forms.TextBox txtContactoC;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblMorada;
+        private System.Windows.Forms.TextBox txtNome;
+        private System.Windows.Forms.TextBox txtMorada;
+        private System.Windows.Forms.TextBox txtProfissao;
+        private System.Windows.Forms.TextBox txtContacto;
+        private System.Windows.Forms.Label lblProfissao;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblMotivo;
         private System.Windows.Forms.Button btnRead;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rbVisitantes;
+        private System.Windows.Forms.RadioButton rbClientes;
         private System.Windows.Forms.ListView lstRegisto;
         private System.Windows.Forms.ComboBox cbxMotivo;
     }
