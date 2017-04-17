@@ -20,164 +20,119 @@ namespace CSV_info
         private const string VISITANTES = "VISITANTES";
         private const string SORTED = "SORTED";
 
-        private List<string[]> Registo = new List<string[]>();
-        private String RegType = TODOS;
+        private List<string[]> Registo = new List<string[]>();  //Lista que mantem os dados actuais da ListView para poder fazer filtragem sem ter de ler de novo o ficheiro
+        private String RegType = TODOS; // Variavel que diz que tipo de dados o Registo tem de momento, afectado cada vez que o registo é carregado do ficheiro
 
         public frmRegisto()
         {
             InitializeComponent();
         }
-
+        private void CreateHeader(ListView lst, string[] header)
+        {
+            lst.Clear();
+            foreach (string head in header)
+            {
+                lst.Columns.Add(head)
+                .Width = lst.Width / header.Length;
+                
+            }
+        }
         public void loadlistview(string tipo)
         {
+            //Carrega a ListView com os dados da Lista Registo 
+            // Variaveis com os Header das Colunas
+            string[] HEADCLIENTES = { "NOME", "MORADA", "CONTACTO", "PROFISSÃO" };
+            string[] HEADVISITANTES = { "NOME", "CONTACTO", "MOTIVO" };
+            string[] HEADTODOS = { "NOME", "MORADA", "CONTACTO", "PROFISSÃO", "MOTIVO" };
 
-                lstRegisto.Clear();
-                switch (tipo)
-                {
-                    case CLIENTES:
-                        lstRegisto.Columns.Add("NOME");
-                        lstRegisto.Columns.Add("MORADA");
-                        lstRegisto.Columns.Add("CONTACTO");
-                        lstRegisto.Columns.Add("PROFISSÃO");
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[0] == CLIENTES)
-                            {
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
+            switch (tipo)
+            {
+                case CLIENTES:
+                    CreateHeader(lstRegisto, HEADCLIENTES);
 
-                        break;
-                    case VISITANTES:
-
-                        lstRegisto.Columns.Add("NOME");
-                        lstRegisto.Columns.Add("CONTACTO");
-                        lstRegisto.Columns.Add("MOTIVO");
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[0] == VISITANTES)
-                            {
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
-
-                        break;
-                    case TODOS:
-                        lstRegisto.Columns.Add("NOME");
-                        lstRegisto.Columns.Add("MORADA");
-                        lstRegisto.Columns.Add("CONTACTO");
-                        lstRegisto.Columns.Add("PROFISSÃO");
-                        lstRegisto.Columns.Add("MOTIVO");
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[0] == VISITANTES)
-                            {
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add("");
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }else if (item[0] == CLIENTES)
-                            {
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                        lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
-
-                        break;
-                    case SORTED:
-
-                    if (RegType == CLIENTES)
+                    foreach (string[] item in Registo)
                     {
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[4].Contains(txtProfissao.Text))
-                            {
-                                lstRegisto.Clear();
-                                lstRegisto.Columns.Add("NOME");
-                                lstRegisto.Columns.Add("MORADA");
-                                lstRegisto.Columns.Add("CONTACTO");
-                                lstRegisto.Columns.Add("PROFISSÃO");
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
-                    }
-                    else if (RegType == VISITANTES)
-                    {
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[3].Contains(cbxMotivo.Text))
-                            {
-                                lstRegisto.Clear();
-                                lstRegisto.Columns.Add("NOME");
-                                lstRegisto.Columns.Add("CONTACTO");
-                                lstRegisto.Columns.Add("MOTIVO");
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
-                    }
-                    else if (RegType == TODOS)
-                    {
-                        foreach (string[] item in Registo)
-                        {
-                            if (item[0].Text = C   item[3].Contains(cbxMotivo.Text) )
-                            {
-                                lstRegisto.Clear();
-                                lstRegisto.Columns.Add("NOME");
-                                lstRegisto.Columns.Add("MORADA");
-                                lstRegisto.Columns.Add("CONTACTO");
-                                lstRegisto.Columns.Add("PROFISSÃO");
-                                lstRegisto.Columns.Add("MOTIVO");
-                                ListViewItem lvi = new ListViewItem(item[1]);
-                                for (int i = 2; i < item.Length; i++)
-                                {
-                                    lvi.SubItems.Add(item[i]);
-                                }
-                                lstRegisto.Items.Add(lvi);
-                            }
-                        }
-
+                        if (item[0] == CLIENTES) InsertItem(item);
                     }
 
                     break;
+                case VISITANTES:
 
-                    default:
+                    CreateHeader(lstRegisto, HEADVISITANTES);
+                    foreach (string[] item in Registo)
+                    {
+                        if (item[0] == VISITANTES) InsertItem(item);
+
+                    }
                     break;
-                }
+                case TODOS:
+                    CreateHeader(lstRegisto, HEADTODOS);
+                    foreach (string[] item in Registo)
+                    {
+                        InsertItem(item);
+                    }
 
-            
+                    break;
+                case SORTED:
+                    if (cbxMotivo.Text != "" || txtNome.Text != "" || txtProfissao.Text != "")
+                    {
+                       // Tipo especial que filtra os dados da Lista em função dos campos preenchidos e do tipo de dados que já lá está (RegType)
+                        if (RegType == CLIENTES)
+                        {
+                            CreateHeader(lstRegisto, HEADCLIENTES);
+                            foreach (string[] item in Registo)
+                            {
+                                if ((item[4].Contains(txtProfissao.Text) && txtProfissao.Text != "") || (item[1].Contains(txtNome.Text) && txtNome.Text != "")) InsertItem(item);
+                            }
+                        }
+                        else if (RegType == VISITANTES)
+                        {
+                            CreateHeader(lstRegisto, HEADVISITANTES);
+                            foreach (string[] item in Registo)
+                            {
+                                if ((item[3].Contains(cbxMotivo.Text) && cbxMotivo.Text != "") || (item[1].Contains(txtNome.Text) && txtNome.Text != "")) InsertItem(item);
+                            }
+                        }
+                        else if (RegType == TODOS)
+                        {
+                            CreateHeader(lstRegisto, HEADTODOS);
+                            foreach (string[] item in Registo)
+                            {
+                                if (item[0] == CLIENTES && (item[4].Contains(txtProfissao.Text) && txtProfissao.Text != "")) InsertItem(item);
+                                if ((item[1].Contains(txtNome.Text) && txtNome.Text != "") || (item[3].Contains(cbxMotivo.Text) && cbxMotivo.Text != "")) InsertItem(item);
+                            }
+                        }
 
+
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+
+        } 
+
+        
+        private void InsertItem(string[] item)
+        {
+            ListViewItem lvi = new ListViewItem(item[1]);
+            for (int i = 2; i < item.Length; i++)
+            {
+                lvi.SubItems.Add(item[i]);
+            }
+            lstRegisto.Items.Add(lvi);
         }
         public List<string[]> ReadCSVFile(string tipo)
         {
-           
-            FileStream fs = File.OpenRead(@"csvfile.csv");
+            FileStream fs;
+            if (!File.Exists(@"csvfile.csv"))
+            {
+                fs = File.Create(@"csvfile.csv");
+                fs.Close();
+            }
+
+            fs = File.OpenRead(@"csvfile.csv");
             StreamReader reader = new StreamReader(fs);
 
             List<string[]> list = new List<string[]>();
@@ -213,7 +168,7 @@ namespace CSV_info
             }
             reader.Close();
             fs.Close();
-            RegType = tipo;
+            RegType = tipo; 
             return list;
         }
 
@@ -266,16 +221,7 @@ namespace CSV_info
             fs.Close();
         }
 
-        private void btnRead_Click(object sender, EventArgs e)
-        {
-            if (Registo.Count == 0 || RegType != TODOS )
-            {
-                Registo.Clear();
-                Registo.AddRange(ReadCSVFile(TODOS));
-            }
-            loadlistview(TODOS);
-
-        }
+ 
 
         private void btnADD_Click(object sender, EventArgs e)
         {
@@ -299,17 +245,10 @@ namespace CSV_info
             {
                 SystemSounds.Beep.Play();
             }
-            txtNome.Text = "";
-            txtMorada.Text = "";
-            txtContacto.Text = "";
-            txtProfissao.Text = "";
-            cbxMotivo.Text = "";
+            ClearText();
         }
 
-        //private void btnADDV_Click(object sender, EventArgs e)
-        //{
-
-        //}
+        
 
         private void btnRead_Click_1(object sender, EventArgs e)
         {
@@ -320,11 +259,9 @@ namespace CSV_info
         {
             if (rbVisitantes.Checked)
             {
-                lblMorada.Enabled = false;
-                lblProfissao.Enabled = false;
+                ClearText();
                 txtMorada.Enabled = false;
                 txtProfissao.Enabled = false;
-                lblMotivo.Enabled = true;
                 cbxMotivo.Enabled = true;
                 Registo.Clear();
                 Registo.AddRange(ReadCSVFile(VISITANTES));
@@ -336,11 +273,9 @@ namespace CSV_info
         {
             if (rbClientes.Checked)
             {
-                lblMorada.Enabled = true;
-                lblProfissao.Enabled = true;
+                ClearText();
                 txtMorada.Enabled = true;
                 txtProfissao.Enabled = true;
-                lblMotivo.Enabled = false;
                 cbxMotivo.Enabled = false;
                 Registo.Clear();
                 Registo.AddRange(ReadCSVFile(CLIENTES));
@@ -348,17 +283,44 @@ namespace CSV_info
             }
         }
 
+        private void ClearText()
+        {
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl.GetType().ToString().Contains("TextBox") || ctrl.GetType().ToString().Contains("ComboBox"))
+                {
+                    ctrl.Text = "";
+                }
+            }
+        }
         private void frmRegisto_Load(object sender, EventArgs e)
         {
-            lblMorada.Enabled = false;
-            lblProfissao.Enabled = false;
+            ClearText();
+            btnADD.Enabled = true;
             txtMorada.Enabled = false;
             txtProfissao.Enabled = false;
-            lblMotivo.Enabled = true;
             cbxMotivo.Enabled = true;
             Registo.Clear();
             Registo.AddRange(ReadCSVFile(VISITANTES));
             loadlistview(VISITANTES);
+        }
+
+        private void rbTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbTodos.Checked)
+            {
+                ClearText();
+                btnADD.Enabled = false;
+                txtMorada.Enabled = true;
+                txtProfissao.Enabled = true;
+                cbxMotivo.Enabled = true;
+                if (Registo.Count == 0 || RegType != TODOS)
+                {
+                    Registo.Clear();
+                    Registo.AddRange(ReadCSVFile(TODOS));
+                }
+                loadlistview(TODOS);
+            }
         }
     }
 }
