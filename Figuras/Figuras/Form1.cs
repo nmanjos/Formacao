@@ -29,32 +29,77 @@ namespace Figuras
             graph.DrawLine(pen, a.X*2, a.Y*2, b.X*2, b.Y*2);
             
         }
+        private void DrawQuadrilatero(Quadrilatero Quadr)
+        {
+            List<Ponto> Arestas = new List<Ponto>();
+            Arestas.Add(Quadr.AB.Inicial);
+            Arestas.Add(Quadr.AB.Final);
+            Arestas.Add(Quadr.CD.Inicial);
+            Arestas.Add(Quadr.CD.Final);
+
+            Poligono poli = new Poligono(Arestas);
+            poli.Draw(panelDraw.CreateGraphics(), Color.Black);
+
+
+        }
+        private void DrawPoligon(Poligono poli)
+        {
+
+            poli.Draw(panelDraw.CreateGraphics(),Color.Black);
+ 
+
+        }
         private void DrawTriangulo(Color c, Linha L1, Linha L2, Linha L3)
         {
-            Drawline(c, L1.Inicial, L1.Final);
-            Drawline(c, L2.Inicial, L2.Final);
-            Drawline(c, L3.Inicial, L3.Final);
+            List<Ponto> Arestas = new List<Ponto>();
+            Arestas.Add(L1.Inicial);
+            Arestas.Add(L2.Inicial);
+            Arestas.Add(L3.Inicial);
+            Poligono poli = new Poligono(Arestas);
+            poli.Draw(panelDraw.CreateGraphics(), Color.Black);
+
+            Drawline(Color.Red, L1.Inicial, L1.Final);
+            Drawline(Color.Red, L2.Inicial, L2.Final);
+            Drawline(Color.Red, L3.Inicial, L3.Final);
         }
         public void FillCombo(ComboBox combo, List<object> list)
         {
             combo.Items.Clear();
             foreach (object obj in list)
             {
-                
                 combo.Items.Add(obj.ToString());
             }
         }
+        private void CreateHeader(ListView lst, string[] header)
+        {
+            lst.Clear();
+            foreach (string head in header)
+            {
+                lst.Columns.Add(head)
+                .Width = lst.Width / header.Length;
+            }
+        }
+        private void InsertItem(ListView lst , List<object> list)
+        {
+            string[] cabecalho = { "Pontos" };
+            CreateHeader(lstPontos, cabecalho);
+            
+            foreach (object obj in list)
+            {
+                ListViewItem lvi = new ListViewItem(obj.ToString());
+                lst.Items.Add(lvi);
+            }
 
+            
+        }
         private void btnAddPonto_Click(object sender, EventArgs e)
         {
+            
+            //InsertItem(lstPontos, dados);
+
             pontos.Add(new Ponto((float)nupX.Value, (float)nupY.Value));
             List<object> objPontos = new List<Object>(pontos);
-            FillCombo(cmbPontos, objPontos);
-            FillCombo(cmbPontoA, objPontos);
-            FillCombo(cmbPontoB, objPontos);
-            FillCombo(cmbPTriA, objPontos);
-            FillCombo(cmbPTriB, objPontos);
-            FillCombo(cmbPTriC, objPontos);
+            
         }
 
         private void cmbPontos_SelectedIndexChanged(object sender, EventArgs e)
@@ -124,6 +169,12 @@ namespace Figuras
                 DrawTriangulo(Color.Navy,tri.AB,tri.BC,tri.CA );
 
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
 
         }
     }
