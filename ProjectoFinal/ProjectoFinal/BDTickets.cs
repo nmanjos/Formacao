@@ -28,6 +28,11 @@ namespace ProjectoFinal
             throw new NotImplementedException();
         }
 
+        public Colaborador EliminaColaborador(int nif)
+        {
+            throw new NotImplementedException();
+        }
+
         public Tecnico EliminaTecnico()
         {
             throw new NotImplementedException();
@@ -49,6 +54,11 @@ namespace ProjectoFinal
         }
 
         public bool InsereTicket()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool InsereTicket(Ticket ticket)
         {
             throw new NotImplementedException();
         }

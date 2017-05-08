@@ -31,7 +31,25 @@ namespace GestaoEscolar
         }
         public override string Avaliacao()
         {
-            throw new NotImplementedException();
+            
+            string avaliacao = "Avaliação do Aluno " + nome + "\n";
+            double mediafinal = 0;
+            foreach (Disciplina media in disciplinas)
+
+            {
+                avaliacao += media.Nome + " - " + media.Nota + "valores\n";
+                mediafinal += media.Nota;
+            }
+            if (disciplinas.Count() > 10) mediafinal /= (disciplinas.Count() - 10);
+            avaliacao += "Média Final - " + mediafinal + "valores\n";
+
+            return avaliacao;
+        }
+        public override string ToString()
+        {
+            string tostring = base.ToString();
+            tostring += "Nº de Disciplinas inscritas: " + disciplinas.Count() + "\n";
+            return tostring;
         }
     }
 }

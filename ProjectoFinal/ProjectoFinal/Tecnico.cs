@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectoFinal
 {
-    class Tecnico
+    class Tecnico : Perfil
     {
+        public Tecnico(string Nome, int NIF, string Senha, Habilitacao NivelHab) : base(Nome, NIF, Senha, NivelHab)
+        {
+        }
     }
 }

@@ -21,8 +21,20 @@ namespace GestaoEscolar
 
         public override string Avaliacao()
         {
+            int ano = 10;
+            string avaliacao = "Avaliação do Aluno " + nome + "\n";
+            double mediafinal = 0;
+            foreach (int media in mediasnotasanual)
+            
+            {
+                avaliacao += ano + "º - " + media + "valores\n";
+                mediafinal += media;
+                ano++;
+            }
+            mediafinal /= (ano - 10);
+            avaliacao += "Média Final - " + mediafinal + "valores\n";
 
-            throw new NotImplementedException();
+            return avaliacao;
         }
         public bool AddMediaAno( double valor)
         {
