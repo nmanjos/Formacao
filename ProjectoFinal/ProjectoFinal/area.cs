@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace ProjectoFinal
 {
-    class area
+    class Area
     {
         string descricao;
         Habilitacao nivelminimo;
+
+        public Area(string Descricao, Habilitacao NivelMinimo)
+        {
+            descricao = Descricao;
+            nivelminimo = NivelMinimo;
+        }
 
     }
 }

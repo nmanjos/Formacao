@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProjectoFinal
 {
-    class SuporteRede
+    class SuporteRede: Ticket
     {
+
     }
 }
