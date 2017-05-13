@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26412.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientapp", "clientapp\clientapp.csproj", "{2CF81375-125A-434B-ACD7-4D742FBAF708}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2EF09BEF-779C-48F7-A21C-51BCB358CE33} = {2EF09BEF-779C-48F7-A21C-51BCB358CE33}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serverapp", "ConsoleApp1\Serverapp.csproj", "{2EF09BEF-779C-48F7-A21C-51BCB358CE33}"
 EndProject
