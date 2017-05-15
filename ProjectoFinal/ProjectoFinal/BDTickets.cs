@@ -134,12 +134,12 @@ namespace ProjectoFinal
                     qry += " Where ";
                 }
             }
-            for (int i = 0; i < Fields.Length; i++)
+            for (int i = 0; i < condition.GetLength(0); i++)
             {
                 myCommand.Parameters.AddWithValue("@" + condition[i, 0], condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value example: Field = Operand 
-                if (i != (Fields.Length - 1))
+                if (i != (condition.GetLength(0) - 1))
                 {
-                    qry += condition[i, 0] + " " + = " " + "@" + condition[i, 0] + ","; // Add the condition 
+                    qry += condition[i, 0] + " " + condition[i, 1] + " @" + condition[i, 2] + ","; // Add the condition 
                 }
                 else
                 {
