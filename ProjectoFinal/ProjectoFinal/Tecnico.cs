@@ -15,5 +15,34 @@ namespace ProjectoFinal
             is_admin = Is_Admin;
             areaintre = AreaIntre;
         }
+        public bool Is_Admin {
+            get
+            {
+                return is_admin;
+            }
+            set
+            {
+                is_admin = value;
+            }
+        }
+        public List<Area> AreaIntre
+        {
+            get
+            {
+                return areaintre;
+            }
+            set
+            {
+                areaintre = value;
+            }
+        }
+        public void AddAreaIntre(Area Area)
+        {
+            areaintre.Add(Area);
+        }
+        public void DelAreaIntre(string Area)
+        {
+            areaintre.Find(x => x.Descricao.Contains(Area));
+        }
     }
 }

@@ -16,6 +16,32 @@ namespace ProjectoFinal
             descricao = Descricao;
             nivelminimo = NivelMinimo;
         }
-
+        public string Descricao
+        {
+            get
+            {
+                return descricao;
+            }
+            set
+            {
+                descricao = value;
+            }
+        }
+            
+        public Habilitacao NivelMinimo
+        {
+            get
+            {
+                return nivelminimo;
+            }
+            set
+            {
+                nivelminimo = value;
+            }
+        }
+        public override string ToString()
+        {
+            return descricao;
+        }
     }
 }

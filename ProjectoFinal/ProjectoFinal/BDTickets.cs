@@ -118,35 +118,46 @@ namespace ProjectoFinal
         {
             SqlDataReader Reader;
 
-            if (Fields.Length == Values.Length)  // Validate if Fields and Values have the same number of elements
-            {
-                SqlCommand myCommand = new SqlCommand();
 
-                string str = "";
-                for (int i = 0; i < Fields.Length; i++)
+            SqlCommand myCommand = new SqlCommand();
+
+            string qry = "Select ";
+            for (int i = 0; i < Fields.Length; i++)
+            {
+                qry += Fields[i];
+                if (i < Fields.Length-1 )
                 {
-                    myCommand.Parameters.AddWithValue("@" + Fields[i], Values[i]);
-                    if (i != (Fields.Length - 1))
-                    {
-                        str += Fields[i] + " = " + "@" + Fields[i] + ",";
-                    }
-                    else
-                    {
-                        str += Fields[i] + " = " + "@" + Fields[i];
-                    }
+                    qry += ", ";
                 }
-                string SQLstr = "UPDATE" + Table + "SET " + str + ";";
-                myCommand.CommandText = SQLstr;
-                myCommand.Connection = OpenConnection(@SERVERNAME, DBNAME, USERNAME, PASSWORD);
-                try
+                else
                 {
-                    return  myCommand.ExecuteReader();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
+                    qry += " Where ";
                 }
             }
+            for (int i = 0; i < Fields.Length; i++)
+            {
+                myCommand.Parameters.AddWithValue("@" + condition[i, 0], condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value example: Field = Operand 
+                if (i != (Fields.Length - 1))
+                {
+                    qry += condition[i, 0] + " " + = " " + "@" + condition[i, 0] + ","; // Add the condition 
+                }
+                else
+                {
+                    qry += Fields[i] + " = " + "@" + Fields[i];
+                }
+            }
+            string SQLstr = "UPDATE" + Table + "SET " + qry + ";";
+            myCommand.CommandText = SQLstr;
+            myCommand.Connection = OpenConnection(@SERVERNAME, DBNAME, USERNAME, PASSWORD);
+            try
+            {
+                return myCommand.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
             return null;
         }
         private List<object> ProcuraSQL(string[] table, string[] fields, string condition)
