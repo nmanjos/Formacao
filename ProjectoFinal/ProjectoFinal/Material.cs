@@ -13,7 +13,7 @@ namespace ProjectoFinal
         string supplier;
         double price;
         bool issoftware;
-        DateTime expires;
+        
         public Material(string Partnumber, string Descr, string Supplier, double Price, bool isSoftware)
         {
 
@@ -88,22 +88,15 @@ namespace ProjectoFinal
                 issoftware = value;
             }
         }
-
-        public DateTime Expires
+        public override string ToString()
         {
-            get
-            {
-                return expires;
-            }
-
-            set
-            {
-                expires = value;
-            }
+            return partnumber + " - " + name + " - " + price.ToString();
         }
 
-        
-        
+
+
+
+
 
     }
 }

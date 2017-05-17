@@ -14,12 +14,12 @@ namespace ProjectoFinal
         string descricao;
         Habilitacao nivelminimo;
 
-        public Area(string Descricao, Habilitacao nivelminimo)
+        public Area(string Descr, Habilitacao NivelMinimo)
         {
-            descricao = Descricao;
-            
+            descricao = Descr;
+            nivelminimo = NivelMinimo;
         }
-        public string Descricao
+        public string Descr
         {
             get
             {

@@ -47,7 +47,7 @@ namespace ProjectoFinal
         }
         public void DelAreaIntre(string Area)
         {
-            areaintre.Find(x => x.Descricao.Contains(Area));
+            areaintre.Find(x => x.Descr.Contains(Area));
         }
     }
 }

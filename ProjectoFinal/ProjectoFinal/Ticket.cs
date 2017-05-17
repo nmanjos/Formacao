@@ -19,12 +19,14 @@ namespace ProjectoFinal
         private Status estado;   //Estado (Por associar, Aguarda Validação Técnico, Em Análise, Resolvido, Rejeitado)
         private List<MaterialRequest> requesicoes;  //Registo de eventuais pedidos de material com custo associado
         private int horas;  //Horas gastas
+        private string resolution;
         private Tecnico quemfechou;
-        public Ticket(int Num, DateTime CreateDate, DateTime LastUpdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Requesicoes, int Horas, Tecnico QuemFechou)
+
+        public Ticket(int Num, DateTime Createate, DateTime Lastupdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Requesicoes, int Horas, string Resolution, Tecnico Quemfechou)
         {
             this.num = Num;
-            this.createdate = CreateDate;
-            this.lastupdate = LastUpdate;
+            this.createdate = Createate;
+            this.lastupdate = Lastupdate;
             this.requester = Requester;
             this.priority = Priority;
             this.equipamento = Equipamento;
@@ -33,8 +35,10 @@ namespace ProjectoFinal
             this.estado = Estado;
             this.requesicoes = Requesicoes;
             this.horas = Horas;
-            this.quemfechou = QuemFechou;
+            this.resolution = Resolution;
+            this.quemfechou = Quemfechou;
         }
+
         public int Num
         {
             get
@@ -47,6 +51,7 @@ namespace ProjectoFinal
                 num = value;
             }
         }
+
         public DateTime Createdate
         {
             get
@@ -59,6 +64,7 @@ namespace ProjectoFinal
                 createdate = value;
             }
         }
+
         public DateTime Lastupdate
         {
             get
@@ -71,7 +77,8 @@ namespace ProjectoFinal
                 lastupdate = value;
             }
         }
-        public Colaborador Requester
+
+        internal Colaborador Requester
         {
             get
             {
@@ -83,6 +90,7 @@ namespace ProjectoFinal
                 requester = value;
             }
         }
+
         public int Priority
         {
             get
@@ -96,7 +104,7 @@ namespace ProjectoFinal
             }
         }
 
-        public Equipamento Equipamento
+        internal Equipamento Equipamento
         {
             get
             {
@@ -108,6 +116,7 @@ namespace ProjectoFinal
                 equipamento = value;
             }
         }
+
         public string Description
         {
             get
@@ -120,7 +129,8 @@ namespace ProjectoFinal
                 description = value;
             }
         }
-        public List<Tecnico> Tecnicos
+
+        internal List<Tecnico> Tecnicos
         {
             get
             {
@@ -133,7 +143,7 @@ namespace ProjectoFinal
             }
         }
 
-        public Status Estado
+        internal Status Estado
         {
             get
             {
@@ -146,7 +156,7 @@ namespace ProjectoFinal
             }
         }
 
-        public List<MaterialRequest> Requesicoes
+        internal List<MaterialRequest> Requesicoes
         {
             get
             {
@@ -172,7 +182,20 @@ namespace ProjectoFinal
             }
         }
 
-        public Tecnico Quemfechou
+        public string Resolution
+        {
+            get
+            {
+                return resolution;
+            }
+
+            set
+            {
+                resolution = value;
+            }
+        }
+
+        internal Tecnico Quemfechou
         {
             get
             {
@@ -184,7 +207,5 @@ namespace ProjectoFinal
                 quemfechou = value;
             }
         }
-
-        
     }
 }

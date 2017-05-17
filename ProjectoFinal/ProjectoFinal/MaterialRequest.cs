@@ -8,13 +8,14 @@ namespace ProjectoFinal
 {
     class MaterialRequest
     {
-        private string reqcode;
+        private int reqcode;
+        private string description;
         private double price;
-        private Perfil requester;
-        private List<Material> materiais;
+        private Tecnico requester;
+        private Material materiais;
         private Status estado;
 
-        public MaterialRequest(string Reqcode, double Price, Perfil Requester, List<Material> Materiais, Status Estado)
+        public MaterialRequest(int Reqcode, double Price, Tecnico Requester, Material Materiais, Status Estado)
         {
             this.reqcode = Reqcode;
             this.price = Price;
@@ -23,7 +24,7 @@ namespace ProjectoFinal
             estado = Estado;
         }
 
-        public string Reqcode
+        public int Reqcode
         {
             get
             {
@@ -49,7 +50,7 @@ namespace ProjectoFinal
             }
         }
 
-        internal Perfil Requester
+        internal Tecnico Requester
         {
             get
             {
@@ -62,7 +63,7 @@ namespace ProjectoFinal
             }
         }
 
-        internal List<Material> Materiais
+        internal Material Materiais
         {
             get
             {
