@@ -14,15 +14,15 @@ namespace ProjectoFinal
         double price;
         bool issoftware;
         DateTime expires;
-        public Material(string Partnumber, string Name, string Supplier, double Price, bool isSoftware, DateTime Expires)
+        public Material(string Partnumber, string Descr, string Supplier, double Price, bool isSoftware)
         {
 
             partnumber = Partnumber;
-            name = Name;
+            name = Descr;
             supplier = Supplier;
             price = Price;
             issoftware = isSoftware;
-            expires = Expires;
+ 
         }
         public string Partnumber
         {
@@ -37,7 +37,7 @@ namespace ProjectoFinal
             }
         }
 
-        public string Name
+        public string Descr
         {
             get
             {

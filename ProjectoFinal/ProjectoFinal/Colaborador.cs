@@ -11,5 +11,9 @@ namespace ProjectoFinal
         public Colaborador(string Nome, int NIF, string Senha, Habilitacao NivelHab) : base(Nome, NIF, Senha, NivelHab)
         {
         }
+        public Colaborador() : base()
+        {
+
+        }
     }
 }

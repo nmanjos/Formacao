@@ -7,27 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace ProjectoFinal
 {
-    public partial class Tickets_Form : Form
+    public partial class Login : Form
     {
-        public Tickets_Form()
+        public Login()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-
-
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

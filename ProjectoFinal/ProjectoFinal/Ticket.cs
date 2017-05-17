@@ -16,11 +16,11 @@ namespace ProjectoFinal
         private Equipamento equipamento;   //Elemento que gerou a anomalia
         private string description;    //Descrição da anomalia
         private List<Tecnico> tecnicos;   //Técnico ou técnicos associados
-        private TicketStatus estado;   //Estado (Por associar, Aguarda Validação Técnico, Em Análise, Resolvido, Rejeitado)
+        private Status estado;   //Estado (Por associar, Aguarda Validação Técnico, Em Análise, Resolvido, Rejeitado)
         private List<MaterialRequest> requesicoes;  //Registo de eventuais pedidos de material com custo associado
         private int horas;  //Horas gastas
         private Tecnico quemfechou;
-        public Ticket(int Num, DateTime CreateDate, DateTime LastUpdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, TicketStatus Estado, List<MaterialRequest> Requesicoes, int Horas, Tecnico QuemFechou)
+        public Ticket(int Num, DateTime CreateDate, DateTime LastUpdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Requesicoes, int Horas, Tecnico QuemFechou)
         {
             this.num = Num;
             this.createdate = CreateDate;
@@ -47,7 +47,6 @@ namespace ProjectoFinal
                 num = value;
             }
         }
-
         public DateTime Createdate
         {
             get
@@ -60,7 +59,6 @@ namespace ProjectoFinal
                 createdate = value;
             }
         }
-
         public DateTime Lastupdate
         {
             get
@@ -73,7 +71,6 @@ namespace ProjectoFinal
                 lastupdate = value;
             }
         }
-
         public Colaborador Requester
         {
             get
@@ -86,7 +83,6 @@ namespace ProjectoFinal
                 requester = value;
             }
         }
-
         public int Priority
         {
             get
@@ -112,7 +108,6 @@ namespace ProjectoFinal
                 equipamento = value;
             }
         }
-
         public string Description
         {
             get
@@ -125,7 +120,6 @@ namespace ProjectoFinal
                 description = value;
             }
         }
-
         public List<Tecnico> Tecnicos
         {
             get
@@ -139,7 +133,7 @@ namespace ProjectoFinal
             }
         }
 
-        public TicketStatus Estado
+        public Status Estado
         {
             get
             {

@@ -8,14 +8,15 @@ namespace ProjectoFinal
 {
     class Habilitacao
     {
-        int nivel;
         string descricao;
-        public Habilitacao(int Nivel, string Descricao)
+        int nivel; // Nivel Académico
+        
+        public Habilitacao(string Descr,int Nivel )
         {
-            descricao = Descricao;
-            nivel = Nivel;
+            descricao = Descr;
+            nivel = Nivel; 
         }
-        public string Descricao
+        public string Descr
         {
             get
             {

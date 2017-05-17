@@ -35,17 +35,20 @@ namespace ProjectoFinal
             
             string[] Fields = { "NIF", "Senha" };
             string[,] Condition = { { "NIF", "=", NIF.ToString() }, { "Senha", "=", Pass } };
-            SqlDataReader Reader =  ProcuraSQL("Perfis", Fields, Condition);
+            SqlDataReader Reader =  ProcuraSQL( "Perfis", Fields, Condition);
             if (Reader.HasRows)
             {
                 
                 Reader.Read();
-                if (Reader.GetBoolean(5)) CurrentUser = new Tecnico;
+                if (Reader.GetBoolean(5)) CurrentUser = new Tecnico();
 
 
                 CurrentUser.NIF = Reader.GetInt32(0);
-               
-                
+                CurrentUser.Nome = Reader.GetString(0);
+                CurrentUser.Senha = Reader.GetString(0);
+                CurrentUser.NivelHab.Nivel = Reader.GetInt32(0);
+
+
             }   
             return false;
         }
@@ -151,6 +154,32 @@ namespace ProjectoFinal
         {
             throw new NotImplementedException();
         }
+        private void LoadLinked(object obj, string table, int id)
+        {
+            SqlDataReader Reader;
+            SqlCommand myCommand = new SqlCommand();
+            string SQLstr = "Select * from " + table + " Where Id = @Id";
+            myCommand.Parameters.AddWithValue("@Id", id); // Condition has 3 columns 0=Field, 1=Operand 2=Value example: Field = Operand 
+            myCommand.CommandText = SQLstr;
+            myCommand.Connection = OpenConnection(DBNAME);
+            try
+            {
+                Reader = myCommand.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());  // write to app log
+                Reader = null;
+            }
+            if (Reader.HasRows)
+            {
+                Reader.Read();
+                
+            }
+            myCommand.Connection.Close();
+            myCommand.Dispose();
+            
+        } 
         private SqlDataReader ProcuraSQL(string Table, string[] Fields, string[,] condition)
         {
             SqlDataReader Reader;
@@ -190,9 +219,14 @@ namespace ProjectoFinal
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.ToString());  // write to app log
+                Reader = null;
+                myCommand.Connection.Close();
+                myCommand.Dispose();
+                
+                
             }
-            return null;
+            return Reader;
         }
         private List<object> ProcuraSQL(string[] table, string[] fields, string condition)
         {

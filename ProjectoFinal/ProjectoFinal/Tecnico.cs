@@ -15,6 +15,11 @@ namespace ProjectoFinal
             is_admin = Is_Admin;
             areaintre = AreaIntre;
         }
+        public Tecnico() : base()
+        {
+            is_admin = false;
+            areaintre = null;
+        }
         public bool Is_Admin {
             get
             {

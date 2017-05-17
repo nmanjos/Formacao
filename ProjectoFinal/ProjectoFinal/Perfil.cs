@@ -22,6 +22,13 @@ namespace ProjectoFinal
             senha = Senha;
             nivelhab = NivelHab;
         }
+        public Perfil()
+        {
+            nome = "";
+            nif = 0;
+            senha = "";
+            nivelhab = null;
+        }
 
        public int NIF
         {

@@ -16,16 +16,16 @@ namespace ProjectoFinal
         string localizacao;
         Perfil empregado;
         double price;
-        public Equipamento(string PartNumber, string ModelNum, string InventCode, string Description, List<Material> Pecas, string Localizacao, Perfil Empregado, double Price)
+        public Equipamento(string InventCode,string PartNumber, string ModelNum,  string Descr, List<Material> Pecas, string Localizacao, Perfil Empregado, double Price)
         {
-            PartNumber = partnumber;
-            ModelNum = modelnum;
-            InventCode = inventcode;
-            Description = description;
-            Pecas = pecas;
-            Localizacao = localizacao;
-            Empregado = empregado;
-            Price = price;
+            partnumber = PartNumber;
+            modelnum = ModelNum;
+            inventcode = InventCode;
+            description = Descr;
+            pecas = Pecas;
+            localizacao = Localizacao;
+            empregado = Empregado;
+            price = Price;
         }
 
         public string Partnumber
@@ -67,7 +67,7 @@ namespace ProjectoFinal
             }
         }
 
-        public string Description
+        public string Descr
         {
             get
             {
