@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace ProjectoFinal
 {
+    /// <summary>
+    /// Areas de Intervencao do Ticket (Equipamentos, Rede, Software)
+    /// </summary>
     class Area
-    {
+    {   
         string descricao;
         Habilitacao nivelminimo;
 
-        public Area(string Descricao, Habilitacao NivelMinimo)
+        public Area(string Descricao, Habilitacao nivelminimo)
         {
             descricao = Descricao;
-            nivelminimo = NivelMinimo;
+            
         }
         public string Descricao
         {

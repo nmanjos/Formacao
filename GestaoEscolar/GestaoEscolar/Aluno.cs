@@ -12,7 +12,7 @@ namespace GestaoEscolar
         protected string nome;
         protected int cc;
         protected DateTime dataNasc;
-        
+
         public Aluno(int matricula, string nome, int cc, DateTime dataNasc)
         {
             this.matricula = matricula;
@@ -20,7 +20,7 @@ namespace GestaoEscolar
             this.cc = cc;
             this.dataNasc = dataNasc;
         }
-        
+
         public int Matricula
         {
             get
@@ -32,7 +32,8 @@ namespace GestaoEscolar
                 matricula = value;
             }
         }
-        public string  Nome
+
+        public string Nome
         {
             get
             {
@@ -43,7 +44,8 @@ namespace GestaoEscolar
                 nome = value;
             }
         }
-        public int CC
+
+        public int Cc
         {
             get
             {
@@ -65,14 +67,7 @@ namespace GestaoEscolar
                 dataNasc = value;
             }
         }
-        public int Idade
-        {
-            get
-            {
-                
-                return DateTime.Today.Year - dataNasc.Year;
-            }
-        }
+
         public abstract string Avaliacao();
 
         public override string ToString()
@@ -80,7 +75,8 @@ namespace GestaoEscolar
             string tostring = "Matricula: " + matricula + "\n";
             tostring += "Nome: " + nome + "\n";
             tostring += "Cartão de Cidadão: " + cc + "\n";
-            tostring += "Data de Nascimento: " + dataNasc.ToShortDateString() + "\n";
+            tostring += "Data de Nascimento: " 
+                + dataNasc.ToShortDateString() + "\n";
             return tostring;
         }
     }

@@ -14,9 +14,12 @@ namespace ProjectoFinal
         [STAThread]
         static void Main()
         {
+
+            IBDTickets ticket = new BDTickets();
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Tickets_Form());
         }
     }
 }

@@ -18,7 +18,8 @@ namespace GestaoEscolar
             this.code = code;
             this.nota = nota;
         }
-            public string Nome
+
+        public string Nome
         {
             get
             {
@@ -40,6 +41,7 @@ namespace GestaoEscolar
                 code = value;
             }
         }
+
         public double Nota
         {
             get
@@ -51,6 +53,5 @@ namespace GestaoEscolar
                 nota = value;
             }
         }
-
     }
 }

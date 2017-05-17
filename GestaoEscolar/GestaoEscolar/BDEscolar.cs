@@ -1,102 +1,121 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GestaoEscolar
 {
-    class BDEscolar
+    class BDEscolar:IBDEscolar
     {
         private List<Aluno> alunos;
+
         public BDEscolar()
         {
             alunos = new List<Aluno>();
-
         }
-        /// <summary>
-        /// CriarAluno(int matricula, string nome, int cc, DateTime dataNasc, string curso, string turma)
-        /// </summary>
-        /// <param name="matricula"></param>
-        /// <param name="nome"></param>
-        /// <param name="cc"></param>
-        /// <param name="dataNasc"></param>
-        /// <param name="curso"></param>
-        /// <param name="turma"></param>
+
         public void CriarAluno(int matricula, string nome, int cc, DateTime dataNasc, string curso, string turma)
         {
-            Interno aluno = new Interno(matricula, nome, cc, dataNasc, curso, turma);
+            Aluno aluno = new AlunoInterno(matricula, nome, cc, dataNasc, curso, turma);
             alunos.Add(aluno);
         }
+
         public void CriarAluno(int matricula, string nome, int cc, DateTime dataNasc)
         {
-            Externo aluno = new Externo(matricula, nome, cc, dataNasc);
+            Aluno aluno = new AlunoExterno(matricula, nome, cc, dataNasc);
             alunos.Add(aluno);
         }
+
         private Aluno GetAluno(int matricula)
         {
             foreach (Aluno aluno in alunos)
             {
                 if (aluno.Matricula == matricula)
-                {
                     return aluno;
-                }
             }
-           
             return null;
         }
-        public string AddMediaAno(double valor, int matricula)
+
+        public string AddMediaAno(int matricula, double valor)
         {
             string mensagem = "";
+
             Aluno aluno = GetAluno(matricula);
             if (aluno != null)
             {
-                if(aluno is Interno)
+                if (aluno is AlunoInterno)
                 {
-                    Interno interno = (Interno)aluno;
-                    if (interno.AddMediaAno(valor))
-                    {
-                        mensagem = "Media inserida com sucesso";
-
-                    }
+                    AlunoInterno interno = (AlunoInterno)aluno;
+                    bool addMedia = interno.AddMediaAno(valor);
+                    if (addMedia)
+                        mensagem = "Media inserida com sucesso!";
                     else
-                    {
-                        mensagem = "O Aluno já concluiu o percurso curricular";
-                    }
+                        mensagem = "O aluno já concluiu o seu percurso escolar!";
                 }
                 else
-                {
-                    mensagem = "Matricula de Aluno Externo, esta funcionalidade (Gravar Media do Ano), Só está disponivel para alunos internos";
-                }
+                    mensagem = "Matrícula de um aluno externo.\nFuncionalidade exclusiva para alunos internos!";
             }
             else
-            {
-                mensagem = "Matricula Inválida !?!?!?!?!?!?!";
-            }
+                mensagem = "Matrícula inválida!";
+
             return mensagem;
         }
-        public string AddDisciplina(double nota, int code,string nome,int matricula)
+
+        public string AddDisciplina(int matricula, string nome, int code, double nota)
         {
             string mensagem = "";
+
             Aluno aluno = GetAluno(matricula);
             if (aluno != null)
             {
-                if (aluno is Externo)
+                if (aluno is AlunoExterno)
                 {
-                    Externo externo = (Externo)aluno;
+                    AlunoExterno externo = (AlunoExterno)aluno;
                     Disciplina disc = new Disciplina(nome, code, nota);
                     externo.AddDisciplina(disc);
-                    mensagem = "Disciplina Gravada";
+
+                    mensagem = "Disciplina inserida com sucesso!";
+
                 }
                 else
-                {
-                    mensagem = "Matricula de Aluno Interno, esta funcionalidade (Gravar Disciplina), Só está disponivel para alunos internos";
-                }
+                    mensagem = "Matrícula de um aluno interno.\nFuncionalidade exclusiva para alunos externos!";
             }
             else
+                mensagem = "Matrícula inválida!";
+
+            return mensagem;
+        }
+
+        public string VisualizaDados(int matricula)
+        {
+            string mensagem = "";
+
+            Aluno aluno = GetAluno(matricula);
+            if (aluno != null)
             {
-                mensagem = "Matricula Inválida !?!?!?!?!?!?!";
+                mensagem = aluno.ToString();
             }
+            else
+                mensagem = "Matrícula inválida!";
+
+            return mensagem;
+        }
+
+        public string VisualizaAvaliacoes(int matricula)
+        {
+            string mensagem = "";
+
+            Aluno aluno = GetAluno(matricula);
+            if (aluno != null)
+            {
+                mensagem = aluno.Avaliacao();
+            }
+            else
+                mensagem = "Matrícula inválida!";
+
             return mensagem;
         }
     }

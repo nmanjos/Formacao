@@ -16,7 +16,7 @@ namespace ProjectoFinal
         DateTime expires;
         public Material(string Partnumber, string Name, string Supplier, double Price, bool isSoftware, DateTime Expires)
         {
-           
+
             partnumber = Partnumber;
             name = Name;
             supplier = Supplier;
@@ -24,12 +24,86 @@ namespace ProjectoFinal
             issoftware = isSoftware;
             expires = Expires;
         }
-        public string Partnumber { get; set; }
-        public string Name { get; set; }
-        public string Supplier { get; set; }
-        public double Price { get; set; }
-        public bool isSoftware { get; set; }
-        public DateTime Expires { get; set; }
+        public string Partnumber
+        {
+            get
+            {
+                return partnumber;
+            }
+
+            set
+            {
+                partnumber = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string Supplier
+        {
+            get
+            {
+                return supplier;
+            }
+
+            set
+            {
+                supplier = value;
+            }
+        }
+
+        public double Price
+        {
+            get
+            {
+                return price;
+            }
+
+            set
+            {
+                price = value;
+            }
+        }
+
+        public bool Issoftware
+        {
+            get
+            {
+                return issoftware;
+            }
+
+            set
+            {
+                issoftware = value;
+            }
+        }
+
+        public DateTime Expires
+        {
+            get
+            {
+                return expires;
+            }
+
+            set
+            {
+                expires = value;
+            }
+        }
+
+        
+        
 
     }
 }

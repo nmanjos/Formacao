@@ -6,31 +6,68 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using ProjectoFinal.Properties;
-
-
-
+using Microsoft.Win32;
+using System.IO;
 
 namespace ProjectoFinal
 {
     class BDTickets : IBDTickets
     {
-        private string SERVERNAME = Settings.Default.ServerName;
+       
         private string DBNAME = Settings.Default.Database;
-        private string USERNAME = Settings.Default.DBUser;
-        private string PASSWORD = Settings.Default.DBPass;
         
+        private Perfil CurrentUser;
 
+
+
+
+
+
+
+       
+        /// <summary>
+        /// Meio de Autenticar o user na aplicação, o Programa tem os dados do utilizador para fazer as suas decisões sobre o interface
+        /// </summary>
+        /// <returns>Bool -> User Autenticou</returns>
+        ///
+        public bool Login(int NIF, string Pass )
+        {
+            
+            string[] Fields = { "NIF", "Senha" };
+            string[,] Condition = { { "NIF", "=", NIF.ToString() }, { "Senha", "=", Pass } };
+            SqlDataReader Reader =  ProcuraSQL("Perfis", Fields, Condition);
+            if (Reader.HasRows)
+            {
+                
+                Reader.Read();
+                if (Reader.GetBoolean(5)) CurrentUser = new Tecnico;
+
+
+                CurrentUser.NIF = Reader.GetInt32(0);
+               
+                
+            }   
+            return false;
+        }
+        public Perfil GetCurrentUser()
+        {
+            return CurrentUser;
+        }
+        /// <summary>
+        /// Devolve o Valor médio do Custo de todos os Tickets Fechados
+        /// </summary>
+        /// <returns></returns>
         public double CustoMediaTickets()
         {
             throw new NotImplementedException();
         }
 
-        public double CustoTecnicoTickets(int tipo)
+        public double CustoMedioTecnicoTickets(int tipo)
         {
             throw new NotImplementedException();
         }
 
-        public double CustoTipoTickets(int tipo)
+        public double CustoMediaTipoTickets(int tipo)
         {
             throw new NotImplementedException();
         }
@@ -117,8 +154,6 @@ namespace ProjectoFinal
         private SqlDataReader ProcuraSQL(string Table, string[] Fields, string[,] condition)
         {
             SqlDataReader Reader;
-
-
             SqlCommand myCommand = new SqlCommand();
 
             string qry = "Select ";
@@ -148,16 +183,15 @@ namespace ProjectoFinal
             }
             string SQLstr = "UPDATE" + Table + "SET " + qry + ";";
             myCommand.CommandText = SQLstr;
-            myCommand.Connection = OpenConnection(@SERVERNAME, DBNAME, USERNAME, PASSWORD);
+            myCommand.Connection = OpenConnection( DBNAME);
             try
             {
-                return myCommand.ExecuteReader();
+                Reader = myCommand.ExecuteReader();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-
             return null;
         }
         private List<object> ProcuraSQL(string[] table, string[] fields, string condition)
@@ -169,13 +203,11 @@ namespace ProjectoFinal
         private bool InsereRegisto(string table, string[] fields, string[] values)
         {
             bool result = false;
-
             return result;
         }
         private bool UpdateRegisto(string Table, string[] Fields, string[] values, string Values)
         {
             bool result = false;
-
             return result;
         }
         private SqlCommand UpdateRegisto(string Table, string[] Fields, string[] Values)
@@ -200,7 +232,7 @@ namespace ProjectoFinal
                 }
                 string SQLstr = "UPDATE" + Table + "SET " + str + ";";
                 myCommand.CommandText = SQLstr;
-                myCommand.Connection = OpenConnection(@SERVERNAME, DBNAME, USERNAME, PASSWORD);
+                myCommand.Connection = OpenConnection(DBNAME);
                 try
                 {
                     myCommand.ExecuteNonQuery();
@@ -215,14 +247,13 @@ namespace ProjectoFinal
 
             return result;
         }
-        private SqlConnection OpenConnection(string Server, string Database, string username, string password)
+        private SqlConnection OpenConnection( string Database)
         {
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString =
-            "Data Source=" + Server + ";" +
-            "Initial Catalog=" + Database + ";" +
-            "User id=" + username + ";" +
-            "Password=" + password + ";";
+
+            
+            SqlConnection conn = new SqlConnection(@"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\" + Database + ";Integrated Security = True");
+
+            
             try
             {
                 conn.Open();
@@ -234,6 +265,10 @@ namespace ProjectoFinal
             }
             return conn;
         }
-         
+
+        public bool Login()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

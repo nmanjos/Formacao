@@ -8,6 +8,9 @@ namespace ProjectoFinal
 {
     interface IBDTickets
     {
+        bool Login();
+        
+        Perfil GetCurrentUser();
         bool InsereColaborador();
         Colaborador EliminaColaborador();
         bool InsereTecnico();
@@ -22,8 +25,8 @@ namespace ProjectoFinal
         List<Ticket> ProcuraTicketsTipo(int tipo);
         List<Ticket> ProcuraTicketsPorAssociar();
         List<Ticket> ProcuraTicketsEncomendaPendente();
-        double CustoMediaTickets();
-        double CustoTipoTickets(int tipo);
-        double CustoTecnicoTickets(int tipo);
+        double CustoMediaTickets();  // Media do Custo dos tickets fechados 
+        double CustoMediaTipoTickets(int tipo); //  Media do Custo dos Tickets por Tecnico
+        double CustoMedioTecnicoTickets(int nif); // Media do Custo dos Tickets por Tecnico
     }
 }

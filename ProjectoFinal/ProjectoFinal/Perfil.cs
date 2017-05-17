@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace ProjectoFinal
 {
+    /// <summary>
+    /// Classe abstrata dos Perfis de utilizador, na base de dados existirá uma unica tabela com toda a informação que é carregada para as classes conforme necessário! 
+    /// </summary>
     abstract class Perfil
     {
-        private String nome;
+        private string nome;
         private int nif; // primary key
         private string senha;
         private Habilitacao nivelhab;
-        public  Perfil(String Nome, int NIF, string Senha, Habilitacao NivelHab)
+        public  Perfil(string Nome, int NIF, string Senha, Habilitacao NivelHab)
         {
             nome = Nome;
             nif = NIF;
