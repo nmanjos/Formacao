@@ -12,17 +12,18 @@ namespace ProjectoFinal
         private DateTime createdate;   //Data e hora do pedido;
         private DateTime lastupdate;   // data do ultimo update
         private Colaborador requester;     //Colaborador que criou o Ticket
+        private Area areaintre; //Area de Intrevencao, Define o tipo de Intreveção a ser realizado, só pode ser alterada na criacao do registo e pelo Administrador atravez do processo de atribuição.
         private int priority;//Nível de Urgência
         private Equipamento equipamento;   //Elemento que gerou a anomalia
         private string description;    //Descrição da anomalia
         private List<Tecnico> tecnicos;   //Técnico ou técnicos associados
         private Status estado;   //Estado (Por associar, Aguarda Validação Técnico, Em Análise, Resolvido, Rejeitado)
-        private List<MaterialRequest> requesicoes;  //Registo de eventuais pedidos de material com custo associado
+        private List<MaterialRequest> encomendas;  //Registo de eventuais pedidos de material com custo associado
         private int horas;  //Horas gastas
         private string resolution;
         private Tecnico quemfechou;
 
-        public Ticket(int Num, DateTime Createate, DateTime Lastupdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Requesicoes, int Horas, string Resolution, Tecnico Quemfechou)
+        public Ticket(int Num, DateTime Createate, DateTime Lastupdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
         {
             this.num = Num;
             this.createdate = Createate;
@@ -33,7 +34,7 @@ namespace ProjectoFinal
             this.description = Description;
             this.tecnicos = Tecnicos;
             this.estado = Estado;
-            this.requesicoes = Requesicoes;
+            this.encomendas = Encomendas;
             this.horas = Horas;
             this.resolution = Resolution;
             this.quemfechou = Quemfechou;
@@ -156,16 +157,16 @@ namespace ProjectoFinal
             }
         }
 
-        internal List<MaterialRequest> Requesicoes
+        internal List<MaterialRequest> Encomendas
         {
             get
             {
-                return requesicoes;
+                return encomendas;
             }
 
             set
             {
-                requesicoes = value;
+                encomendas = value;
             }
         }
 

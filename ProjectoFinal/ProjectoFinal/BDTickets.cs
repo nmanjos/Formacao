@@ -18,13 +18,6 @@ namespace ProjectoFinal
         
         private Perfil CurrentUser;
 
-
-
-
-
-
-
-       
         /// <summary>
         /// Meio de Autenticar o user na aplicação, o Programa tem os dados do utilizador para fazer as suas decisões sobre o interface
         /// </summary>
@@ -38,7 +31,7 @@ namespace ProjectoFinal
             SqlDataReader Reader =  ProcuraSQL( "Perfis", Fields, Condition);
             if (Reader.HasRows)
             {
-                
+
                 Reader.Read();
                 if (Reader.GetBoolean(5)) CurrentUser = new Tecnico();
 
@@ -64,73 +57,71 @@ namespace ProjectoFinal
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Devolve o Valor médio do Custo de todos os Tickets Fechados por Técnico
+        /// </summary>
+        /// <returns></returns>
         public double CustoMedioTecnicoTickets(int tipo)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Devolve o Valor médio do Custo de todos os Tickets Fechados por Tipo de Ticket
+        /// </summary>
+        /// <returns></returns>
         public double CustoMediaTipoTickets(int tipo)
         {
             throw new NotImplementedException();
         }
-
-        public Colaborador EliminaColaborador()
+        public bool InsereColaborador(Colaborador Colab)
         {
             throw new NotImplementedException();
         }
-
-        public Colaborador EliminaColaborador(int nif)
+        public Colaborador EliminaColaborador(int NIF)
         {
             throw new NotImplementedException();
         }
-
-        public Tecnico EliminaTecnico()
+        public bool InsereTecnico(Tecnico Colab)
         {
             throw new NotImplementedException();
         }
-
-        public Ticket EliminaTicket()
+        public Tecnico EliminaTecnico(int NIF)
         {
             throw new NotImplementedException();
         }
-
-        public bool InsereColaborador()
+        public bool InsereTicket(int Id)
         {
             throw new NotImplementedException();
         }
-
-        public bool InsereTecnico()
+        public Ticket EliminaTicket(int Id)
         {
             throw new NotImplementedException();
         }
-
-        public bool InsereTicket()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool InsereTicket(Ticket ticket)
-        {
-            throw new NotImplementedException();
-        }
-
         public Perfil ProcuraPerfil(int nif)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Mostra todos os Perfis
+        /// </summary>
+        /// <returns></returns>
         public List<Perfil> ProcuraPerfis()
         {
             throw new NotImplementedException();
         }
-
-        public List<Perfil> ProcuraPerfisTipo(int TIPO)
+        /// <summary>
+        /// Mostra Perfis por Tipo,corre query que filtra por tipo, ou seja: is_Tecnico =  True mostra todos os Técnicos, mas pode mostrar tambem os técnicos e os Admin se is_admin for True
+        /// Funcão especialmente util para usar em combinação com checkboxs
+        /// </summary>
+        /// <param name="is_Tecnico">Se False mostra Colaboradores</param>
+        /// <param name="is_Admin">Se False mostra Tecnicos</param>
+        /// <returns>Lista de Perfis</returns>
+        public List<Perfil> ProcuraPerfisTipo(bool is_Tecnico, bool is_Admin)
         {
             throw new NotImplementedException();
         }
 
-        public Ticket ProcuraTicket(int numero)
+        public Ticket ProcuraTicket(int Id)
         {
             throw new NotImplementedException();
         }
@@ -139,7 +130,15 @@ namespace ProjectoFinal
         {
             throw new NotImplementedException();
         }
-
+        public List<Ticket> ProcuraTicketsPorEstado(String Estado)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// Esta função usa a ProcuraTicketsPorEstado é mantida para compatibilidade com versões antigas do interface
+        /// O estado Por Associar é Hardcoded na base de dados devido a isso 
+        /// </summary>
+        /// <returns></returns>
         public List<Ticket> ProcuraTicketsPorAssociar()
         {
             throw new NotImplementedException();
