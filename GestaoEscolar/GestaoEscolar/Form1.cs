@@ -12,12 +12,12 @@ namespace GestaoEscolar
 {
     public partial class Form1 : Form
     {
-        private IBDEscolar bd;
+        private BDEscolar bd;
 
         public Form1()
         {
             InitializeComponent();
-            bd = new BDEscolarSQL();
+            bd = new BDEscolar();
         }
 
         private void btnAddAluno_Click(object sender, EventArgs e)

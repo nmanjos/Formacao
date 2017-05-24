@@ -61,6 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addTicket.Designer.cs">
+      <DependentUpon>addTicket.cs</DependentUpon>
+    </Compile>
     <Compile Include="Area.cs" />
     <Compile Include="BDTickets.cs" />
     <Compile Include="Equipamento.cs" />
@@ -91,6 +97,9 @@
     <Compile Include="Perfil.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="Status.cs" />
+    <EmbeddedResource Include="addTicket.resx">
+      <DependentUpon>addTicket.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>

@@ -15,13 +15,14 @@ namespace ProjectoFinal
         private Material materiais;
         private Status estado;
 
-        public MaterialRequest(int Reqcode, double Price, Tecnico Requester, Material Materiais, Status Estado)
+        public MaterialRequest(int reqcode, string description, double price, Tecnico requester, Material materiais, Status estado)
         {
-            this.reqcode = Reqcode;
-            this.price = Price;
-            requester = Requester;
-            this.materiais = Materiais;
-            estado = Estado;
+            this.reqcode = reqcode;
+            this.description = description;
+            this.price = price;
+            this.requester = requester;
+            this.materiais = materiais;
+            this.estado = estado;
         }
 
         public int Reqcode
@@ -34,6 +35,19 @@ namespace ProjectoFinal
             set
             {
                 reqcode = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+
+            set
+            {
+                description = value;
             }
         }
 
@@ -54,12 +68,12 @@ namespace ProjectoFinal
         {
             get
             {
-                return Requester;
+                return requester;
             }
 
             set
             {
-                Requester = value;
+                requester = value;
             }
         }
 
@@ -80,12 +94,12 @@ namespace ProjectoFinal
         {
             get
             {
-                return Estado;
+                return estado;
             }
 
             set
             {
-                Estado = value;
+                estado = value;
             }
         }
     }

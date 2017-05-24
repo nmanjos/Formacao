@@ -8,7 +8,7 @@ namespace ProjectoFinal
 {
     interface IBDTickets
     {
-        bool Login();
+        bool Login(int NIF, string Pass);
         Perfil GetCurrentUser();
         bool InsereColaborador(Colaborador colab);
         Colaborador EliminaColaborador(int NIF);
@@ -16,7 +16,6 @@ namespace ProjectoFinal
         Tecnico EliminaTecnico(int NIF);
         bool InsereTicket(int Id);
         Ticket EliminaTicket(int Id);
-        void Login(int NIF, string Pass);
         Perfil ProcuraPerfil(int nif);
         List<Perfil> ProcuraPerfis();
         List<Perfil> ProcuraPerfisTipo(bool is_Tecnico, bool is_Admin);

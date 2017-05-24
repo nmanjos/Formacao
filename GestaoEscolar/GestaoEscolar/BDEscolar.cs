@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GestaoEscolar
 {
-    class BDEscolar:IBDEscolar
+    class BDEscolar
     {
         private List<Aluno> alunos;
 

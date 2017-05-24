@@ -8,9 +8,8 @@ namespace ProjectoFinal
 {
     class SuporteSoftware : Ticket
     {
-        public SuporteSoftware(int Num, DateTime CreateDate, DateTime LastUpdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Requesicoes, int Horas, Tecnico QuemFechou) : base(Num, CreateDate, LastUpdate, Requester, Priority, Equipamento, Description, Tecnicos, Estado, Requesicoes, Horas, QuemFechou)
+        public SuporteSoftware(int Num, DateTime Createate, DateTime Lastupdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou) : base(Num, Createate, Lastupdate, Requester, Priority, Equipamento, Description, Tecnicos, Estado, Encomendas, Horas, Resolution, Quemfechou)
         {
-
         }
     }
 }
