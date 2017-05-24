@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace ProjectoFinal
 {
     public partial class Login : Form
     {
+        
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            Program.TicketDB.Login(int.Parse(txtUsername.Text),txtPass.Text);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ProjectoFinal
         private DateTime lastupdate;   // data do ultimo update
         private Colaborador requester;     //Colaborador que criou o Ticket
         private Area areaintre; //Area de Intrevencao, Define o tipo de Intreveção a ser realizado, só pode ser alterada na criacao do registo e pelo Administrador atravez do processo de atribuição.
-        private int priority;//Nível de Urgência
+        private int priority;//Nível de Urgência P1 P2 P3 P4
         private Equipamento equipamento;   //Elemento que gerou a anomalia
         private string description;    //Descrição da anomalia
         private List<Tecnico> tecnicos;   //Técnico ou técnicos associados
