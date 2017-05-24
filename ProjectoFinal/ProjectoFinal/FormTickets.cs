@@ -11,11 +11,14 @@ using Microsoft.Win32;
 
 namespace ProjectoFinal
 {
-    public partial class Tickets_Form : Form
+    public partial class FormTickets : Form
     {
-        public Tickets_Form()
+        List<Ticket> Tickets;
+        public FormTickets()
         {
             InitializeComponent();
+            Form Login = new FormLogin();
+            Login.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,6 +39,23 @@ namespace ProjectoFinal
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Tickets_Form_Load(object sender, EventArgs e)
+        {
+            Tickets = ProcuraTicketsTipo()
+            lstTickets.Items.AddRange()
+        }
+
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            Form Addticket = new FormAddTicket();
+            Addticket.ShowDialog();
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

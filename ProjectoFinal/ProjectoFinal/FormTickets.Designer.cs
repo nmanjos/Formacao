@@ -1,6 +1,6 @@
 ﻿namespace ProjectoFinal
 {
-    partial class Tickets_Form
+    partial class FormTickets
     {
         /// <summary>
         /// Required designer variable.
@@ -32,22 +32,23 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.TicketsTabular = new System.Windows.Forms.TabControl();
             this.Tickets = new System.Windows.Forms.TabPage();
+            this.btnNovo = new System.Windows.Forms.Button();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.rdbRedes = new System.Windows.Forms.RadioButton();
+            this.rdbSoftware = new System.Windows.Forms.RadioButton();
+            this.rdbTodos = new System.Windows.Forms.RadioButton();
+            this.rdbEquipamento = new System.Windows.Forms.RadioButton();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lstTickets = new System.Windows.Forms.ListView();
+            this.Requesicoes = new System.Windows.Forms.TabPage();
             this.Equipamento = new System.Windows.Forms.TabPage();
+            this.Aux = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Requesicoes = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.Aux = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.rdbEquipamento = new System.Windows.Forms.RadioButton();
-            this.rdbTodos = new System.Windows.Forms.RadioButton();
-            this.rdbSoftware = new System.Windows.Forms.RadioButton();
-            this.rdbRedes = new System.Windows.Forms.RadioButton();
-            this.listView2 = new System.Windows.Forms.ListView();
             this.statusStrip1.SuspendLayout();
             this.TicketsTabular.SuspendLayout();
             this.Tickets.SuspendLayout();
@@ -60,7 +61,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 510);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1001, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -80,11 +81,12 @@
             this.TicketsTabular.Location = new System.Drawing.Point(1, 27);
             this.TicketsTabular.Name = "TicketsTabular";
             this.TicketsTabular.SelectedIndex = 0;
-            this.TicketsTabular.Size = new System.Drawing.Size(1000, 480);
+            this.TicketsTabular.Size = new System.Drawing.Size(1181, 480);
             this.TicketsTabular.TabIndex = 1;
             // 
             // Tickets
             // 
+            this.Tickets.Controls.Add(this.btnNovo);
             this.Tickets.Controls.Add(this.listView2);
             this.Tickets.Controls.Add(this.rdbRedes);
             this.Tickets.Controls.Add(this.rdbSoftware);
@@ -92,25 +94,131 @@
             this.Tickets.Controls.Add(this.rdbEquipamento);
             this.Tickets.Controls.Add(this.textBox1);
             this.Tickets.Controls.Add(this.label1);
-            this.Tickets.Controls.Add(this.listView1);
+            this.Tickets.Controls.Add(this.lstTickets);
             this.Tickets.Location = new System.Drawing.Point(4, 22);
             this.Tickets.Name = "Tickets";
             this.Tickets.Padding = new System.Windows.Forms.Padding(3);
-            this.Tickets.Size = new System.Drawing.Size(992, 454);
+            this.Tickets.Size = new System.Drawing.Size(1173, 454);
             this.Tickets.TabIndex = 0;
             this.Tickets.Text = "Tickets";
             this.Tickets.UseVisualStyleBackColor = true;
             this.Tickets.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // btnNovo
+            // 
+            this.btnNovo.Location = new System.Drawing.Point(792, 3);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(70, 23);
+            this.btnNovo.TabIndex = 8;
+            this.btnNovo.Text = "Novo";
+            this.btnNovo.UseVisualStyleBackColor = true;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
+            // listView2
+            // 
+            this.listView2.Location = new System.Drawing.Point(6, 317);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(1162, 134);
+            this.listView2.TabIndex = 7;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            // 
+            // rdbRedes
+            // 
+            this.rdbRedes.AutoSize = true;
+            this.rdbRedes.Location = new System.Drawing.Point(975, 6);
+            this.rdbRedes.Name = "rdbRedes";
+            this.rdbRedes.Size = new System.Drawing.Size(56, 17);
+            this.rdbRedes.TabIndex = 6;
+            this.rdbRedes.TabStop = true;
+            this.rdbRedes.Text = "Redes";
+            this.rdbRedes.UseVisualStyleBackColor = true;
+            // 
+            // rdbSoftware
+            // 
+            this.rdbSoftware.AutoSize = true;
+            this.rdbSoftware.Location = new System.Drawing.Point(1037, 6);
+            this.rdbSoftware.Name = "rdbSoftware";
+            this.rdbSoftware.Size = new System.Drawing.Size(67, 17);
+            this.rdbSoftware.TabIndex = 5;
+            this.rdbSoftware.TabStop = true;
+            this.rdbSoftware.Text = "Software";
+            this.rdbSoftware.UseVisualStyleBackColor = true;
+            // 
+            // rdbTodos
+            // 
+            this.rdbTodos.AutoSize = true;
+            this.rdbTodos.Location = new System.Drawing.Point(1110, 6);
+            this.rdbTodos.Name = "rdbTodos";
+            this.rdbTodos.Size = new System.Drawing.Size(55, 17);
+            this.rdbTodos.TabIndex = 4;
+            this.rdbTodos.TabStop = true;
+            this.rdbTodos.Text = "Todos";
+            this.rdbTodos.UseVisualStyleBackColor = true;
+            // 
+            // rdbEquipamento
+            // 
+            this.rdbEquipamento.AutoSize = true;
+            this.rdbEquipamento.Location = new System.Drawing.Point(882, 6);
+            this.rdbEquipamento.Name = "rdbEquipamento";
+            this.rdbEquipamento.Size = new System.Drawing.Size(87, 17);
+            this.rdbEquipamento.TabIndex = 3;
+            this.rdbEquipamento.TabStop = true;
+            this.rdbEquipamento.Text = "Equipamento";
+            this.rdbEquipamento.UseVisualStyleBackColor = true;
+            this.rdbEquipamento.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(44, 276);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(265, 20);
+            this.textBox1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 276);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // lstTickets
+            // 
+            this.lstTickets.Location = new System.Drawing.Point(6, 26);
+            this.lstTickets.Name = "lstTickets";
+            this.lstTickets.Size = new System.Drawing.Size(1162, 234);
+            this.lstTickets.TabIndex = 0;
+            this.lstTickets.UseCompatibleStateImageBehavior = false;
+            this.lstTickets.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // Requesicoes
+            // 
+            this.Requesicoes.Location = new System.Drawing.Point(4, 22);
+            this.Requesicoes.Name = "Requesicoes";
+            this.Requesicoes.Size = new System.Drawing.Size(1173, 454);
+            this.Requesicoes.TabIndex = 2;
+            this.Requesicoes.Text = "Requesições";
+            this.Requesicoes.UseVisualStyleBackColor = true;
             // 
             // Equipamento
             // 
             this.Equipamento.Location = new System.Drawing.Point(4, 22);
             this.Equipamento.Name = "Equipamento";
             this.Equipamento.Padding = new System.Windows.Forms.Padding(3);
-            this.Equipamento.Size = new System.Drawing.Size(992, 454);
+            this.Equipamento.Size = new System.Drawing.Size(1173, 454);
             this.Equipamento.TabIndex = 1;
             this.Equipamento.Text = "Equipamento";
             this.Equipamento.UseVisualStyleBackColor = true;
+            // 
+            // Aux
+            // 
+            this.Aux.Location = new System.Drawing.Point(4, 22);
+            this.Aux.Name = "Aux";
+            this.Aux.Size = new System.Drawing.Size(1173, 454);
+            this.Aux.TabIndex = 3;
+            this.Aux.Text = "Dados Auxiliares";
+            this.Aux.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -121,7 +229,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1001, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -149,113 +257,19 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // Requesicoes
-            // 
-            this.Requesicoes.Location = new System.Drawing.Point(4, 22);
-            this.Requesicoes.Name = "Requesicoes";
-            this.Requesicoes.Size = new System.Drawing.Size(992, 454);
-            this.Requesicoes.TabIndex = 2;
-            this.Requesicoes.Text = "Requesições";
-            this.Requesicoes.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            this.listView1.Location = new System.Drawing.Point(6, 26);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(978, 234);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // Aux
-            // 
-            this.Aux.Location = new System.Drawing.Point(4, 22);
-            this.Aux.Name = "Aux";
-            this.Aux.Size = new System.Drawing.Size(992, 454);
-            this.Aux.TabIndex = 3;
-            this.Aux.Text = "Dados Auxiliares";
-            this.Aux.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 276);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(44, 276);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(265, 20);
-            this.textBox1.TabIndex = 2;
-            // 
-            // rdbEquipamento
-            // 
-            this.rdbEquipamento.AutoSize = true;
-            this.rdbEquipamento.Location = new System.Drawing.Point(700, 3);
-            this.rdbEquipamento.Name = "rdbEquipamento";
-            this.rdbEquipamento.Size = new System.Drawing.Size(87, 17);
-            this.rdbEquipamento.TabIndex = 3;
-            this.rdbEquipamento.TabStop = true;
-            this.rdbEquipamento.Text = "Equipamento";
-            this.rdbEquipamento.UseVisualStyleBackColor = true;
-            this.rdbEquipamento.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // rdbTodos
-            // 
-            this.rdbTodos.AutoSize = true;
-            this.rdbTodos.Location = new System.Drawing.Point(928, 3);
-            this.rdbTodos.Name = "rdbTodos";
-            this.rdbTodos.Size = new System.Drawing.Size(55, 17);
-            this.rdbTodos.TabIndex = 4;
-            this.rdbTodos.TabStop = true;
-            this.rdbTodos.Text = "Todos";
-            this.rdbTodos.UseVisualStyleBackColor = true;
-            // 
-            // rdbSoftware
-            // 
-            this.rdbSoftware.AutoSize = true;
-            this.rdbSoftware.Location = new System.Drawing.Point(855, 3);
-            this.rdbSoftware.Name = "rdbSoftware";
-            this.rdbSoftware.Size = new System.Drawing.Size(67, 17);
-            this.rdbSoftware.TabIndex = 5;
-            this.rdbSoftware.TabStop = true;
-            this.rdbSoftware.Text = "Software";
-            this.rdbSoftware.UseVisualStyleBackColor = true;
-            // 
-            // rdbRedes
-            // 
-            this.rdbRedes.AutoSize = true;
-            this.rdbRedes.Location = new System.Drawing.Point(793, 3);
-            this.rdbRedes.Name = "rdbRedes";
-            this.rdbRedes.Size = new System.Drawing.Size(56, 17);
-            this.rdbRedes.TabIndex = 6;
-            this.rdbRedes.TabStop = true;
-            this.rdbRedes.Text = "Redes";
-            this.rdbRedes.UseVisualStyleBackColor = true;
-            // 
-            // listView2
-            // 
-            this.listView2.Location = new System.Drawing.Point(6, 317);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(978, 134);
-            this.listView2.TabIndex = 7;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            // 
-            // Tickets_Form
+            // FormTickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 532);
+            this.ClientSize = new System.Drawing.Size(1184, 532);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.TicketsTabular);
             this.Controls.Add(this.statusStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Tickets_Form";
+            this.Name = "FormTickets";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Tickets_Form_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.TicketsTabular.ResumeLayout(false);
@@ -286,10 +300,11 @@
         private System.Windows.Forms.RadioButton rdbEquipamento;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lstTickets;
         private System.Windows.Forms.TabPage Requesicoes;
         private System.Windows.Forms.TabPage Aux;
         private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.Button btnNovo;
     }
 }
 

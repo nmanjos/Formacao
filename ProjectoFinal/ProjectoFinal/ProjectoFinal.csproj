@@ -61,21 +61,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="addTicket.cs">
+    <Compile Include="FormAddTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="addTicket.Designer.cs">
-      <DependentUpon>addTicket.cs</DependentUpon>
+    <Compile Include="FormAddTicket.Designer.cs">
+      <DependentUpon>FormAddTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="Area.cs" />
     <Compile Include="BDTickets.cs" />
     <Compile Include="Equipamento.cs" />
     <Compile Include="Habilitacao.cs" />
-    <Compile Include="Login.cs">
+    <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Material.cs" />
     <Compile Include="MaterialRequest.cs" />
@@ -85,11 +85,11 @@
     <Compile Include="SuporteSoftware.cs" />
     <Compile Include="Tecnico.cs" />
     <Compile Include="Colaborador.cs" />
-    <Compile Include="Tickets_Form.cs">
+    <Compile Include="FormTickets.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tickets_Form.Designer.cs">
-      <DependentUpon>Tickets_Form.cs</DependentUpon>
+    <Compile Include="FormTickets.Designer.cs">
+      <DependentUpon>FormTickets.cs</DependentUpon>
     </Compile>
     <Compile Include="IBDTickets.cs" />
     <Compile Include="Program.cs" />
@@ -97,14 +97,14 @@
     <Compile Include="Perfil.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="Status.cs" />
-    <EmbeddedResource Include="addTicket.resx">
-      <DependentUpon>addTicket.cs</DependentUpon>
+    <EmbeddedResource Include="FormAddTicket.resx">
+      <DependentUpon>FormAddTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tickets_Form.resx">
-      <DependentUpon>Tickets_Form.cs</DependentUpon>
+    <EmbeddedResource Include="FormTickets.resx">
+      <DependentUpon>FormTickets.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -18,7 +18,7 @@ namespace ProjectoFinal
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Tickets_Form());
+            Application.Run(new FormTickets());
         }
     }
 }

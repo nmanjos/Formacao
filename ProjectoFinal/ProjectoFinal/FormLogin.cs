@@ -11,17 +11,18 @@ using System.Windows.Forms;
 
 namespace ProjectoFinal
 {
-    public partial class Login : Form
+    public partial class FormLogin : Form
     {
         
-        public Login()
+        public FormLogin()
         {
             InitializeComponent();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Program.TicketDB.Login(int.Parse(txtUsername.Text),txtPass.Text);
+           // Program.TicketDB.Login(int.Parse(txtUsername.Text),txtPass.Text);
+
         }
     }
 }

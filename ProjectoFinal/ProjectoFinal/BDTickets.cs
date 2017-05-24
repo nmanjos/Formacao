@@ -300,7 +300,13 @@ namespace ProjectoFinal
 
         public List<Ticket> ProcuraTicketsTipo(int tipo)
         {
-            throw new NotImplementedException();
+            string[,] cond = new string[1, 3];
+            cond[0, 0] = "Area_Id";
+            cond[0, 1] = "=";
+            cond[0, 2] = tipo.ToString();
+
+            ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, );
+            return new List<Ticket>();
         }
 
         public bool Login()

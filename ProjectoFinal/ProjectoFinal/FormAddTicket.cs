@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace ProjectoFinal
 {
-    public partial class addTicket : Form
+    public partial class FormAddTicket : Form
     {
-        public addTicket()
+        public FormAddTicket()
         {
             InitializeComponent();
+        }
+
+        private void addTicket_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
