@@ -162,9 +162,44 @@ namespace ProjectoFinal
             return Reader;
         }
 
-        private bool InsereRegisto(string table, string[] fields, string[] values)
+        private bool InsereRegisto(string Table, string[] Fields, string[] Values)
         {
             bool result = false;
+
+            if (Fields.Length == Values.Length)  // Validate if Fields and Values have the same number of elements
+            {
+                SqlCommand myCommand = new SqlCommand();
+                string fld = "";
+                string vlu = "";
+                for (int i = 0; i < Fields.Length; i++)
+                {
+                    myCommand.Parameters.AddWithValue("@" + Fields[i], Values[i]);
+                    if (i != (Fields.Length - 1))
+                    {
+                        fld += Fields[i] + ",";
+                        vlu += "@" + Fields[i] + ",";
+                    }
+                    else
+                    {
+                        fld += Fields[i] ;
+                        vlu += "@" + Fields[i] ;
+                    }
+                }
+                string SQLstr = "INSERT INTO " + Table + " (" + fld + ") VALUES (" + vlu +  ");";
+                myCommand.CommandText = SQLstr;
+                myCommand.Connection = OpenConnection(DBNAME);
+                try
+                {
+                    myCommand.ExecuteNonQuery();
+                    result = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                myCommand.Connection.Close();
+                myCommand.Dispose();
+            }
             return result;
         }
         private bool UpdateRegisto(string Table, string[] Fields, string[] values, string Values)
@@ -283,7 +318,7 @@ namespace ProjectoFinal
         }
         public bool InsereColaborador(Colaborador Colab)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
         }
         public Colaborador EliminaColaborador(int NIF)
         {
@@ -291,7 +326,7 @@ namespace ProjectoFinal
         }
         public bool InsereTecnico(Tecnico Colab)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
         }
         public Tecnico EliminaTecnico(int NIF)
         {
@@ -299,7 +334,7 @@ namespace ProjectoFinal
         }
         public bool InsereTicket(int Id)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
         }
         public Ticket EliminaTicket(int Id)
         {
@@ -370,11 +405,7 @@ namespace ProjectoFinal
             return new List<Ticket>();
         }
 
-        public bool Login()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public List<Status> CarregaEstados(bool is_Ticket, bool is_request)
         {
             throw new NotImplementedException();
@@ -382,7 +413,7 @@ namespace ProjectoFinal
 
         public bool InsereEstado(Status Estado)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("States", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
         }
 
         public Status EliminaEstado(string Estado)
@@ -392,7 +423,7 @@ namespace ProjectoFinal
 
         public bool InsereEquipamento(Equipamento Equip)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Equipamento", new string[] { "NivelMinimo", "Descricao" }, new string[] { Equip.NivelMinimo.ToString(), Equip.Descr.ToString() });
         }
 
         public List<Equipamento> ProcuraEquipamentos()
@@ -412,8 +443,7 @@ namespace ProjectoFinal
 
         public bool InsereArea(Area Area)
         {
-            throw new NotImplementedException();
-        }
+            return InsereRegisto("Areas", new string[] { "NivelMinimo", "Descricao" }, new string[] { Area.NivelMinimo.ToString(), Area.Descr.ToString() });
 
         public List<Area> ProcuraAreas()
         {
@@ -427,7 +457,7 @@ namespace ProjectoFinal
 
         public bool InsereHabilitacao(Habilitacao Habilitacao)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Habilitacoes", new string[] { "Nivel", "Descr" }, new string[] { Habilitacao.Nivel.ToString(), Habilitacao.Descr.ToString() });
         }
 
         public List<Habilitacao> ProcuraHabilitacoes()
@@ -442,7 +472,8 @@ namespace ProjectoFinal
 
         public bool InsereMaterial(Material Material)
         {
-            throw new NotImplementedException();
+            return InsereRegisto("Materiais", new string[] { "partnumber", "price","issoftware","name","supplier" }, new string[] { Material.Partnumber.ToString(), Material.Price.ToString(), Material.Issoftware.ToString(), Material.Descr.ToString(), Material.Supplier.ToString() });
+
         }
 
         public List<Material> ProcuraMaterial()
@@ -461,7 +492,7 @@ namespace ProjectoFinal
 
         public bool InserePrioridade(Prioridade Prioridade)
         {
-            throw new NotImplementedException();
+           return InsereRegisto("Priority", new string[] { "Nivel", "Descr" }, new string[] { Prioridade.Nivel.ToString(), Prioridade.Descr.ToString() });
         }
 
         public List<Prioridade> ProcuraPrioridade()

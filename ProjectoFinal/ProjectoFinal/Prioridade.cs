@@ -11,13 +11,13 @@ namespace ProjectoFinal
     {
         int nivel; // 1 maxima ... 99 minima
         string smallname; // nome breve da prioridade na base de dados terá 15 caracteres
-        string Descr; //  Descricao mais detalhada
+        string descr; //  Descricao mais detalhada
 
-        public Prioridade(int nivel, string smallname, string descr)
+        public Prioridade(int Nivel, string Smallname, string Descr)
         {
-            this.nivel = nivel;
-            this.smallname = smallname;
-            Descr = descr;
+            this.nivel = Nivel;
+            this.smallname = Smallname;
+            this.descr = Descr;
         }
 
         public int Nivel
@@ -46,16 +46,16 @@ namespace ProjectoFinal
             }
         }
 
-        public string Descr1
+        public string Descr
         {
             get
             {
-                return Descr;
+                return descr;
             }
 
             set
             {
-                Descr = value;
+                descr = value;
             }
         }
     }
