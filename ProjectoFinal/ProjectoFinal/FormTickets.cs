@@ -8,13 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace ProjectoFinal
 {
     public partial class FormTickets : Form
     {
-        List<Ticket> Tickets;
+        List<Ticket> lTickets;
+
+        private static void LoadlstView(ListView lstv, object[] lstobj)
+        {
+
+
+            ListViewItem lvi = new ListViewItem();
+           
+            PropertyInfo[] properties = lstobj[0].GetType().GetProperties();
+            foreach (PropertyInfo Property in properties)
+            {
+                lstv.Columns.Add(Property.GetType().ToString());
+            }
+            foreach (object obj in lstobj)
+            {
+                foreach (PropertyInfo Property in properties)
+                {
+                    lvi.SubItems.Add(Property.GetValue(obj).ToString());
+                }
+                lstv.Items.Add(lvi);
+            }
+        }
+    
+
+
         public FormTickets()
+
+
         {
             InitializeComponent();
             Form Login = new FormLogin();
@@ -45,8 +72,8 @@ namespace ProjectoFinal
 
         private void Tickets_Form_Load(object sender, EventArgs e)
         {
-            Tickets = ProcuraTicketsTipo()
-            lstTickets.Items.AddRange()
+            LoadlstView(lstTickets,lTickets.ToArray());
+
         }
 
         private void btnNovo_Click(object sender, EventArgs e)

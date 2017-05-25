@@ -98,10 +98,68 @@ namespace ProjectoFinal
             }
             return Reader;
         }
-        private List<object> ProcuraSQL(string[] table, string[] fields, string condition)
+        private SqlDataReader ProcuraSQL(string[] Tables,string[,] JoinFields, string[] Fields, string[,] Condition)
         {
-            List<object> lst = new List<object>();
-            return lst;
+            SqlDataReader Reader;
+            SqlCommand myCommand = new SqlCommand();
+
+            string qry = "SELECT ";
+            for (int i = 0; i < Fields.Length; i++)
+            {
+                qry += Fields[i];
+                if (i < Fields.Length - 1)
+                {
+                    qry += ",";
+                }
+            }
+            qry += " FROM ";
+            int joincounter = 0;
+            for (int i = 0; i < Tables.Length; i++)
+            {
+                
+                qry += Tables[i];
+                if (joincounter > 0)
+                {
+                    qry += " ON " + JoinFields[joincounter - 1, 0] + " = " + JoinFields[joincounter - 1, 1];
+                }
+                if (i < Tables.Length - 1)
+                {
+                    qry += " INNER JOIN ";
+                    joincounter++;
+                }
+
+            }
+            if (Condition != null)
+            {
+                qry += " WHERE ";
+                for (int i = 0; i < Condition.GetLength(0); i++)
+                {
+                    myCommand.Parameters.AddWithValue("@" + Condition[i, 0], Condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value
+                    qry += Condition[i, 0] + " " + Condition[i, 1] + " @" + Condition[i, 0];
+                    if (i < (Condition.GetLength(0) - 1))
+                    {
+                         qry += " AND "; // Add the condition 
+                    }
+                }
+
+            }
+            qry += ";";
+            myCommand.CommandText = qry;
+            myCommand.Connection = OpenConnection(DBNAME);
+            try
+            {
+                Reader = myCommand.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());  // write to app log
+                Reader = null;
+                myCommand.Connection.Close();
+                myCommand.Dispose();
+
+
+            }
+            return Reader;
         }
 
         private bool InsereRegisto(string table, string[] fields, string[] values)
@@ -175,7 +233,7 @@ namespace ProjectoFinal
         public bool Login(int NIF, string Pass )
         {
             
-            string[] Fields = { "NIF", "Senha" };
+            string[] Fields = { "NIF", "Senha", "Nome", "Nivel","" };
             string[,] Condition = { { "NIF", "=", NIF.ToString() }, { "Senha", "=", Pass } };
             SqlDataReader Reader =  ProcuraSQL( "Perfis", Fields, Condition);
             if (Reader.HasRows)
@@ -185,11 +243,12 @@ namespace ProjectoFinal
                 if (Reader.GetBoolean(5)) CurrentUser = new Tecnico();
 
 
+
                 CurrentUser.NIF = Reader.GetInt32(0);
                 CurrentUser.Nome = Reader.GetString(0);
                 CurrentUser.Senha = Reader.GetString(0);
                 CurrentUser.NivelHab.Nivel = Reader.GetInt32(0);
-
+                return true;
 
             }   
             return false;
@@ -305,7 +364,9 @@ namespace ProjectoFinal
             cond[0, 1] = "=";
             cond[0, 2] = tipo.ToString();
 
-            ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, );
+            SqlDataReader Reader = ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, cond);
+
+
             return new List<Ticket>();
         }
 
