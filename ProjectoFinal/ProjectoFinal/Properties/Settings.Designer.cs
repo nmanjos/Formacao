@@ -34,7 +34,7 @@ namespace ProjectoFinal.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tickets.mdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DATA\\Tickets.mdf")]
         public string Database {
             get {
                 return ((string)(this["Database"]));

@@ -8,13 +8,14 @@ using System.Data.SqlClient;
 using ProjectoFinal.Properties;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ProjectoFinal
 {
     class BDTickets : IBDTickets
     {
        
-        private string DBNAME = Settings.Default.Database;
+        private string DBNAME = @Settings.Default.Database;
         
         public Perfil CurrentUser;
 
@@ -50,6 +51,14 @@ namespace ProjectoFinal
             myCommand.Dispose();
 
         }
+        /// <summary>
+        /// Procura uma só tabela, devolve os campos definidos no segundo array, segundo a condição do terceiro array
+        /// ultimo parametro pode ser null, nesse caso devolve todos os registos da tabela!
+        /// </summary>
+        /// <param name="Table"></param>
+        /// <param name="Fields"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
         private SqlDataReader ProcuraSQL(string Table, string[] Fields, string[,] condition)
         {
             SqlDataReader Reader;
@@ -63,25 +72,26 @@ namespace ProjectoFinal
                 {
                     qry += ", ";
                 }
-                else
-                {
-                    qry += " Where ";
-                }
             }
-            for (int i = 0; i < condition.GetLength(0); i++)
+            if (condition != null)
             {
-                myCommand.Parameters.AddWithValue("@" + condition[i, 0], condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value example: Field = Operand 
-                if (i != (condition.GetLength(0) - 1))
+                qry += " Where ";
+                for (int i = 0; i < condition.GetLength(0); i++)
                 {
-                    qry += condition[i, 0] + " " + condition[i, 1] + " @" + condition[i, 2] + ","; // Add the condition 
-                }
-                else
-                {
-                    qry += Fields[i] + " = " + "@" + Fields[i];
+
+                    myCommand.Parameters.AddWithValue("@" + condition[i, 0], condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value example: Field = Operand 
+                    if (i != (condition.GetLength(0) - 1))
+                    {
+                        qry += condition[i, 0] + " " + condition[i, 1] + " @" + condition[i, 2] + ","; // Add the condition 
+                    }
+                    else
+                    {
+                        qry += Fields[i] + " = " + "@" + Fields[i];
+                    }
                 }
             }
-            string SQLstr = "UPDATE" + Table + "SET " + qry + ";";
-            myCommand.CommandText = SQLstr;
+           
+            myCommand.CommandText = qry;
             myCommand.Connection = OpenConnection(DBNAME);
             try
             {
@@ -152,7 +162,7 @@ namespace ProjectoFinal
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());  // write to app log
+                MessageBox.Show(e.ToString());  // write to app log
                 Reader = null;
                 myCommand.Connection.Close();
                 myCommand.Dispose();
@@ -173,6 +183,14 @@ namespace ProjectoFinal
                 string vlu = "";
                 for (int i = 0; i < Fields.Length; i++)
                 {
+                    if (Values[i] == "True") 
+                    {
+                        Values[i] = "1";
+                    }
+                    else if (Values[i] == "False")
+                    {
+                        Values[i] = "0";
+                    }
                     myCommand.Parameters.AddWithValue("@" + Fields[i], Values[i]);
                     if (i != (Fields.Length - 1))
                     {
@@ -257,7 +275,7 @@ namespace ProjectoFinal
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                MessageBox.Show(e.ToString());
                 return null;
             }
             return conn;
@@ -267,22 +285,36 @@ namespace ProjectoFinal
 
         public bool Login(int NIF, string Pass )
         {
-            
-            string[] Fields = { "NIF", "Senha", "Nome", "Nivel","" };
+            string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao", "Habilitacoes.Nivel" };
             string[,] Condition = { { "NIF", "=", NIF.ToString() }, { "Senha", "=", Pass } };
-            SqlDataReader Reader =  ProcuraSQL( "Perfis", Fields, Condition);
+            string[] Tables = { "Perfil", "Habilitacoes" };
+            string[,] JointFields = { { "Perfil.NivelHab", "Habilitacoes.Nivel" } };
+            SqlDataReader Reader =  ProcuraSQL(Tables,JointFields, Fields, Condition);
             if (Reader.HasRows)
             {
-
+                bool is_tec=false;
                 Reader.Read();
-                if (Reader.GetBoolean(5)) CurrentUser = new Tecnico();
-
-
-
+                
+                if (!(Reader.GetValue(5) is DBNull))
+                {
+                    is_tec = Reader.GetBoolean(5);
+                }
+                if (is_tec)
+                {
+                    CurrentUser = new Tecnico();
+                    
+                    ((Tecnico)CurrentUser).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
+                } else
+                {
+                    CurrentUser = new Colaborador();
+                }
                 CurrentUser.NIF = Reader.GetInt32(0);
-                CurrentUser.Nome = Reader.GetString(0);
-                CurrentUser.Senha = Reader.GetString(0);
-                CurrentUser.NivelHab.Nivel = Reader.GetInt32(0);
+                CurrentUser.Nome = Reader.GetString(2);
+                CurrentUser.Senha = Reader.GetString(1);
+                CurrentUser.NivelHab.Nivel = Reader.GetInt32(8);
+                CurrentUser.NivelHab.Descr = Reader.GetString(7);
+                Reader.Close();
+                Reader = null;
                 return true;
 
             }   
@@ -318,7 +350,7 @@ namespace ProjectoFinal
         }
         public bool InsereColaborador(Colaborador Colab)
         {
-            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
+            return InsereRegisto("Perfil", new string[] { "NIF", "Nome","senha","NivelHab2" }, new string[] { Colab.NIF.ToString(), Colab.Nome.ToString() });
         }
         public Colaborador EliminaColaborador(int NIF)
         {
@@ -326,15 +358,19 @@ namespace ProjectoFinal
         }
         public bool InsereTecnico(Tecnico Colab)
         {
-            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
+            return InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", "0" });
+        }
+        public bool InsereTecnico(Tecnico Colab,bool super)
+        {
+            return InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", super.ToString() });
         }
         public Tecnico EliminaTecnico(int NIF)
         {
             throw new NotImplementedException();
         }
-        public bool InsereTicket(int Id)
+        public bool InsereTicket(Ticket TK)
         {
-            return InsereRegisto("Ticket", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
+            return InsereRegisto("Ticket", new string[] { "createdate", "Descricao" }, new string[] { TK.Createdate.ToString(), TK.Description.ToString() });
         }
         public Ticket EliminaTicket(int Id)
         {
@@ -342,7 +378,43 @@ namespace ProjectoFinal
         }
         public Perfil ProcuraPerfil(int nif)
         {
-            throw new NotImplementedException();
+            string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao", "Habilitacoes.Nivel" };
+            string[,] Condition = { { "NIF", "=", nif.ToString() } };
+            string[] Tables = { "Perfil", "Habilitacoes" };
+            string[,] JointFields = { { "Perfil.NivelHab", "Habilitacoes.Id" } };
+            SqlDataReader Reader = ProcuraSQL(Tables, JointFields, Fields, Condition);
+            Perfil Perf;
+            if (Reader.HasRows)
+            {
+                bool is_tec = false;
+                Reader.Read();
+
+                if (!(Reader.GetValue(5) is DBNull))
+                {
+                    is_tec = Reader.GetBoolean(5);
+                }
+                if (is_tec)
+                {
+                    Perf = new Tecnico();
+
+                    ((Tecnico)Perf).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
+                    ((Tecnico)Perf).Is_Admin = Reader.GetBoolean(4);
+                }
+                else
+                {
+                    Perf = new Colaborador();
+                }
+                Perf.NIF = Reader.GetInt32(0);
+                Perf.Nome = Reader.GetString(2);
+                Perf.Senha = Reader.GetString(1);
+                Perf.NivelHab.Nivel = Reader.GetInt32(8);
+                Perf.NivelHab.Descr = Reader.GetString(7);
+                Reader.Close();
+                Reader = null;
+                return Perf;
+
+            }
+            return null;
         }
         /// <summary>
         /// Mostra todos os Perfis
@@ -413,7 +485,7 @@ namespace ProjectoFinal
 
         public bool InsereEstado(Status Estado)
         {
-            return InsereRegisto("States", new string[] { "name", "Descricao" }, new string[] { Estado.NivelMinimo.ToString(), Estado.Descr.ToString() });
+            return InsereRegisto("States", new string[] { "Is_final", "Descricao" }, new string[] { Estado.Is_final.ToString(), Estado.Descr.ToString() });
         }
 
         public Status EliminaEstado(string Estado)
@@ -423,7 +495,7 @@ namespace ProjectoFinal
 
         public bool InsereEquipamento(Equipamento Equip)
         {
-            return InsereRegisto("Equipamento", new string[] { "NivelMinimo", "Descricao" }, new string[] { Equip.NivelMinimo.ToString(), Equip.Descr.ToString() });
+            return InsereRegisto("Equipamento", new string[] { "Inventcode", "Descricao" }, new string[] { Equip.Inventcode.ToString(), Equip.Descr.ToString() });
         }
 
         public List<Equipamento> ProcuraEquipamentos()
@@ -444,12 +516,32 @@ namespace ProjectoFinal
         public bool InsereArea(Area Area)
         {
             return InsereRegisto("Areas", new string[] { "NivelMinimo", "Descricao" }, new string[] { Area.NivelMinimo.ToString(), Area.Descr.ToString() });
+        }
 
         public List<Area> ProcuraAreas()
         {
             throw new NotImplementedException();
         }
-
+        public List<Area> ProcuraAreas(int NIF)
+        {
+            List<Area> areas = new List<Area>();
+            
+            SqlDataReader reader = ProcuraSQL(new string[] { "AreaIntre", "Areas" },new string[,] { {"AreaIntre.Area_Id","Areas.Id" } }, new string[] { "Areas.Descricao", "Areas.NivelMinimo" }, new string[,] { { "NIF", "=", NIF.ToString() } });
+            if (reader != null)
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        areas.Add(new Area(reader.GetString(0), reader.GetInt32(1)));
+                    }
+                }
+            }
+            
+            reader.Close();
+            reader = null;
+            return areas;
+        }
         public Area EliminaArea(string Area)
         {
             throw new NotImplementedException();
@@ -457,7 +549,7 @@ namespace ProjectoFinal
 
         public bool InsereHabilitacao(Habilitacao Habilitacao)
         {
-            return InsereRegisto("Habilitacoes", new string[] { "Nivel", "Descr" }, new string[] { Habilitacao.Nivel.ToString(), Habilitacao.Descr.ToString() });
+            return InsereRegisto("Habilitacoes", new string[] { "Nivel", "Descricao" }, new string[] { Habilitacao.Nivel.ToString(), Habilitacao.Descr.ToString() });
         }
 
         public List<Habilitacao> ProcuraHabilitacoes()

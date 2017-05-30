@@ -33,6 +33,7 @@
             this.txtPass = new System.Windows.Forms.TextBox();
             this.lblPAssword = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.CloseApp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblUsername
@@ -74,24 +75,38 @@
             this.btnLogin.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.Location = new System.Drawing.Point(260, 10);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(75, 58);
+            this.btnLogin.Size = new System.Drawing.Size(75, 27);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // Login
+            // CloseApp
+            // 
+            this.CloseApp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CloseApp.Location = new System.Drawing.Point(260, 45);
+            this.CloseApp.Name = "CloseApp";
+            this.CloseApp.Size = new System.Drawing.Size(75, 27);
+            this.CloseApp.TabIndex = 5;
+            this.CloseApp.Text = "Close";
+            this.CloseApp.UseVisualStyleBackColor = true;
+            this.CloseApp.Click += new System.EventHandler(this.CloseApp_Click);
+            // 
+            // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(347, 84);
+            this.Controls.Add(this.CloseApp);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.lblPAssword);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.lblUsername);
-            this.Name = "Login";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "FormLogin";
             this.Text = "Login";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -104,5 +119,6 @@
         private System.Windows.Forms.TextBox txtPass;
         private System.Windows.Forms.Label lblPAssword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button CloseApp;
     }
 }

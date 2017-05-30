@@ -12,9 +12,9 @@ namespace ProjectoFinal
     class Area
     {   
         string descricao;
-        Habilitacao nivelminimo;
+        int nivelminimo;
 
-        public Area(string Descr, Habilitacao NivelMinimo)
+        public Area(string Descr, int NivelMinimo)
         {
             descricao = Descr;
             nivelminimo = NivelMinimo;
@@ -31,7 +31,7 @@ namespace ProjectoFinal
             }
         }
             
-        public Habilitacao NivelMinimo
+        public int NivelMinimo
         {
             get
             {

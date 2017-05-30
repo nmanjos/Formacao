@@ -36,6 +36,16 @@ namespace ProjectoFinal
                 lstv.Items.Add(lvi);
             }
         }
+        private void ValidaTab( TabPage Tab)
+        {
+            Tab.Hide();
+            if (Program.TicketDB.CurrentUser != null)
+            {
+                if (((Tecnico)Program.TicketDB.CurrentUser).Is_Admin) Tab.Show();
+
+            }
+
+        }
     
 
 
@@ -72,7 +82,8 @@ namespace ProjectoFinal
 
         private void Tickets_Form_Load(object sender, EventArgs e)
         {
-            LoadlstView(lstTickets,lTickets.ToArray());
+            if (lTickets != null) LoadlstView(lstTickets,lTickets.ToArray());
+            ValidaTab(Perfil);
 
         }
 

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">(localdb)\MSSQLLocalDB</Value>
     </Setting>
     <Setting Name="Database" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Tickets.mdf</Value>
+      <Value Profile="(Default)">DATA\Tickets.mdf</Value>
     </Setting>
     <Setting Name="SuperUser" Type="System.String" Scope="User">
       <Value Profile="(Default)">admin</Value>

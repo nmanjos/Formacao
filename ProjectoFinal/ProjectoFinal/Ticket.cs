@@ -23,13 +23,14 @@ namespace ProjectoFinal
         private string resolution;
         private Tecnico quemfechou;
 
-        public Ticket(int Num, DateTime Createate, DateTime Lastupdate, Colaborador Requester, int Priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
+        public Ticket(int Num, DateTime Createdate, DateTime Lastupdate, Colaborador Requester, Area Areaintre, int priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
         {
             this.num = Num;
-            this.createdate = Createate;
+            this.createdate = Createdate;
             this.lastupdate = Lastupdate;
             this.requester = Requester;
-            this.priority = Priority;
+            this.areaintre = Areaintre;
+            this.priority = priority;
             this.equipamento = Equipamento;
             this.description = Description;
             this.tecnicos = Tecnicos;
@@ -89,6 +90,19 @@ namespace ProjectoFinal
             set
             {
                 requester = value;
+            }
+        }
+
+        internal Area Areaintre
+        {
+            get
+            {
+                return areaintre;
+            }
+
+            set
+            {
+                areaintre = value;
             }
         }
 

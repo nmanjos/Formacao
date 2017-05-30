@@ -43,6 +43,7 @@ namespace ProjectoFinal
         }
         public void AddAreaIntre(Area Area)
         {
+
             areaintre.Add(Area);
         }
         public void DelAreaIntre(string Area)

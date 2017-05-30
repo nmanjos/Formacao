@@ -13,8 +13,9 @@ namespace ProjectoFinal
         bool InsereColaborador(Colaborador colab);
         Colaborador EliminaColaborador(int NIF);
         bool InsereTecnico(Tecnico Colab);
+        bool InsereTecnico(Tecnico Colab, bool super);
         Tecnico EliminaTecnico(int NIF);
-        bool InsereTicket(int Id);
+        bool InsereTicket(Ticket TK);
         Ticket EliminaTicket(int Id);
         Perfil ProcuraPerfil(int nif);
         List<Perfil> ProcuraPerfis();
