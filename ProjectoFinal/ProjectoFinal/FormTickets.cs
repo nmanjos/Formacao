@@ -70,11 +70,6 @@ namespace ProjectoFinal
 
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -83,7 +78,7 @@ namespace ProjectoFinal
         private void Tickets_Form_Load(object sender, EventArgs e)
         {
             if (lTickets != null) LoadlstView(lstTickets,lTickets.ToArray());
-            ValidaTab(Perfil);
+            ValidaTab(tabPerfil);
 
         }
 
@@ -93,9 +88,83 @@ namespace ProjectoFinal
             Addticket.ShowDialog();
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void tbMateriais_Click(object sender, EventArgs e)
+        {
+            LoadAuxs(tbMateriais);
+        }
+        private void LoadAuxs(TabPage tab)
+        {
+            switch (tab.Name)
+            {
+                case "tbMateriais":
+
+                    break;
+                case "tbHabilit":
+
+                    break;
+                case "tbAreas":
+
+                    break;
+                case "tbStates":
+
+                    break;
+                case "tbPriority":
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void tbAuxs_Selected(object sender, TabControlEventArgs e)
+        {
+            
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void tabPerfil_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tabPerfil_Enter ");
+        }
+
+        private void TicketsTabular_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event TicketsTabular_Click ");
+        }
+
+        private void tbHabilit_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tbHabilit_Enter");
+        }
+
+        private void tabEquipamento_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tabEquipamento_Enter");
+        }
+
+        private void tabRequesicoes_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tabRequesicoes_Enter");
+        }
+
+        private void tabAuxs_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tabAuxs_Enter");
+        }
+
+        private void tabTickets_Enter(object sender, EventArgs e)
+        {
+            MessageBox.Show("You have Raised event tabTickets_Enter");
+            //LoadlstView(lstTickets, Program.TicketDB.ProcuraTicketsTipo(1).ToArray());
+        }
+
+        private void lstTickets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show(lstTickets.SelectedItems[0].SubItems[0].ToString());
         }
     }
 }

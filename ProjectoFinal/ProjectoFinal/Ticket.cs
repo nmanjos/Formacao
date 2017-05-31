@@ -23,6 +23,10 @@ namespace ProjectoFinal
         private string resolution;
         private Tecnico quemfechou;
 
+        public Ticket()
+        {
+
+        }
         public Ticket(int Num, DateTime Createdate, DateTime Lastupdate, Colaborador Requester, Area Areaintre, int priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
         {
             this.num = Num;

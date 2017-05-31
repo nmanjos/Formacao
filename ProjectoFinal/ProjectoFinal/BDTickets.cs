@@ -311,8 +311,8 @@ namespace ProjectoFinal
                 CurrentUser.NIF = Reader.GetInt32(0);
                 CurrentUser.Nome = Reader.GetString(2);
                 CurrentUser.Senha = Reader.GetString(1);
-                CurrentUser.NivelHab.Nivel = Reader.GetInt32(8);
-                CurrentUser.NivelHab.Descr = Reader.GetString(7);
+                 
+                CurrentUser.NivelHab = new Habilitacao(Reader.GetString(7), Reader.GetInt32(8));
                 Reader.Close();
                 Reader = null;
                 return true;
@@ -472,9 +472,24 @@ namespace ProjectoFinal
             cond[0, 2] = tipo.ToString();
 
             SqlDataReader Reader = ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, cond);
+            List<Ticket> lsttks = new List<Ticket>();
+            if (Reader.HasRows)
+            {
+                while (Reader.Read())
+                {
+                    Ticket tk = new Ticket();
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    tk.Num = Reader.GetInt32(0);
+                    lsttks.Add(tk);
+                }
+            }
 
-
-            return new List<Ticket>();
+            return lsttks;
         }
 
         
