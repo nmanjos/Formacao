@@ -27,7 +27,7 @@ namespace ProjectoFinal
             }
             else
             {
-                MessageBox.Show("There was an error authenticating your user, try again or close the app", "AUTHENTICATION ERROR");
+                MessageBox.Show("There was an error authenticating your user, try again or close the app" + Program.TicketDB.GetError(), "AUTHENTICATION ERROR");
             }
 
         }

@@ -58,17 +58,7 @@ namespace ProjectoFinal
             Login.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-
-
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -97,19 +87,27 @@ namespace ProjectoFinal
             switch (tab.Name)
             {
                 case "tbMateriais":
-
+               //     LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
                     break;
                 case "tbHabilit":
-
+               //     LoadlstView(lstHabilit, Program.TicketDB.ProcuraHabilitacoes().ToArray());
                     break;
                 case "tbAreas":
-
+              //      LoadlstView(lstAreas, Program.TicketDB.ProcuraAreas().ToArray());
                     break;
                 case "tbStates":
-
+                    List<Status> Estados = Program.TicketDB.ProcuraEstados(true, true);
+                    if (Estados.Count() != 0)
+                    {
+                        LoadlstView(lstStates, Estados.ToArray());
+                    }else
+                    {
+                        StatusBar.Text = Program.TicketDB.GetError();
+                    }
+                    
                     break;
                 case "tbPriority":
-
+              //      LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
                     break;
                 default:
                     break;
@@ -128,12 +126,19 @@ namespace ProjectoFinal
 
         private void tabPerfil_Enter(object sender, EventArgs e)
         {
-            MessageBox.Show("You have Raised event tabPerfil_Enter ");
+            // MessageBox.Show("You have Raised event tabPerfil_Enter ");
+            List<Habilitacao> HAbilits = Program.TicketDB.ProcuraHabilitacoes();
+            foreach (Habilitacao habilit in HAbilits)
+            {
+                cbxPerfilHabilit.Items.Add(habilit.ToString());
+            }
+            
+
         }
 
         private void TicketsTabular_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("You have Raised event TicketsTabular_Click ");
+           
         }
 
         private void tbHabilit_Enter(object sender, EventArgs e)
@@ -158,13 +163,36 @@ namespace ProjectoFinal
 
         private void tabTickets_Enter(object sender, EventArgs e)
         {
-            MessageBox.Show("You have Raised event tabTickets_Enter");
-            //LoadlstView(lstTickets, Program.TicketDB.ProcuraTicketsTipo(1).ToArray());
+            List<Ticket> TKs = Program.TicketDB.ProcuraTicketsTipo(1);
+            if (TKs.Count() != 0)
+            {
+                LoadlstView(lstStates, TKs.ToArray());
+            }
+            else
+            {
+                StatusBar.Text = Program.TicketDB.GetError();
+            }
+            // LoadlstView(lstTickets, Program.TicketDB.ProcuraTicketsTipo(1).ToArray());
         }
 
         private void lstTickets_SelectedIndexChanged(object sender, EventArgs e)
         {
             MessageBox.Show(lstTickets.SelectedItems[0].SubItems[0].ToString());
+        }
+
+        private void tbMateriais_Enter(object sender, EventArgs e)
+        {
+            LoadAuxs(tbMateriais);
+        }
+
+        private void tbStates_Enter(object sender, EventArgs e)
+        {
+            LoadAuxs(tbStates);
+        }
+
+        private void tabPerfil_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

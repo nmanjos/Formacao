@@ -9,10 +9,13 @@ namespace ProjectoFinal
     class Prioridade
 
     {
-        int nivel; // 1 maxima ... 99 minima
+        int nivel; // 1 maxima ... 99 minima Valor unico não pode haver 2 numeros iguais
         string smallname; // nome breve da prioridade na base de dados terá 15 caracteres
         string descr; //  Descricao mais detalhada
+        public Prioridade()
+        {
 
+        }
         public Prioridade(int Nivel, string Smallname, string Descr)
         {
             this.nivel = Nivel;

@@ -16,7 +16,10 @@ namespace ProjectoFinal
         bool is_rejected = false;
         bool is_ticket = true;
         bool is_request = false;
+        public Status()
+        {
 
+        }
         public Status(string Descr, bool Is_final, bool Is_rejected, bool Is_ticket, bool Is_request)
         {
             this.descr = Descr;

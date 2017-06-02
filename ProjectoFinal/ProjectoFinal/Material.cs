@@ -13,7 +13,10 @@ namespace ProjectoFinal
         string supplier;
         double price;
         bool issoftware;
-        
+        public Material()
+        {
+
+        }
         public Material(string Partnumber, string Descr, string Supplier, double Price, bool isSoftware)
         {
 

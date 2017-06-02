@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.TicketsTabular = new System.Windows.Forms.TabControl();
             this.tabTickets = new System.Windows.Forms.TabPage();
             this.btnNovo = new System.Windows.Forms.Button();
@@ -69,14 +68,14 @@
             this.chkStateIsFinal = new System.Windows.Forms.CheckBox();
             this.txtStateDescr = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.listView5 = new System.Windows.Forms.ListView();
+            this.lstStates = new System.Windows.Forms.ListView();
             this.tbPriority = new System.Windows.Forms.TabPage();
             this.btnPrioSave = new System.Windows.Forms.Button();
             this.txtPrioDescr = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtPrioLevel = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.listView6 = new System.Windows.Forms.ListView();
+            this.lstPrio = new System.Windows.Forms.ListView();
             this.tbMateriais = new System.Windows.Forms.TabPage();
             this.btnMatSave = new System.Windows.Forms.Button();
             this.chkMatIsSoftware = new System.Windows.Forms.CheckBox();
@@ -88,8 +87,10 @@
             this.label14 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.listView7 = new System.Windows.Forms.ListView();
+            this.lstMateriais = new System.Windows.Forms.ListView();
             this.tabPerfil = new System.Windows.Forms.TabPage();
+            this.btnPerfilNovo = new System.Windows.Forms.Button();
+            this.btnPerfilSave = new System.Windows.Forms.Button();
             this.cbxPerfilHabilit = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtPerfilSenha = new System.Windows.Forms.TextBox();
@@ -99,9 +100,9 @@
             this.txtPerfilNIF = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lstPerfil = new System.Windows.Forms.ListView();
-            this.btnPerfilSave = new System.Windows.Forms.Button();
-            this.btnPerfilNovo = new System.Windows.Forms.Button();
-            this.statusStrip1.SuspendLayout();
+            this.chkIsSuper = new System.Windows.Forms.CheckBox();
+            this.chkIsTeck = new System.Windows.Forms.CheckBox();
+            this.chkIsAdmin = new System.Windows.Forms.CheckBox();
             this.TicketsTabular.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabRequesicoes.SuspendLayout();
@@ -116,22 +117,12 @@
             this.tabPerfil.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip1
+            // StatusBar
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 497);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            this.StatusBar.Location = new System.Drawing.Point(0, 497);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(1184, 22);
+            this.StatusBar.TabIndex = 0;
             // 
             // TicketsTabular
             // 
@@ -460,13 +451,14 @@
             this.tbStates.Controls.Add(this.chkStateIsFinal);
             this.tbStates.Controls.Add(this.txtStateDescr);
             this.tbStates.Controls.Add(this.label10);
-            this.tbStates.Controls.Add(this.listView5);
+            this.tbStates.Controls.Add(this.lstStates);
             this.tbStates.Location = new System.Drawing.Point(23, 4);
             this.tbStates.Name = "tbStates";
             this.tbStates.Size = new System.Drawing.Size(1133, 456);
             this.tbStates.TabIndex = 2;
             this.tbStates.Text = "Estados";
             this.tbStates.UseVisualStyleBackColor = true;
+            this.tbStates.Enter += new System.EventHandler(this.tbStates_Enter);
             // 
             // btnStateSave
             // 
@@ -533,13 +525,13 @@
             this.label10.Text = "Nome do Estado:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // listView5
+            // lstStates
             // 
-            this.listView5.Location = new System.Drawing.Point(0, 0);
-            this.listView5.Name = "listView5";
-            this.listView5.Size = new System.Drawing.Size(464, 400);
-            this.listView5.TabIndex = 10;
-            this.listView5.UseCompatibleStateImageBehavior = false;
+            this.lstStates.Location = new System.Drawing.Point(0, 0);
+            this.lstStates.Name = "lstStates";
+            this.lstStates.Size = new System.Drawing.Size(464, 400);
+            this.lstStates.TabIndex = 10;
+            this.lstStates.UseCompatibleStateImageBehavior = false;
             // 
             // tbPriority
             // 
@@ -548,7 +540,7 @@
             this.tbPriority.Controls.Add(this.label12);
             this.tbPriority.Controls.Add(this.txtPrioLevel);
             this.tbPriority.Controls.Add(this.label13);
-            this.tbPriority.Controls.Add(this.listView6);
+            this.tbPriority.Controls.Add(this.lstPrio);
             this.tbPriority.Location = new System.Drawing.Point(23, 4);
             this.tbPriority.Name = "tbPriority";
             this.tbPriority.Size = new System.Drawing.Size(1133, 456);
@@ -597,13 +589,13 @@
             this.label13.Text = "Nivel da Prioridade:";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // listView6
+            // lstPrio
             // 
-            this.listView6.Location = new System.Drawing.Point(0, 0);
-            this.listView6.Name = "listView6";
-            this.listView6.Size = new System.Drawing.Size(464, 400);
-            this.listView6.TabIndex = 15;
-            this.listView6.UseCompatibleStateImageBehavior = false;
+            this.lstPrio.Location = new System.Drawing.Point(0, 0);
+            this.lstPrio.Name = "lstPrio";
+            this.lstPrio.Size = new System.Drawing.Size(464, 400);
+            this.lstPrio.TabIndex = 15;
+            this.lstPrio.UseCompatibleStateImageBehavior = false;
             // 
             // tbMateriais
             // 
@@ -617,7 +609,7 @@
             this.tbMateriais.Controls.Add(this.label14);
             this.tbMateriais.Controls.Add(this.textBox9);
             this.tbMateriais.Controls.Add(this.label15);
-            this.tbMateriais.Controls.Add(this.listView7);
+            this.tbMateriais.Controls.Add(this.lstMateriais);
             this.tbMateriais.Location = new System.Drawing.Point(23, 4);
             this.tbMateriais.Name = "tbMateriais";
             this.tbMateriais.Size = new System.Drawing.Size(1133, 456);
@@ -625,7 +617,7 @@
             this.tbMateriais.Text = "Materiais";
             this.tbMateriais.UseVisualStyleBackColor = true;
             this.tbMateriais.UseWaitCursor = true;
-            this.tbMateriais.Click += new System.EventHandler(this.tbMateriais_Click);
+            this.tbMateriais.Enter += new System.EventHandler(this.tbMateriais_Enter);
             // 
             // btnMatSave
             // 
@@ -720,17 +712,20 @@
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label15.UseWaitCursor = true;
             // 
-            // listView7
+            // lstMateriais
             // 
-            this.listView7.Location = new System.Drawing.Point(0, 0);
-            this.listView7.Name = "listView7";
-            this.listView7.Size = new System.Drawing.Size(464, 400);
-            this.listView7.TabIndex = 15;
-            this.listView7.UseCompatibleStateImageBehavior = false;
-            this.listView7.UseWaitCursor = true;
+            this.lstMateriais.Location = new System.Drawing.Point(0, 0);
+            this.lstMateriais.Name = "lstMateriais";
+            this.lstMateriais.Size = new System.Drawing.Size(464, 400);
+            this.lstMateriais.TabIndex = 15;
+            this.lstMateriais.UseCompatibleStateImageBehavior = false;
+            this.lstMateriais.UseWaitCursor = true;
             // 
             // tabPerfil
             // 
+            this.tabPerfil.Controls.Add(this.chkIsSuper);
+            this.tabPerfil.Controls.Add(this.chkIsTeck);
+            this.tabPerfil.Controls.Add(this.chkIsAdmin);
             this.tabPerfil.Controls.Add(this.btnPerfilNovo);
             this.tabPerfil.Controls.Add(this.btnPerfilSave);
             this.tabPerfil.Controls.Add(this.cbxPerfilHabilit);
@@ -748,7 +743,26 @@
             this.tabPerfil.TabIndex = 4;
             this.tabPerfil.Text = "Perfil";
             this.tabPerfil.UseVisualStyleBackColor = true;
+            this.tabPerfil.Click += new System.EventHandler(this.tabPerfil_Click);
             this.tabPerfil.Enter += new System.EventHandler(this.tabPerfil_Enter);
+            // 
+            // btnPerfilNovo
+            // 
+            this.btnPerfilNovo.Location = new System.Drawing.Point(1046, 3);
+            this.btnPerfilNovo.Name = "btnPerfilNovo";
+            this.btnPerfilNovo.Size = new System.Drawing.Size(59, 53);
+            this.btnPerfilNovo.TabIndex = 10;
+            this.btnPerfilNovo.Text = "Novo";
+            this.btnPerfilNovo.UseVisualStyleBackColor = true;
+            // 
+            // btnPerfilSave
+            // 
+            this.btnPerfilSave.Location = new System.Drawing.Point(1111, 3);
+            this.btnPerfilSave.Name = "btnPerfilSave";
+            this.btnPerfilSave.Size = new System.Drawing.Size(59, 53);
+            this.btnPerfilSave.TabIndex = 9;
+            this.btnPerfilSave.Text = "Gravar";
+            this.btnPerfilSave.UseVisualStyleBackColor = true;
             // 
             // cbxPerfilHabilit
             // 
@@ -830,23 +844,35 @@
             this.lstPerfil.TabIndex = 0;
             this.lstPerfil.UseCompatibleStateImageBehavior = false;
             // 
-            // btnPerfilSave
+            // chkIsSuper
             // 
-            this.btnPerfilSave.Location = new System.Drawing.Point(1111, 3);
-            this.btnPerfilSave.Name = "btnPerfilSave";
-            this.btnPerfilSave.Size = new System.Drawing.Size(59, 53);
-            this.btnPerfilSave.TabIndex = 9;
-            this.btnPerfilSave.Text = "Gravar";
-            this.btnPerfilSave.UseVisualStyleBackColor = true;
+            this.chkIsSuper.AutoSize = true;
+            this.chkIsSuper.Location = new System.Drawing.Point(937, 182);
+            this.chkIsSuper.Name = "chkIsSuper";
+            this.chkIsSuper.Size = new System.Drawing.Size(86, 17);
+            this.chkIsSuper.TabIndex = 20;
+            this.chkIsSuper.Text = "É SuperUser";
+            this.chkIsSuper.UseVisualStyleBackColor = true;
             // 
-            // btnPerfilNovo
+            // chkIsTeck
             // 
-            this.btnPerfilNovo.Location = new System.Drawing.Point(1046, 3);
-            this.btnPerfilNovo.Name = "btnPerfilNovo";
-            this.btnPerfilNovo.Size = new System.Drawing.Size(59, 53);
-            this.btnPerfilNovo.TabIndex = 10;
-            this.btnPerfilNovo.Text = "Novo";
-            this.btnPerfilNovo.UseVisualStyleBackColor = true;
+            this.chkIsTeck.AutoSize = true;
+            this.chkIsTeck.Location = new System.Drawing.Point(831, 182);
+            this.chkIsTeck.Name = "chkIsTeck";
+            this.chkIsTeck.Size = new System.Drawing.Size(75, 17);
+            this.chkIsTeck.TabIndex = 19;
+            this.chkIsTeck.Text = "É Técnico";
+            this.chkIsTeck.UseVisualStyleBackColor = true;
+            // 
+            // chkIsAdmin
+            // 
+            this.chkIsAdmin.AutoSize = true;
+            this.chkIsAdmin.Location = new System.Drawing.Point(748, 182);
+            this.chkIsAdmin.Name = "chkIsAdmin";
+            this.chkIsAdmin.Size = new System.Drawing.Size(65, 17);
+            this.chkIsAdmin.TabIndex = 18;
+            this.chkIsAdmin.Text = "É Admin";
+            this.chkIsAdmin.UseVisualStyleBackColor = true;
             // 
             // FormTickets
             // 
@@ -854,13 +880,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 519);
             this.Controls.Add(this.TicketsTabular);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.StatusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormTickets";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Tickets_Form_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.TicketsTabular.ResumeLayout(false);
             this.tabTickets.ResumeLayout(false);
             this.tabTickets.PerformLayout();
@@ -887,8 +911,7 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.StatusStrip StatusBar;
         private System.Windows.Forms.TabControl TicketsTabular;
         private System.Windows.Forms.TabPage tabTickets;
         private System.Windows.Forms.TabPage tabEquipamento;
@@ -933,17 +956,17 @@
         private System.Windows.Forms.ListView lstAreas;
         private System.Windows.Forms.TextBox txtStateDescr;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListView listView5;
+        private System.Windows.Forms.ListView lstStates;
         private System.Windows.Forms.TextBox txtPrioDescr;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtPrioLevel;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ListView listView6;
+        private System.Windows.Forms.ListView lstPrio;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ListView listView7;
+        private System.Windows.Forms.ListView lstMateriais;
         private System.Windows.Forms.CheckBox chkStateIsRequest;
         private System.Windows.Forms.CheckBox chkStateIsTicket;
         private System.Windows.Forms.CheckBox chkStateIsReject;
@@ -960,6 +983,9 @@
         private System.Windows.Forms.Button btnMatSave;
         private System.Windows.Forms.Button btnPerfilSave;
         private System.Windows.Forms.Button btnPerfilNovo;
+        private System.Windows.Forms.CheckBox chkIsSuper;
+        private System.Windows.Forms.CheckBox chkIsTeck;
+        private System.Windows.Forms.CheckBox chkIsAdmin;
     }
 }
 

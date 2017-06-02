@@ -10,7 +10,10 @@ namespace ProjectoFinal
     {
         string descricao;
         int nivel; // Nivel Académico
-        
+        public Habilitacao()
+        {
+
+        }
         public Habilitacao(string Descr,int Nivel )
         {
             descricao = Descr;
@@ -37,6 +40,10 @@ namespace ProjectoFinal
             {
                 nivel = value;
             }
+        }
+        public override string ToString()
+        {
+            return nivel.ToString() + " - " + descricao;
         }
     }
 }
