@@ -115,8 +115,9 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(131, 47);
             this.btnSave.TabIndex = 10;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Grava";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSaveAdd
             // 
@@ -124,9 +125,9 @@
             this.btnSaveAdd.Name = "btnSaveAdd";
             this.btnSaveAdd.Size = new System.Drawing.Size(131, 47);
             this.btnSaveAdd.TabIndex = 11;
-            this.btnSaveAdd.Text = "Save and New";
+            this.btnSaveAdd.Text = "Grava e Novo";
             this.btnSaveAdd.UseVisualStyleBackColor = true;
-            this.btnSaveAdd.Click += new System.EventHandler(this.btn_Click);
+            this.btnSaveAdd.Click += new System.EventHandler(this.btnSaveAdd_Click);
             // 
             // FormAddTicket
             // 

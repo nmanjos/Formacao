@@ -8,13 +8,13 @@ namespace ProjectoFinal
 {
     interface IBDTickets
     {
+        
         string GetError();
         bool Login(int NIF, string Pass);
         Perfil GetCurrentUser();
         bool InsereColaborador(Colaborador colab);
         Colaborador EliminaColaborador(int NIF);
         bool InsereTecnico(Tecnico Colab);
-        bool InsereTecnico(Tecnico Colab, bool super);
         Tecnico EliminaTecnico(int NIF);
         bool InsereTicket(Ticket TK);
         Ticket EliminaTicket(int Id);
@@ -39,15 +39,16 @@ namespace ProjectoFinal
         Area EliminaArea(String Area);
         bool InsereHabilitacao(Habilitacao Habilitacao);
         List<Habilitacao> ProcuraHabilitacoes();
-        Area EliminaHabilitacao(String Habilitacao);
+        Habilitacao EliminaHabilitacao(string Descricao);
         bool InsereMaterial(Material Material);
         List<Material> ProcuraMaterial();
         Prioridade EliminaPrioridade(String Prioridade);
         bool InserePrioridade(Prioridade Prioridade);
         List<Prioridade> ProcuraPrioridade();
-        Area EliminaMaterial(String Material);
+        Material EliminaMaterial(string partnumber);
         double CustoMediaTickets();  // Media do Custo dos tickets fechados 
         double CustoMediaTipoTickets(int tipo); //  Media do Custo dos Tickets Fechados por Tecnico
         double CustoMedioTecnicoTickets(int nif); // Media do Custo dos Tickets Fechados por Tecnico
+        Habilitacao ProcuraHabilitacao(string Descr);
     }
 }

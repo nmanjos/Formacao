@@ -15,26 +15,40 @@ namespace ProjectoFinal
     public partial class FormTickets : Form
     {
         List<Ticket> lTickets;
+        string EditMode;     // variavel para controlar em que estado está o ecran "New" para novo Registo, "Edit" para modo de Actualização, qualquer outro para não fazer alterações. 
 
         private static void LoadlstView(ListView lstv, object[] lstobj)
         {
-
-
-            ListViewItem lvi = new ListViewItem();
-           
-            PropertyInfo[] properties = lstobj[0].GetType().GetProperties();
-            foreach (PropertyInfo Property in properties)
+            if (lstobj.Length > 0)
             {
-                lstv.Columns.Add(Property.GetType().ToString());
-            }
-            foreach (object obj in lstobj)
-            {
+                lstv.Clear();
+                lstv.View = View.Details;
+                PropertyInfo[] properties = lstobj[0].GetType().GetProperties();
                 foreach (PropertyInfo Property in properties)
                 {
-                    lvi.SubItems.Add(Property.GetValue(obj).ToString());
+                    lstv.Columns.Add(Property.Name.Trim())
+                        .Width = lstv.Width / properties.Length;
                 }
-                lstv.Items.Add(lvi);
+                foreach (object obj in lstobj)
+                {
+                    ListViewItem lvi = null;
+                    for (int i = 0; i < properties.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            lvi = new ListViewItem(properties[i].GetValue(obj).ToString().Trim());
+                        }
+                        else
+                        {
+                            lvi.SubItems.Add(properties[i].GetValue(obj).ToString().Trim());
+                        }
+                    }
+                    lstv.Items.Add(lvi);
+                }
+                lstv.Refresh();
             }
+
+            
         }
         private void ValidaTab( TabPage Tab)
         {
@@ -46,20 +60,15 @@ namespace ProjectoFinal
             }
 
         }
-    
-
 
         public FormTickets()
-
 
         {
             InitializeComponent();
             Form Login = new FormLogin();
             Login.ShowDialog();
+            
         }
-
-        
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -67,8 +76,15 @@ namespace ProjectoFinal
 
         private void Tickets_Form_Load(object sender, EventArgs e)
         {
+            if (Program.TicketDB.CurrentUser != null) this.Text += " - " + Program.TicketDB.CurrentUser.Nome;
+            this.Update();
             if (lTickets != null) LoadlstView(lstTickets,lTickets.ToArray());
             ValidaTab(tabPerfil);
+            Application.DoEvents();
+            if (Program.TicketDB.CurrentUser == null)
+            {
+                Application.Exit();
+            }
 
         }
 
@@ -87,13 +103,14 @@ namespace ProjectoFinal
             switch (tab.Name)
             {
                 case "tbMateriais":
-               //     LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
+                    LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
                     break;
                 case "tbHabilit":
-               //     LoadlstView(lstHabilit, Program.TicketDB.ProcuraHabilitacoes().ToArray());
+                   LoadlstView(lstHabilit, Program.TicketDB.ProcuraHabilitacoes().ToArray());
                     break;
                 case "tbAreas":
-              //      LoadlstView(lstAreas, Program.TicketDB.ProcuraAreas().ToArray());
+                    LoadlstView(lstAreas, Program.TicketDB.ProcuraAreas().ToArray());
+                    
                     break;
                 case "tbStates":
                     List<Status> Estados = Program.TicketDB.ProcuraEstados(true, true);
@@ -126,14 +143,12 @@ namespace ProjectoFinal
 
         private void tabPerfil_Enter(object sender, EventArgs e)
         {
-            // MessageBox.Show("You have Raised event tabPerfil_Enter ");
             List<Habilitacao> HAbilits = Program.TicketDB.ProcuraHabilitacoes();
             foreach (Habilitacao habilit in HAbilits)
             {
                 cbxPerfilHabilit.Items.Add(habilit.ToString());
             }
-            
-
+            LoadlstView(lstPerfil, Program.TicketDB.ProcuraPerfis().ToArray());
         }
 
         private void TicketsTabular_Click(object sender, EventArgs e)
@@ -191,6 +206,83 @@ namespace ProjectoFinal
         }
 
         private void tabPerfil_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPerfilNovo_Click(object sender, EventArgs e)
+        {
+            EditMode = "New";
+            txtPerfilNIF.Text = "";
+            txtPerfilNome.Text = "";
+            txtPerfilSenha.Text = "";
+            lsbAreasIntre.Items.Clear();
+            lsbAreas.Items.AddRange(Program.TicketDB.ProcuraAreas().ToArray());
+        }
+
+        private void btnPerfilSave_Click(object sender, EventArgs e)
+        {
+            if (EditMode == "New" )
+            {
+                Habilitacao habilit = new Habilitacao();
+                habilit.Nivel = int.Parse(cbxPerfilHabilit.Text.Split('-')[0]);
+                habilit.Descr = cbxPerfilHabilit.Text.Split('-')[1].Trim();
+                if (chkIsTec.Checked)
+                {
+
+                    List<Area> AreasIntre = new List<Area>();
+                    foreach (object item in lsbAreasIntre.Items)
+                    {
+                        AreasIntre.Add(new Area(item.ToString()));
+                    }
+                    
+                    Program.TicketDB.InsereTecnico(new Tecnico(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit, AreasIntre, chkIsAdmin.Checked,false));
+                }
+                else
+                {
+                    Program.TicketDB.InsereColaborador(new Colaborador(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit));
+                }
+                
+            }
+        }
+
+        private void btnAreaAdd_Click(object sender, EventArgs e)
+        {
+            
+            foreach (object item in lsbAreas.SelectedItems)
+            {
+                lsbAreasIntre.Items.Add(item);
+            }
+            while (lsbAreas.SelectedItems.Count > 0)
+            {
+                lsbAreas.Items.Remove(lsbAreas.SelectedItems[0]);
+            }
+            
+        }
+
+        private void btnAreaDel_Click(object sender, EventArgs e)
+        {
+            foreach (object item in lsbAreasIntre.SelectedItems)
+            {
+                lsbAreas.Items.Add(item);
+            }
+            while (lsbAreasIntre.SelectedItems.Count > 0)
+            {
+                lsbAreasIntre.Items.Remove(lsbAreasIntre.SelectedItems[0]);
+            }
+        }
+
+        private void lsbAreas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbAreas_Enter(object sender, EventArgs e)
+        {
+            LoadAuxs(tbAreas);
+        }
+
+        private void tabTickets_Click(object sender, EventArgs e)
         {
 
         }

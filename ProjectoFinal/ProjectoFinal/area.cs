@@ -13,11 +13,15 @@ namespace ProjectoFinal
     {   
         string descricao;
         int nivelminimo;
-
         public Area(string Descr, int NivelMinimo)
         {
             descricao = Descr;
             nivelminimo = NivelMinimo;
+        }
+        public Area(string Descr)
+        {
+            descricao = Descr;
+            
         }
         public string Descr
         {

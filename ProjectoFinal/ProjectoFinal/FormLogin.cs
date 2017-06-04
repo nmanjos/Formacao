@@ -21,14 +21,21 @@ namespace ProjectoFinal
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (Program.TicketDB.Login(int.Parse(txtUsername.Text), txtPass.Text))
+            if (txtUsername.Text !="" && txtPass.Text != "")
             {
-                this.Close();
-            }
-            else
+                if (Program.TicketDB.Login(int.Parse(txtUsername.Text), txtPass.Text))
+                {
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("There was an error authenticating your user, try again or close the app" + Program.TicketDB.GetError(), "AUTHENTICATION ERROR");
+                }
+            }else
             {
-                MessageBox.Show("There was an error authenticating your user, try again or close the app" + Program.TicketDB.GetError(), "AUTHENTICATION ERROR");
+                MessageBox.Show("O Campos tem de ser preenchidos");
             }
+            
 
         }
 
@@ -41,6 +48,11 @@ namespace ProjectoFinal
         {
             Application.DoEvents();
             Application.Exit();
+        }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

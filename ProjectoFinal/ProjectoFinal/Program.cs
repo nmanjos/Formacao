@@ -20,7 +20,7 @@ namespace ProjectoFinal
             Application.SetCompatibleTextRenderingDefault(false);
             if (FirstRun()) MessageBox.Show("This is your First Run, please fill all aux tables before deploing the app");
             Application.Run(new FormTickets());
-            
+
         }
         private static bool FirstRun()
         {
@@ -32,7 +32,7 @@ namespace ProjectoFinal
                 Habilitacao hablit = new Habilitacao("Licenciatura", 6);
                 TicketDB.InsereHabilitacao(hablit);
 
-                if (TicketDB.InsereTecnico(new Tecnico("ADMIN", 000000000, "000000000",hablit, null, true),true))
+                if (TicketDB.InsereTecnico(new Tecnico("ADMIN", 000000000, "000000000",hablit, null, true ,true)))
                 {
                     MessageBox.Show("Utilizador de Administração criado, altere a password assim que possivel ");
                 }   

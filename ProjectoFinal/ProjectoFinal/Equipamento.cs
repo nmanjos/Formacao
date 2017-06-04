@@ -16,6 +16,10 @@ namespace ProjectoFinal
         string localizacao;
         Perfil empregado;
         double price;
+        public Equipamento()
+        {
+
+        }
         public Equipamento(string InventCode,string PartNumber, string ModelNum,  string Descr, List<Material> Pecas, string Localizacao, Perfil Empregado, double Price)
         {
             partnumber = PartNumber;
@@ -131,8 +135,11 @@ namespace ProjectoFinal
                 price = value;
             }
         }
+        public override string ToString()
+        {
+            return inventcode.ToString() + " - " + description;
+        }
 
-        
 
 
 

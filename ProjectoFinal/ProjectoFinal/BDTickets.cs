@@ -9,14 +9,15 @@ using ProjectoFinal.Properties;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace ProjectoFinal
 {
     class BDTickets : IBDTickets
     {
-       
-        private string DBNAME = @Settings.Default.Database;
         
+        private string DBNAME = @Settings.Default.Database;
+
         public Perfil CurrentUser;
         private Stack<string> Errors = new Stack<string>();
 
@@ -33,7 +34,7 @@ namespace ProjectoFinal
             {
                 error = Errors.Pop();
                 Errors.Clear();
-            }   
+            }
             return error;
         }
         private void LoadLinked(object obj, string table, int id)
@@ -70,7 +71,7 @@ namespace ProjectoFinal
         /// <param name="Fields"></param>
         /// <param name="condition"></param>
         /// <returns></returns>
-        private SqlDataReader ProcuraSQL(string Table, string[] Fields, string[,] condition)  
+        private SqlDataReader ProcuraSQL(string Table, string[] Fields, string[,] condition)
         {
             SqlDataReader Reader;
             SqlCommand myCommand = new SqlCommand();
@@ -86,7 +87,8 @@ namespace ProjectoFinal
                         qry += ", ";
                     }
                 }
-            }else
+            }
+            else
             {
                 qry += "*";
             }
@@ -103,7 +105,7 @@ namespace ProjectoFinal
                     {
                         qry += " AND "; // Add the condition 
                     }
-                    
+
                 }
             }
             qry += ";";
@@ -124,7 +126,26 @@ namespace ProjectoFinal
             }
             return Reader;
         }
-        private SqlDataReader ProcuraSQL(string[] Tables,string[,] JoinFields, string[] Fields, string[,] Condition)
+        private bool RecExists(string Table, string FieldIn, string condval)
+        {
+            SqlDataReader Reader = ProcuraSQL(Table, new string[] { FieldIn }, new string[,] { { FieldIn, "=", condval } });
+            bool result = Reader.HasRows;
+            Reader.Close();
+            return result;
+        }
+        private int GetID(string Table, string FieldIn, string FieldOut, string condval)
+        {
+            SqlDataReader Reader = ProcuraSQL(Table, new string[] { FieldOut }, new string[,] { { FieldIn, "=", condval } });
+            int result = 0;
+            if (Reader.HasRows)
+            {
+                Reader.Read();
+                result = Reader.GetInt32(0);
+            }
+            Reader.Close();
+            return result;
+        }
+        private SqlDataReader ProcuraSQL(string[] Tables, string[,] JoinFields, string[] Fields, string[,] Condition)
         {
             SqlDataReader Reader;
             SqlCommand myCommand = new SqlCommand();
@@ -142,7 +163,7 @@ namespace ProjectoFinal
             int joincounter = 0;
             for (int i = 0; i < Tables.Length; i++)
             {
-                
+
                 qry += Tables[i];
                 if (joincounter > 0)
                 {
@@ -164,7 +185,7 @@ namespace ProjectoFinal
                     qry += Condition[i, 0] + " " + Condition[i, 1] + " @" + Condition[i, 0];
                     if (i < (Condition.GetLength(0) - 1))
                     {
-                         qry += " AND "; // Add the condition 
+                        qry += " AND "; // Add the condition 
                     }
                 }
 
@@ -199,7 +220,7 @@ namespace ProjectoFinal
                 string vlu = "";
                 for (int i = 0; i < Fields.Length; i++)
                 {
-                    if (Values[i] == "True") 
+                    if (Values[i] == "True")
                     {
                         Values[i] = "1";
                     }
@@ -215,11 +236,11 @@ namespace ProjectoFinal
                     }
                     else
                     {
-                        fld += Fields[i] ;
-                        vlu += "@" + Fields[i] ;
+                        fld += Fields[i];
+                        vlu += "@" + Fields[i];
                     }
                 }
-                string SQLstr = "INSERT INTO " + Table + " (" + fld + ") VALUES (" + vlu +  ");";
+                string SQLstr = "INSERT INTO " + Table + " (" + fld + ") VALUES (" + vlu + ");";
                 myCommand.CommandText = SQLstr;
                 myCommand.Connection = OpenConnection(DBNAME);
                 try
@@ -278,7 +299,7 @@ namespace ProjectoFinal
             }
             return result;
         }
-        private bool UpdateRegisto(string Table, string[] Fields, string[] Values)
+        private bool UpdateRegisto(string Table, string[] Fields, string[] Values, string[,] Condition)
         {
             bool result = false;
 
@@ -297,6 +318,20 @@ namespace ProjectoFinal
                     {
                         str += Fields[i] + " = " + "@" + Fields[i];
                     }
+                }
+                if (Condition != null)
+                {
+                    string qry = " WHERE ";
+                    for (int i = 0; i < Condition.GetLength(0); i++)
+                    {
+                        myCommand.Parameters.AddWithValue("@" + Condition[i, 0], Condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value
+                        qry += Condition[i, 0] + " " + Condition[i, 1] + " @" + Condition[i, 0];
+                        if (i < (Condition.GetLength(0) - 1))
+                        {
+                            qry += " AND "; // Add the condition 
+                        }
+                    }
+
                 }
                 string SQLstr = "UPDATE" + Table + "SET " + str + ";";
                 myCommand.CommandText = SQLstr;
@@ -335,18 +370,19 @@ namespace ProjectoFinal
 
 
 
-        public bool Login(int NIF, string Pass )
+        public bool Login(int NIF, string Pass)
         {
+            bool result = false;
             string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao", "Habilitacoes.Nivel" };
             string[,] Condition = { { "NIF", "=", NIF.ToString() }, { "Senha", "=", Pass } };
             string[] Tables = { "Perfil", "Habilitacoes" };
             string[,] JointFields = { { "Perfil.NivelHab", "Habilitacoes.Nivel" } };
-            SqlDataReader Reader =  ProcuraSQL(Tables,JointFields, Fields, Condition);
+            SqlDataReader Reader = ProcuraSQL(Tables, JointFields, Fields, Condition);
             if (Reader.HasRows)
             {
-                bool is_tec=false;
+                bool is_tec = false;
                 Reader.Read();
-                
+
                 if (!(Reader.GetValue(5) is DBNull))
                 {
                     is_tec = Reader.GetBoolean(5);
@@ -354,23 +390,24 @@ namespace ProjectoFinal
                 if (is_tec)
                 {
                     CurrentUser = new Tecnico();
-                    
+
                     ((Tecnico)CurrentUser).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
-                } else
+                }
+                else
                 {
                     CurrentUser = new Colaborador();
                 }
                 CurrentUser.NIF = Reader.GetInt32(0);
                 CurrentUser.Nome = Reader.GetString(2);
                 CurrentUser.Senha = Reader.GetString(1);
-                 
+
                 CurrentUser.NivelHab = new Habilitacao(Reader.GetString(7), Reader.GetInt32(8));
                 Reader.Close();
                 Reader = null;
-                return true;
+                result = true;
 
-            }   
-            return false;
+            }
+            return result;
         }
         public Perfil GetCurrentUser()
         {
@@ -402,32 +439,172 @@ namespace ProjectoFinal
         }
         public bool InsereColaborador(Colaborador Colab)
         {
-            return InsereRegisto("Perfil", new string[] { "NIF", "Nome","senha","NivelHab2" }, new string[] { Colab.NIF.ToString(), Colab.Nome.ToString() });
+            bool result = false;
+            if (RecExists("Perfil", "NIF", Colab.NIF.ToString())) // se o registo já existe ? Actualiza em vez de Inserir
+            {
+                result = UpdateRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString() }, new string[,] { { "NIF", "=", Colab.NIF.ToString() } });
+
+
+            }
+            else
+            {
+                result = InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab" }, new string[] { Colab.NIF.ToString(), Colab.Nome.ToString(), Colab.Senha.ToString(), Colab.NivelHab.Nivel.ToString() });
+            }
+
+
+
+            return result;
         }
         public Colaborador EliminaColaborador(int NIF)
         {
-            throw new NotImplementedException();
+            Colaborador Colab = (Colaborador)ProcuraPerfil(NIF);
+            DeleteRegisto("Perfis", new string[,] { { "NIF", "=", NIF.ToString() } });
+            return Colab;
         }
         public bool InsereTecnico(Tecnico Colab)
         {
-            return InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", "0" });
+            bool result = false;
+            if (RecExists("Perfil", "NIF", Colab.NIF.ToString())) // se o registo já existe ? Actualiza em vez de Inserir
+            {
+                result = UpdateRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", Colab.Is_Super.ToString() }, new string[,] { { "NIF", "=", Colab.NIF.ToString() } });
+                if (result)
+                {
+                    foreach (Area area in Colab.AreaIntre)
+                    {
+                        int AreaID = GetID("Areas", "Descricao", "Id", area.Descr);
+                        result = UpdateRegisto("AreaIntre", new string[] { "NIF", "Aread_ID" }, new string[] { Colab.NIF.ToString(), AreaID.ToString() }, new string[,] { { "NIF", "=", Colab.NIF.ToString() }, { "Aread_ID", "=", AreaID.ToString() } });
+                    }
+                }
+
+            }
+            else
+            {
+                result = InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", Colab.Is_Super.ToString() });
+                if (result)
+                {
+                    foreach (Area area in Colab.AreaIntre)
+                    {
+                        result = InsereRegisto("AreaIntre", new string[] { "NIF", "Aread_ID" }, new string[] { Colab.NIF.ToString(), GetID("Areas", "Descricao", "Id", area.Descr).ToString() });
+                    }
+                }
+            }
+            return result;
         }
-        public bool InsereTecnico(Tecnico Colab,bool super)
-        {
-            return InsereRegisto("Perfil", new string[] { "NIF", "Nome", "senha", "NivelHab", "Is_Admin", "Is_Tec", "Is_Super" }, new string[] { Colab.NIF.ToString(), Colab.Nome, Colab.Senha, Colab.NivelHab.Nivel.ToString(), Colab.Is_Admin.ToString(), "1", super.ToString() });
-        }
+
         public Tecnico EliminaTecnico(int NIF)
         {
-            throw new NotImplementedException();
+            Tecnico Colab = (Tecnico)ProcuraPerfil(NIF);
+            DeleteRegisto("Perfis", new string[,] { { "NIF", "=", NIF.ToString() } });
+            return Colab;
+        }
+        private Status GetState(string Table, string record)
+        {
+            SqlDataReader Reader = ProcuraSQL(Table, new string[] { "State" }, new string[,] { { "Id", "=", record } });
+            int result = 0;
+            Status State = new Status();
+            if (Reader.HasRows)
+            {
+                Reader.Read();
+                result = Reader.GetInt32(0);
+            }
+            Reader.Close();
+            Reader = ProcuraSQL("States", new string[] { "Name", "isFinalState", "isRejectState", "is_Ticket", "is_Request" }, new string[,] { { "Id", "=", result.ToString() } });
+
+            if (Reader.HasRows)
+            {
+                Reader.Read();
+                State.Descr = Reader.GetString(0);
+                State.Is_final = Reader.GetBoolean(1);
+                State.Is_rejected = Reader.GetBoolean(2);
+                State.Is_request = Reader.GetBoolean(3);
+                State.Is_ticket = Reader.GetBoolean(4);
+            }
+            Reader.Close();
+            return State;
         }
         public bool InsereTicket(Ticket TK)
         {
-            return InsereRegisto("Ticket", new string[] { "createdate", "Descricao" }, new string[] { TK.Createdate.ToString(), TK.Description.ToString() });
+
+            bool result = false;
+            if (TK.Num == 0) // se o registo já existe ? Actualiza em vez de Inserir
+            {
+                string[] Fields = { "Descricao", "createdate", "prioridade", "State", "Aread_ID", "Requester" };
+                string[] Values = new string[Fields.Length];
+                Values[0] = TK.Description;
+                Values[1] = TK.Createdate.ToString();
+                Values[2] = TK.Priority.ToString();
+                Values[3] = TK.Estado.ToString();
+                Values[4] = GetID("Areas", "Descricao", "Id", TK.Areaintre.Descr).ToString();
+                Values[5] = TK.Requester.NIF.ToString();
+
+                result = InsereRegisto("Ticket", Fields, Values);
+            }
+            else
+            {
+                PropertyInfo[] properties = TK.GetType().GetProperties();
+                List<string> Fields = new List<string>();
+                List<string> Values = new List<string>();
+                foreach (PropertyInfo Property in properties)
+                {
+                    if (!(string.IsNullOrEmpty(Property.GetValue(TK).ToString())))
+                    {
+                        switch (Property.Name)
+                        {
+                            case "Createdate":
+                                Fields.Add("createdate");
+                                break;
+                            case "Priority":
+                                Fields.Add("prioridade");
+                                break;
+                            case "Requester":
+                                Fields.Add("Requester");
+                                break;
+                            case "Horas":
+                                Fields.Add("horas");
+                                break;
+                            case "Estado":
+                                Fields.Add("State");
+                                break;
+                            case "Equipamento":
+                                Fields.Add("Equipamento");
+                                break;
+                            case "Lastupdate":
+                                Fields.Add("lastupdate");
+                                break;
+                            case "Quemfechou":
+                                Fields.Add("quemfechou");
+                                break;
+                            case "Description":
+                                Fields.Add("Descricao");
+                                break;
+                            case "Resolution":
+                                Fields.Add("Resolucao");
+                                break;
+                            case "Areaintre":
+                                Fields.Add("Area_Id");
+                                break;
+
+                            default:
+                                break;
+                        }
+                        Values.Add(Property.GetValue(TK).ToString());
+                    }
+                }
+                string[,] Condition = { { "Id", "=", TK.Num.ToString() } };
+                result = UpdateRegisto("Ticket", Fields.ToArray(), Values.ToArray(), Condition);
+
+            }
+            return result;
         }
+
+
         public Ticket EliminaTicket(int Id)
         {
-            throw new NotImplementedException();
+            Ticket Record = ProcuraTicket(Id);
+            DeleteRegisto("Ticket", new string[,] { { "Id", "=", Id.ToString() } });
+            return Record;
         }
+
         public Perfil ProcuraPerfil(int nif)
         {
             string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao" };
@@ -460,10 +637,10 @@ namespace ProjectoFinal
                 Perf.Nome = Reader.GetString(2);
                 Perf.Senha = Reader.GetString(1);
                 Perf.NivelHab = new Habilitacao(Reader.GetString(7), Reader.GetInt32(3));
-                
+
                 Reader.Close();
                 Reader = null;
-                
+
 
             }
             return Perf;
@@ -474,7 +651,46 @@ namespace ProjectoFinal
         /// <returns></returns>
         public List<Perfil> ProcuraPerfis()
         {
-            throw new NotImplementedException();
+            string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao" };
+            string[,] Condition = { { "is_Super", "=", "0" } };
+            string[] Tables = { "Perfil", "Habilitacoes" };
+            string[,] JointFields = { { "Perfil.NivelHab", "Habilitacoes.Nivel" } };
+            SqlDataReader Reader = ProcuraSQL(Tables, JointFields, Fields, Condition);
+            List<Perfil> Perfs = new List<Perfil>();
+            Perfil Perf = null;
+            if (Reader.HasRows)
+            {
+                bool is_tec = false;
+                while (Reader.Read())
+                {
+
+                    if (!(Reader.GetValue(5) is DBNull))
+                    {
+                        is_tec = Reader.GetBoolean(5);
+                    }
+                    if (is_tec)
+                    {
+                        Perf = new Tecnico();
+
+                        ((Tecnico)Perf).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
+                        ((Tecnico)Perf).Is_Admin = Reader.GetBoolean(4);
+                    }
+                    else
+                    {
+                        Perf = new Colaborador();
+                    }
+                    Perf.NIF = Reader.GetInt32(0);
+                    Perf.Nome = Reader.GetString(2);
+                    Perf.Senha = Reader.GetString(1);
+                    Perf.NivelHab = new Habilitacao(Reader.GetString(7), Reader.GetInt32(3));
+                    Perfs.Add(Perf);
+                }
+                Reader.Close();
+                Reader = null;
+
+
+            }
+            return Perfs;
         }
         /// <summary>
         /// Mostra Perfis por Tipo,corre query que filtra por tipo, ou seja: is_Tecnico =  True mostra todos os Técnicos, mas pode mostrar tambem os técnicos e os Admin se is_admin for True
@@ -485,8 +701,51 @@ namespace ProjectoFinal
         /// <returns>Lista de Perfis</returns>
         public List<Perfil> ProcuraPerfisTipo(bool is_Tecnico, bool is_Admin)
         {
-            throw new NotImplementedException();
+            string[] Fields = { "Perfil.NIF", "Perfil.Senha", "Perfil.Nome", "Perfil.NivelHab", "Perfil.Is_Admin", "Perfil.Is_Tec", "Perfil.Is_Super", "Habilitacoes.Descricao" };
+            string tec = "0"; string adm = "0";
+            if (is_Tecnico) tec = "1";
+            if (is_Admin) adm = "1";
+            string[,] Condition = { { "is_Super", "=", "0" }, { "is_Tec", "=", tec }, { "Is_Admin", "=", adm } };
+            string[] Tables = { "Perfil", "Habilitacoes" };
+            string[,] JointFields = { { "Perfil.NivelHab", "Habilitacoes.Nivel" } };
+            SqlDataReader Reader = ProcuraSQL(Tables, JointFields, Fields, Condition);
+            List<Perfil> Perfs = new List<Perfil>();
+            Perfil Perf = null;
+            if (Reader.HasRows)
+            {
+                bool is_tec = false;
+                while (Reader.Read())
+                {
+
+                    if (!(Reader.GetValue(5) is DBNull))
+                    {
+                        is_tec = Reader.GetBoolean(5);
+                    }
+                    if (is_tec)
+                    {
+                        Perf = new Tecnico();
+
+                        ((Tecnico)Perf).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
+                        ((Tecnico)Perf).Is_Admin = Reader.GetBoolean(4);
+                    }
+                    else
+                    {
+                        Perf = new Colaborador();
+                    }
+                    Perf.NIF = Reader.GetInt32(0);
+                    Perf.Nome = Reader.GetString(2);
+                    Perf.Senha = Reader.GetString(1);
+                    Perf.NivelHab = new Habilitacao(Reader.GetString(7), Reader.GetInt32(3));
+                    Perfs.Add(Perf);
+                }
+                Reader.Close();
+                Reader = null;
+
+
+            }
+            return Perfs;
         }
+
 
         public Ticket ProcuraTicket(int Id)
         {
@@ -548,7 +807,31 @@ namespace ProjectoFinal
             return lstTK;
         }
 
-
+        public Status ProcuraEstado(string name)
+        {
+            Status ST = new Status();
+            string[,] cond = new string[2, 3];
+            cond[0, 0] = "name";
+            cond[0, 1] = "=";
+            cond[0, 2] = name;
+            
+            SqlDataReader Reader = ProcuraSQL("States", new string[] { "Name", "IsFinalState", "IsRejectState", "Is_Ticket", "Is_Request" }, cond);
+            List<Status> lstST = new List<Status>();
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();     
+                    ST.Descr = Reader.GetString(0);
+                    ST.Is_final = Reader.GetBoolean(1);
+                    ST.Is_rejected = Reader.GetBoolean(2);
+                    ST.Is_request = Reader.GetBoolean(3);
+                    ST.Is_ticket = Reader.GetBoolean(4);
+                }
+                Reader.Close();
+            }
+            return ST;
+        }
         public List<Status> ProcuraEstados(bool is_Ticket, bool is_Request)
         {
             string[,] cond = new string[2, 3];
@@ -565,7 +848,6 @@ namespace ProjectoFinal
             if (Reader != null)
             {
 
-
                 if (Reader.HasRows)
                 {
                     while (Reader.Read())
@@ -581,7 +863,7 @@ namespace ProjectoFinal
                 }
                 Reader.Close();
             }
-            
+
             return lstST;
         }
         public bool InsereEstado(Status Estado)
@@ -591,7 +873,10 @@ namespace ProjectoFinal
 
         public Status EliminaEstado(string Estado)
         {
-            throw new NotImplementedException();
+            
+            Status Record = ProcuraEstado(Estado);
+            DeleteRegisto("States", new string[,] { { "name", "=", Estado } });
+            return Record;
         }
 
         public bool InsereEquipamento(Equipamento Equip)
@@ -612,7 +897,7 @@ namespace ProjectoFinal
                     {
                         Perfil user = ProcuraPerfil(Reader.GetInt32(0));
                         List<Material> pecas = ProcuraPecas(Reader.GetString(0));
-                        Equipamentos.Add(new Equipamento(Reader.GetString(0), Reader.GetString(0), Reader.GetString(0), Reader.GetString(0),pecas ,Reader.GetString(0),user,Reader.GetDouble(1)));
+                        Equipamentos.Add(new Equipamento(Reader.GetString(0), Reader.GetString(0), Reader.GetString(0), Reader.GetString(0), pecas, Reader.GetString(0), user, Reader.GetDouble(1)));
                     }
                 }
             }
@@ -629,12 +914,33 @@ namespace ProjectoFinal
 
         public Equipamento EliminaEquipamento(string InventCode)
         {
-            throw new NotImplementedException();
+            Equipamento Record = ProcuraEquipamento(InventCode);
+            DeleteRegisto("Equipamento", new string[,] { { "InventCode", "=", InventCode } });
+            return Record;
         }
 
         public bool InsereArea(Area Area)
         {
             return InsereRegisto("Areas", new string[] { "NivelMinimo", "Descricao" }, new string[] { Area.NivelMinimo.ToString(), Area.Descr.ToString() });
+        }
+        public Area ProcuraArea(string name)
+        {
+            Area area = new Area(name);
+
+            SqlDataReader Reader = ProcuraSQL("Areas", new string[] { "Descricao", "NivelMinimo" }, new string[,] { { "Descricao", "=", name } });
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+                    area.Descr = Reader.GetString(0);
+                    area.NivelMinimo =  Reader.GetInt32(1);
+                }
+            }
+
+            Reader.Close();
+            Reader = null;
+            return area;
         }
         /// <summary>
         /// Devolve as areas todas da tabela Areas
@@ -668,8 +974,8 @@ namespace ProjectoFinal
         public List<Area> ProcuraAreas(int NIF)
         {
             List<Area> areas = new List<Area>();
-            
-            SqlDataReader reader = ProcuraSQL(new string[] { "AreaIntre", "Areas" },new string[,] { {"AreaIntre.Area_Id","Areas.Id" } }, new string[] { "Areas.Descricao", "Areas.NivelMinimo" }, new string[,] { { "NIF", "=", NIF.ToString() } });
+
+            SqlDataReader reader = ProcuraSQL(new string[] { "AreaIntre", "Areas" }, new string[,] { { "AreaIntre.Area_Id", "Areas.Id" } }, new string[] { "Areas.Descricao", "Areas.NivelMinimo" }, new string[,] { { "NIF", "=", NIF.ToString() } });
             if (reader != null)
             {
                 if (reader.HasRows)
@@ -680,26 +986,46 @@ namespace ProjectoFinal
                     }
                 }
             }
-            
+
             reader.Close();
             reader = null;
             return areas;
         }
         public Area EliminaArea(string Area)
         {
-            throw new NotImplementedException();
+            Area Record = ProcuraArea(Area);
+            DeleteRegisto("Areas", new string[,] { { "Descricao", "=", Area } });
+            return Record;
         }
 
         public bool InsereHabilitacao(Habilitacao Habilitacao)
         {
             return InsereRegisto("Habilitacoes", new string[] { "Nivel", "Descricao" }, new string[] { Habilitacao.Nivel.ToString(), Habilitacao.Descr.ToString() });
         }
+        public Habilitacao ProcuraHabilitacao(string Descr)
+        {
+            Habilitacao Habilit = new Habilitacao();
 
+            SqlDataReader Reader = ProcuraSQL("Habilitacoes", new string[] { "Nivel", "Descricao" }, new string[,] { { "Descricao", "=", Descr } });
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+                    Habilit.Descr = Reader.GetString(1);
+                    Habilit.Nivel = Reader.GetInt32(0);
+                    
+                }
+            }
+            Reader.Close();
+            Reader = null;
+            return Habilit;
+        }
         public List<Habilitacao> ProcuraHabilitacoes()
         {
             List<Habilitacao> Habilitacoes = new List<Habilitacao>();
 
-            SqlDataReader Reader = ProcuraSQL("Habilitacoes" , new string[] { "Nivel", "Descricao" }, null);
+            SqlDataReader Reader = ProcuraSQL("Habilitacoes", new string[] { "Nivel", "Descricao" }, null);
             if (Reader != null)
             {
                 if (Reader.HasRows)
@@ -716,21 +1042,23 @@ namespace ProjectoFinal
             return Habilitacoes;
         }
 
-        public Area EliminaHabilitacao(string Habilitacao)
+        public Habilitacao EliminaHabilitacao(string Descricao)
         {
-            throw new NotImplementedException();
+            Habilitacao Record = ProcuraHabilitacao(Descricao);
+            DeleteRegisto("Materiais", new string[,] { { "Descricao", "=", Descricao } });
+            return Record;
         }
 
         public bool InsereMaterial(Material Material)
         {
-            return InsereRegisto("Materiais", new string[] { "partnumber", "price","issoftware","name","supplier" }, new string[] { Material.Partnumber.ToString(), Material.Price.ToString(), Material.Issoftware.ToString(), Material.Descr.ToString(), Material.Supplier.ToString() });
+            return InsereRegisto("Materiais", new string[] { "partnumber", "price", "issoftware", "name", "supplier" }, new string[] { Material.Partnumber.ToString(), Material.Price.ToString(), Material.Issoftware.ToString(), Material.Descr.ToString(), Material.Supplier.ToString() });
 
         }
         public List<Material> ProcuraPecas(string InventCode)
         {
             List<Material> Materiais = new List<Material>();
 
-            SqlDataReader Reader = ProcuraSQL(new string[] {"Materiais","EquipPart"}, new string[,] { { "Materiais.partnumber", "=", "EquipPart.PartNumber" } }, new string[] { "Materiais.partnumber", "Materiais.name", "Materiais.supplier", "Materiais.price", "Materiais.issoftware" }, new string[,] { {"EquipPart.InventCode","=", InventCode } });
+            SqlDataReader Reader = ProcuraSQL(new string[] { "Materiais", "EquipPart" }, new string[,] { { "Materiais.partnumber", "=", "EquipPart.PartNumber" } }, new string[] { "Materiais.partnumber", "Materiais.name", "Materiais.supplier", "Materiais.price", "Materiais.issoftware" }, new string[,] { { "EquipPart.InventCode", "=", InventCode } });
             if (Reader != null)
             {
                 if (Reader.HasRows)
@@ -746,6 +1074,28 @@ namespace ProjectoFinal
             Reader = null;
             return Materiais;
         }
+        public Material ProcuraMaterial(string partnumber )
+        {
+            Material Material = new Material();
+
+            SqlDataReader Reader = ProcuraSQL("Materiais", new string[] { "partnumber", "name", "supplier", "price", "issoftware" }, new string[,] { { "partnumber", "=", partnumber } });
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+                    Material.Partnumber = Reader.GetString(0);
+                    Material.Descr = Reader.GetString(1);
+                    Material.Supplier = Reader.GetString(2);
+                    Material.Price = Reader.GetDouble(3);
+                    Material.Issoftware = Reader.GetBoolean(4);
+                }
+            }
+
+            Reader.Close();
+            Reader = null;
+            return Material;
+        }
         public List<Material> ProcuraMaterial()
         {
             List<Material> Materiais = new List<Material>();
@@ -757,7 +1107,7 @@ namespace ProjectoFinal
                 {
                     while (Reader.Read())
                     {
-                        Materiais.Add(new Material(Reader.GetString(0), Reader.GetString(1),Reader.GetString(2),Reader.GetDouble(3), Reader.GetBoolean(4)));
+                        Materiais.Add(new Material(Reader.GetString(0), Reader.GetString(1), Reader.GetString(2), Reader.GetDouble(3), Reader.GetBoolean(4)));
                     }
                 }
             }
@@ -766,21 +1116,45 @@ namespace ProjectoFinal
             Reader = null;
             return Materiais;
         }
-
-        public Area EliminaMaterial(string Material)
+        
+        public Material EliminaMaterial(string partnumber)
         {
-            throw new NotImplementedException();
+            Material Record = ProcuraMaterial(partnumber);
+            DeleteRegisto("Materiais", new string[,] { { "partnumber", "=", partnumber } });
+            return Record;
         }
-        public Prioridade EliminaPrioridade(string Prioridade)
+        public Prioridade EliminaPrioridade(string SmallName)
         {
-            throw new NotImplementedException();
+            Prioridade Record = ProcuraPrioridade(SmallName);
+            DeleteRegisto("Priority", new string[,] { { "SmallName", "=", SmallName } });
+            return Record;
         }
 
         public bool InserePrioridade(Prioridade Prioridade)
         {
-           return InsereRegisto("Priority", new string[] { "Nivel", "Descr" }, new string[] { Prioridade.Nivel.ToString(), Prioridade.Descr.ToString() });
+            return InsereRegisto("Priority", new string[] { "Nivel", "Descr" }, new string[] { Prioridade.Nivel.ToString(), Prioridade.Descr.ToString() });
         }
+        public Prioridade ProcuraPrioridade(string SmallName)
+        {
+            Prioridade Prio = new Prioridade();
 
+            SqlDataReader Reader = ProcuraSQL("Priority", new string[] { "Nivel", "SmallName", "Descr" }, new string[,] { { "SmallName", "=", SmallName } });
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+                    Prio.Nivel = Reader.GetInt32(0);
+                    Prio.Smallname = Reader.GetString(1);
+                    Prio.Descr = Reader.GetString(2);
+                    
+                }
+            }
+
+            Reader.Close();
+            Reader = null;
+            return Prio;
+        }
         public List<Prioridade> ProcuraPrioridade()
         {
             List<Prioridade> Prioridades = new List<Prioridade>();

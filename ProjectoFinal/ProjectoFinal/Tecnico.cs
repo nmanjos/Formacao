@@ -10,15 +10,29 @@ namespace ProjectoFinal
     {
         List<Area> areaintre = new List<Area>();
         bool is_admin = false;
-        public Tecnico(string Nome, int NIF, string Senha, Habilitacao NivelHab, List<Area> AreaIntre, bool Is_Admin) : base(Nome, NIF, Senha, NivelHab)
+        bool is_super = false;
+        public Tecnico(string Nome, int NIF, string Senha, Habilitacao NivelHab, List<Area> AreaIntre, bool Is_Admin, bool Is_Super) : base(Nome, NIF, Senha, NivelHab)
         {
             is_admin = Is_Admin;
             areaintre = AreaIntre;
+            is_super = Is_Super;
         }
         public Tecnico() : base()
         {
             is_admin = false;
             areaintre = null;
+            is_super = false;
+        }
+        public bool Is_Super
+        {
+            get
+            {
+                return is_super;
+            }
+            set
+            {
+                is_super = value;
+            }
         }
         public bool Is_Admin {
             get

@@ -42,8 +42,6 @@
             this.lstTickets = new System.Windows.Forms.ListView();
             this.tabRequesicoes = new System.Windows.Forms.TabPage();
             this.listView3 = new System.Windows.Forms.ListView();
-            this.tabEquipamento = new System.Windows.Forms.TabPage();
-            this.listView4 = new System.Windows.Forms.ListView();
             this.Aux = new System.Windows.Forms.TabPage();
             this.tbAuxs = new System.Windows.Forms.TabControl();
             this.tabAuxs = new System.Windows.Forms.TabPage();
@@ -89,6 +87,15 @@
             this.label15 = new System.Windows.Forms.Label();
             this.lstMateriais = new System.Windows.Forms.ListView();
             this.tabPerfil = new System.Windows.Forms.TabPage();
+            this.btnAreaDel = new System.Windows.Forms.Button();
+            this.btnAreaAdd = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lsbAreas = new System.Windows.Forms.ListBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lsbAreasIntre = new System.Windows.Forms.ListBox();
+            this.chkIsSuper = new System.Windows.Forms.CheckBox();
+            this.chkIsTec = new System.Windows.Forms.CheckBox();
+            this.chkIsAdmin = new System.Windows.Forms.CheckBox();
             this.btnPerfilNovo = new System.Windows.Forms.Button();
             this.btnPerfilSave = new System.Windows.Forms.Button();
             this.cbxPerfilHabilit = new System.Windows.Forms.ComboBox();
@@ -100,13 +107,9 @@
             this.txtPerfilNIF = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lstPerfil = new System.Windows.Forms.ListView();
-            this.chkIsSuper = new System.Windows.Forms.CheckBox();
-            this.chkIsTeck = new System.Windows.Forms.CheckBox();
-            this.chkIsAdmin = new System.Windows.Forms.CheckBox();
             this.TicketsTabular.SuspendLayout();
             this.tabTickets.SuspendLayout();
             this.tabRequesicoes.SuspendLayout();
-            this.tabEquipamento.SuspendLayout();
             this.Aux.SuspendLayout();
             this.tbAuxs.SuspendLayout();
             this.tabAuxs.SuspendLayout();
@@ -128,7 +131,6 @@
             // 
             this.TicketsTabular.Controls.Add(this.tabTickets);
             this.TicketsTabular.Controls.Add(this.tabRequesicoes);
-            this.TicketsTabular.Controls.Add(this.tabEquipamento);
             this.TicketsTabular.Controls.Add(this.Aux);
             this.TicketsTabular.Controls.Add(this.tabPerfil);
             this.TicketsTabular.Location = new System.Drawing.Point(1, 2);
@@ -136,7 +138,6 @@
             this.TicketsTabular.SelectedIndex = 0;
             this.TicketsTabular.Size = new System.Drawing.Size(1181, 496);
             this.TicketsTabular.TabIndex = 1;
-            this.TicketsTabular.Click += new System.EventHandler(this.TicketsTabular_Click);
             // 
             // tabTickets
             // 
@@ -160,7 +161,7 @@
             // 
             // btnNovo
             // 
-            this.btnNovo.Location = new System.Drawing.Point(792, 3);
+            this.btnNovo.Location = new System.Drawing.Point(6, 0);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(70, 23);
             this.btnNovo.TabIndex = 8;
@@ -170,16 +171,16 @@
             // 
             // listView2
             // 
-            this.listView2.Location = new System.Drawing.Point(6, 347);
+            this.listView2.Location = new System.Drawing.Point(797, 26);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1162, 120);
+            this.listView2.Size = new System.Drawing.Size(368, 292);
             this.listView2.TabIndex = 7;
             this.listView2.UseCompatibleStateImageBehavior = false;
             // 
             // rdbRedes
             // 
             this.rdbRedes.AutoSize = true;
-            this.rdbRedes.Location = new System.Drawing.Point(975, 6);
+            this.rdbRedes.Location = new System.Drawing.Point(601, 3);
             this.rdbRedes.Name = "rdbRedes";
             this.rdbRedes.Size = new System.Drawing.Size(56, 17);
             this.rdbRedes.TabIndex = 6;
@@ -189,7 +190,7 @@
             // rdbSoftware
             // 
             this.rdbSoftware.AutoSize = true;
-            this.rdbSoftware.Location = new System.Drawing.Point(1037, 6);
+            this.rdbSoftware.Location = new System.Drawing.Point(663, 3);
             this.rdbSoftware.Name = "rdbSoftware";
             this.rdbSoftware.Size = new System.Drawing.Size(67, 17);
             this.rdbSoftware.TabIndex = 5;
@@ -200,7 +201,7 @@
             // 
             this.rdbTodos.AutoSize = true;
             this.rdbTodos.Checked = true;
-            this.rdbTodos.Location = new System.Drawing.Point(1110, 6);
+            this.rdbTodos.Location = new System.Drawing.Point(736, 3);
             this.rdbTodos.Name = "rdbTodos";
             this.rdbTodos.Size = new System.Drawing.Size(55, 17);
             this.rdbTodos.TabIndex = 4;
@@ -211,7 +212,7 @@
             // rdbEquipamento
             // 
             this.rdbEquipamento.AutoSize = true;
-            this.rdbEquipamento.Location = new System.Drawing.Point(882, 6);
+            this.rdbEquipamento.Location = new System.Drawing.Point(508, 3);
             this.rdbEquipamento.Name = "rdbEquipamento";
             this.rdbEquipamento.Size = new System.Drawing.Size(87, 17);
             this.rdbEquipamento.TabIndex = 3;
@@ -221,7 +222,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(44, 321);
+            this.textBox1.Location = new System.Drawing.Point(43, 342);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(265, 20);
             this.textBox1.TabIndex = 2;
@@ -229,7 +230,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 321);
+            this.label1.Location = new System.Drawing.Point(7, 342);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -241,7 +242,7 @@
             this.lstTickets.Location = new System.Drawing.Point(6, 26);
             this.lstTickets.MultiSelect = false;
             this.lstTickets.Name = "lstTickets";
-            this.lstTickets.Size = new System.Drawing.Size(1162, 289);
+            this.lstTickets.Size = new System.Drawing.Size(785, 292);
             this.lstTickets.TabIndex = 0;
             this.lstTickets.UseCompatibleStateImageBehavior = false;
             this.lstTickets.SelectedIndexChanged += new System.EventHandler(this.lstTickets_SelectedIndexChanged);
@@ -264,26 +265,6 @@
             this.listView3.Size = new System.Drawing.Size(1162, 289);
             this.listView3.TabIndex = 1;
             this.listView3.UseCompatibleStateImageBehavior = false;
-            // 
-            // tabEquipamento
-            // 
-            this.tabEquipamento.Controls.Add(this.listView4);
-            this.tabEquipamento.Location = new System.Drawing.Point(4, 22);
-            this.tabEquipamento.Name = "tabEquipamento";
-            this.tabEquipamento.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEquipamento.Size = new System.Drawing.Size(1173, 470);
-            this.tabEquipamento.TabIndex = 1;
-            this.tabEquipamento.Text = "Equipamento";
-            this.tabEquipamento.UseVisualStyleBackColor = true;
-            this.tabEquipamento.Enter += new System.EventHandler(this.tabEquipamento_Enter);
-            // 
-            // listView4
-            // 
-            this.listView4.Location = new System.Drawing.Point(5, 91);
-            this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(1162, 289);
-            this.listView4.TabIndex = 1;
-            this.listView4.UseCompatibleStateImageBehavior = false;
             // 
             // Aux
             // 
@@ -309,7 +290,6 @@
             this.tbAuxs.SelectedIndex = 0;
             this.tbAuxs.Size = new System.Drawing.Size(1160, 464);
             this.tbAuxs.TabIndex = 0;
-            this.tbAuxs.Selected += new System.Windows.Forms.TabControlEventHandler(this.tbAuxs_Selected);
             // 
             // tabAuxs
             // 
@@ -392,6 +372,7 @@
             this.tbAreas.TabIndex = 1;
             this.tbAreas.Text = "Areas";
             this.tbAreas.UseVisualStyleBackColor = true;
+            this.tbAreas.Enter += new System.EventHandler(this.tbAreas_Enter);
             // 
             // btnAreasSave
             // 
@@ -441,6 +422,7 @@
             this.lstAreas.Size = new System.Drawing.Size(464, 400);
             this.lstAreas.TabIndex = 5;
             this.lstAreas.UseCompatibleStateImageBehavior = false;
+            this.lstAreas.View = System.Windows.Forms.View.Details;
             // 
             // tbStates
             // 
@@ -723,8 +705,14 @@
             // 
             // tabPerfil
             // 
+            this.tabPerfil.Controls.Add(this.btnAreaDel);
+            this.tabPerfil.Controls.Add(this.btnAreaAdd);
+            this.tabPerfil.Controls.Add(this.label18);
+            this.tabPerfil.Controls.Add(this.lsbAreas);
+            this.tabPerfil.Controls.Add(this.label17);
+            this.tabPerfil.Controls.Add(this.lsbAreasIntre);
             this.tabPerfil.Controls.Add(this.chkIsSuper);
-            this.tabPerfil.Controls.Add(this.chkIsTeck);
+            this.tabPerfil.Controls.Add(this.chkIsTec);
             this.tabPerfil.Controls.Add(this.chkIsAdmin);
             this.tabPerfil.Controls.Add(this.btnPerfilNovo);
             this.tabPerfil.Controls.Add(this.btnPerfilSave);
@@ -743,8 +731,94 @@
             this.tabPerfil.TabIndex = 4;
             this.tabPerfil.Text = "Perfil";
             this.tabPerfil.UseVisualStyleBackColor = true;
-            this.tabPerfil.Click += new System.EventHandler(this.tabPerfil_Click);
             this.tabPerfil.Enter += new System.EventHandler(this.tabPerfil_Enter);
+            // 
+            // btnAreaDel
+            // 
+            this.btnAreaDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAreaDel.Location = new System.Drawing.Point(937, 305);
+            this.btnAreaDel.Name = "btnAreaDel";
+            this.btnAreaDel.Size = new System.Drawing.Size(32, 32);
+            this.btnAreaDel.TabIndex = 26;
+            this.btnAreaDel.Text = "<";
+            this.btnAreaDel.UseVisualStyleBackColor = true;
+            this.btnAreaDel.Click += new System.EventHandler(this.btnAreaDel_Click);
+            // 
+            // btnAreaAdd
+            // 
+            this.btnAreaAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAreaAdd.Location = new System.Drawing.Point(937, 254);
+            this.btnAreaAdd.Name = "btnAreaAdd";
+            this.btnAreaAdd.Size = new System.Drawing.Size(32, 32);
+            this.btnAreaAdd.TabIndex = 25;
+            this.btnAreaAdd.Text = ">";
+            this.btnAreaAdd.UseVisualStyleBackColor = true;
+            this.btnAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
+            // 
+            // label18
+            // 
+            this.label18.Location = new System.Drawing.Point(995, 214);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(158, 21);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Areas de Intrevenção";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lsbAreas
+            // 
+            this.lsbAreas.FormattingEnabled = true;
+            this.lsbAreas.Location = new System.Drawing.Point(748, 238);
+            this.lsbAreas.Name = "lsbAreas";
+            this.lsbAreas.Size = new System.Drawing.Size(158, 121);
+            this.lsbAreas.TabIndex = 23;
+            this.lsbAreas.SelectedIndexChanged += new System.EventHandler(this.lsbAreas_SelectedIndexChanged);
+            // 
+            // label17
+            // 
+            this.label17.Location = new System.Drawing.Point(748, 214);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(158, 21);
+            this.label17.TabIndex = 22;
+            this.label17.Text = "Areas";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lsbAreasIntre
+            // 
+            this.lsbAreasIntre.FormattingEnabled = true;
+            this.lsbAreasIntre.Location = new System.Drawing.Point(995, 238);
+            this.lsbAreasIntre.Name = "lsbAreasIntre";
+            this.lsbAreasIntre.Size = new System.Drawing.Size(158, 121);
+            this.lsbAreasIntre.TabIndex = 21;
+            // 
+            // chkIsSuper
+            // 
+            this.chkIsSuper.AutoSize = true;
+            this.chkIsSuper.Location = new System.Drawing.Point(937, 182);
+            this.chkIsSuper.Name = "chkIsSuper";
+            this.chkIsSuper.Size = new System.Drawing.Size(86, 17);
+            this.chkIsSuper.TabIndex = 20;
+            this.chkIsSuper.Text = "É SuperUser";
+            this.chkIsSuper.UseVisualStyleBackColor = true;
+            // 
+            // chkIsTec
+            // 
+            this.chkIsTec.AutoSize = true;
+            this.chkIsTec.Location = new System.Drawing.Point(831, 182);
+            this.chkIsTec.Name = "chkIsTec";
+            this.chkIsTec.Size = new System.Drawing.Size(75, 17);
+            this.chkIsTec.TabIndex = 19;
+            this.chkIsTec.Text = "É Técnico";
+            this.chkIsTec.UseVisualStyleBackColor = true;
+            // 
+            // chkIsAdmin
+            // 
+            this.chkIsAdmin.AutoSize = true;
+            this.chkIsAdmin.Location = new System.Drawing.Point(748, 182);
+            this.chkIsAdmin.Name = "chkIsAdmin";
+            this.chkIsAdmin.Size = new System.Drawing.Size(65, 17);
+            this.chkIsAdmin.TabIndex = 18;
+            this.chkIsAdmin.Text = "É Admin";
+            this.chkIsAdmin.UseVisualStyleBackColor = true;
             // 
             // btnPerfilNovo
             // 
@@ -754,6 +828,7 @@
             this.btnPerfilNovo.TabIndex = 10;
             this.btnPerfilNovo.Text = "Novo";
             this.btnPerfilNovo.UseVisualStyleBackColor = true;
+            this.btnPerfilNovo.Click += new System.EventHandler(this.btnPerfilNovo_Click);
             // 
             // btnPerfilSave
             // 
@@ -763,6 +838,7 @@
             this.btnPerfilSave.TabIndex = 9;
             this.btnPerfilSave.Text = "Gravar";
             this.btnPerfilSave.UseVisualStyleBackColor = true;
+            this.btnPerfilSave.Click += new System.EventHandler(this.btnPerfilSave_Click);
             // 
             // cbxPerfilHabilit
             // 
@@ -786,6 +862,7 @@
             this.txtPerfilSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPerfilSenha.Location = new System.Drawing.Point(748, 105);
             this.txtPerfilSenha.Name = "txtPerfilSenha";
+            this.txtPerfilSenha.PasswordChar = '*';
             this.txtPerfilSenha.Size = new System.Drawing.Size(406, 21);
             this.txtPerfilSenha.TabIndex = 6;
             // 
@@ -844,36 +921,6 @@
             this.lstPerfil.TabIndex = 0;
             this.lstPerfil.UseCompatibleStateImageBehavior = false;
             // 
-            // chkIsSuper
-            // 
-            this.chkIsSuper.AutoSize = true;
-            this.chkIsSuper.Location = new System.Drawing.Point(937, 182);
-            this.chkIsSuper.Name = "chkIsSuper";
-            this.chkIsSuper.Size = new System.Drawing.Size(86, 17);
-            this.chkIsSuper.TabIndex = 20;
-            this.chkIsSuper.Text = "É SuperUser";
-            this.chkIsSuper.UseVisualStyleBackColor = true;
-            // 
-            // chkIsTeck
-            // 
-            this.chkIsTeck.AutoSize = true;
-            this.chkIsTeck.Location = new System.Drawing.Point(831, 182);
-            this.chkIsTeck.Name = "chkIsTeck";
-            this.chkIsTeck.Size = new System.Drawing.Size(75, 17);
-            this.chkIsTeck.TabIndex = 19;
-            this.chkIsTeck.Text = "É Técnico";
-            this.chkIsTeck.UseVisualStyleBackColor = true;
-            // 
-            // chkIsAdmin
-            // 
-            this.chkIsAdmin.AutoSize = true;
-            this.chkIsAdmin.Location = new System.Drawing.Point(748, 182);
-            this.chkIsAdmin.Name = "chkIsAdmin";
-            this.chkIsAdmin.Size = new System.Drawing.Size(65, 17);
-            this.chkIsAdmin.TabIndex = 18;
-            this.chkIsAdmin.Text = "É Admin";
-            this.chkIsAdmin.UseVisualStyleBackColor = true;
-            // 
             // FormTickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -889,7 +936,6 @@
             this.tabTickets.ResumeLayout(false);
             this.tabTickets.PerformLayout();
             this.tabRequesicoes.ResumeLayout(false);
-            this.tabEquipamento.ResumeLayout(false);
             this.Aux.ResumeLayout(false);
             this.tbAuxs.ResumeLayout(false);
             this.tabAuxs.ResumeLayout(false);
@@ -914,7 +960,6 @@
         private System.Windows.Forms.StatusStrip StatusBar;
         private System.Windows.Forms.TabControl TicketsTabular;
         private System.Windows.Forms.TabPage tabTickets;
-        private System.Windows.Forms.TabPage tabEquipamento;
         private System.Windows.Forms.RadioButton rdbRedes;
         private System.Windows.Forms.RadioButton rdbSoftware;
         private System.Windows.Forms.RadioButton rdbTodos;
@@ -937,7 +982,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView lstPerfil;
         private System.Windows.Forms.ListView listView3;
-        private System.Windows.Forms.ListView listView4;
         private System.Windows.Forms.TabControl tbAuxs;
         private System.Windows.Forms.TabPage tabAuxs;
         private System.Windows.Forms.TabPage tbAreas;
@@ -984,8 +1028,14 @@
         private System.Windows.Forms.Button btnPerfilSave;
         private System.Windows.Forms.Button btnPerfilNovo;
         private System.Windows.Forms.CheckBox chkIsSuper;
-        private System.Windows.Forms.CheckBox chkIsTeck;
+        private System.Windows.Forms.CheckBox chkIsTec;
         private System.Windows.Forms.CheckBox chkIsAdmin;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button btnAreaDel;
+        private System.Windows.Forms.Button btnAreaAdd;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ListBox lsbAreas;
+        private System.Windows.Forms.ListBox lsbAreasIntre;
     }
 }
 

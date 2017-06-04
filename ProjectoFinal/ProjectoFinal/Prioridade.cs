@@ -61,5 +61,10 @@ namespace ProjectoFinal
                 descr = value;
             }
         }
+        public override string ToString()
+        {
+            return nivel.ToString() + " - " + smallname;
+        }
+
     }
 }
