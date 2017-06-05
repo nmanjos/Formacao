@@ -64,5 +64,9 @@ namespace ProjectoFinal
         {
             areaintre.Find(x => x.Descr.Contains(Area));
         }
+        public override string ToString()
+        {
+            return base.NIF.ToString() + " - " + base.Nome;
+        }
     }
 }

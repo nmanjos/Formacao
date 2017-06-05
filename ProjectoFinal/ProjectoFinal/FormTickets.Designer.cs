@@ -46,7 +46,7 @@
             this.listView3 = new System.Windows.Forms.ListView();
             this.Aux = new System.Windows.Forms.TabPage();
             this.tbAuxs = new System.Windows.Forms.TabControl();
-            this.tabAuxs = new System.Windows.Forms.TabPage();
+            this.tbHabilit = new System.Windows.Forms.TabPage();
             this.btnHabilitSave = new System.Windows.Forms.Button();
             this.txtHabilitDescr = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -140,7 +140,7 @@
             this.tabRequesicoes.SuspendLayout();
             this.Aux.SuspendLayout();
             this.tbAuxs.SuspendLayout();
-            this.tabAuxs.SuspendLayout();
+            this.tbHabilit.SuspendLayout();
             this.tbAreas.SuspendLayout();
             this.tbStates.SuspendLayout();
             this.tbPriority.SuspendLayout();
@@ -206,6 +206,7 @@
             this.cbxTicketEstado.Name = "cbxTicketEstado";
             this.cbxTicketEstado.Size = new System.Drawing.Size(139, 21);
             this.cbxTicketEstado.TabIndex = 9;
+            this.cbxTicketEstado.SelectionChangeCommitted += new System.EventHandler(this.cbxTicketEstado_SelectionChangeCommitted);
             // 
             // btnNovo
             // 
@@ -328,7 +329,7 @@
             // tbAuxs
             // 
             this.tbAuxs.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tbAuxs.Controls.Add(this.tabAuxs);
+            this.tbAuxs.Controls.Add(this.tbHabilit);
             this.tbAuxs.Controls.Add(this.tbAreas);
             this.tbAuxs.Controls.Add(this.tbStates);
             this.tbAuxs.Controls.Add(this.tbPriority);
@@ -341,22 +342,22 @@
             this.tbAuxs.Size = new System.Drawing.Size(1160, 464);
             this.tbAuxs.TabIndex = 0;
             // 
-            // tabAuxs
+            // tbHabilit
             // 
-            this.tabAuxs.Controls.Add(this.btnHabilitSave);
-            this.tabAuxs.Controls.Add(this.txtHabilitDescr);
-            this.tabAuxs.Controls.Add(this.label7);
-            this.tabAuxs.Controls.Add(this.txtNivel);
-            this.tabAuxs.Controls.Add(this.label6);
-            this.tabAuxs.Controls.Add(this.lstHabilit);
-            this.tabAuxs.Location = new System.Drawing.Point(23, 4);
-            this.tabAuxs.Name = "tabAuxs";
-            this.tabAuxs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAuxs.Size = new System.Drawing.Size(1133, 456);
-            this.tabAuxs.TabIndex = 0;
-            this.tabAuxs.Text = "Habilitações";
-            this.tabAuxs.UseVisualStyleBackColor = true;
-            this.tabAuxs.Enter += new System.EventHandler(this.tabAuxs_Enter);
+            this.tbHabilit.Controls.Add(this.btnHabilitSave);
+            this.tbHabilit.Controls.Add(this.txtHabilitDescr);
+            this.tbHabilit.Controls.Add(this.label7);
+            this.tbHabilit.Controls.Add(this.txtNivel);
+            this.tbHabilit.Controls.Add(this.label6);
+            this.tbHabilit.Controls.Add(this.lstHabilit);
+            this.tbHabilit.Location = new System.Drawing.Point(23, 4);
+            this.tbHabilit.Name = "tbHabilit";
+            this.tbHabilit.Padding = new System.Windows.Forms.Padding(3);
+            this.tbHabilit.Size = new System.Drawing.Size(1133, 456);
+            this.tbHabilit.TabIndex = 0;
+            this.tbHabilit.Text = "Habilitações";
+            this.tbHabilit.UseVisualStyleBackColor = true;
+            this.tbHabilit.Enter += new System.EventHandler(this.tbHabilit_Enter_1);
             // 
             // btnHabilitSave
             // 
@@ -579,6 +580,7 @@
             this.tbPriority.TabIndex = 3;
             this.tbPriority.Text = "Prioridades";
             this.tbPriority.UseVisualStyleBackColor = true;
+            this.tbPriority.Enter += new System.EventHandler(this.tbPriority_Enter);
             // 
             // btnPrioSave
             // 
@@ -760,12 +762,14 @@
             // lstMateriais
             // 
             this.lstMateriais.Location = new System.Drawing.Point(0, 0);
+            this.lstMateriais.MultiSelect = false;
             this.lstMateriais.Name = "lstMateriais";
             this.lstMateriais.Size = new System.Drawing.Size(464, 400);
             this.lstMateriais.TabIndex = 15;
             this.lstMateriais.UseCompatibleStateImageBehavior = false;
             this.lstMateriais.UseWaitCursor = true;
             this.lstMateriais.View = System.Windows.Forms.View.Details;
+            this.lstMateriais.SelectedIndexChanged += new System.EventHandler(this.lstMateriais_SelectedIndexChanged);
             // 
             // tbEquipamentos
             // 
@@ -799,6 +803,7 @@
             this.tbEquipamentos.TabIndex = 5;
             this.tbEquipamentos.Text = "Equipamentos";
             this.tbEquipamentos.UseVisualStyleBackColor = true;
+            this.tbEquipamentos.Enter += new System.EventHandler(this.tbEquipamentos_Enter);
             // 
             // comboBox1
             // 
@@ -1252,8 +1257,8 @@
             this.tabRequesicoes.ResumeLayout(false);
             this.Aux.ResumeLayout(false);
             this.tbAuxs.ResumeLayout(false);
-            this.tabAuxs.ResumeLayout(false);
-            this.tabAuxs.PerformLayout();
+            this.tbHabilit.ResumeLayout(false);
+            this.tbHabilit.PerformLayout();
             this.tbAreas.ResumeLayout(false);
             this.tbAreas.PerformLayout();
             this.tbStates.ResumeLayout(false);
@@ -1299,7 +1304,7 @@
         private System.Windows.Forms.ListView lstPerfil;
         private System.Windows.Forms.ListView listView3;
         private System.Windows.Forms.TabControl tbAuxs;
-        private System.Windows.Forms.TabPage tabAuxs;
+        private System.Windows.Forms.TabPage tbHabilit;
         private System.Windows.Forms.TabPage tbAreas;
         private System.Windows.Forms.TabPage tbStates;
         private System.Windows.Forms.TabPage tbPriority;

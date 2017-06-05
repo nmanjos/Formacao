@@ -452,6 +452,9 @@ namespace ProjectoFinal
                     CurrentUser = new Tecnico();
 
                     ((Tecnico)CurrentUser).AreaIntre = ProcuraAreas(Reader.GetInt32(0));
+                    ((Tecnico)CurrentUser).Is_Admin = Reader.GetBoolean(4);
+                    ((Tecnico)CurrentUser).Is_Super = Reader.GetBoolean(6);
+
                 }
                 else
                 {

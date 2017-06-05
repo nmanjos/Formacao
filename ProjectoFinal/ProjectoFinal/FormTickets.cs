@@ -180,10 +180,9 @@ namespace ProjectoFinal
                     {
                         StatusBar.Text = Program.TicketDB.GetError();
                     }
-                    
                     break;
                 case "tbPriority":
-              //      LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
+                     LoadlstView(lstMateriais, Program.TicketDB.ProcuraMaterial().ToArray());
                     break;
                 default:
                     break;
@@ -202,15 +201,12 @@ namespace ProjectoFinal
 
         private void tabPerfil_Enter(object sender, EventArgs e)
         {
-            
                 List<Habilitacao> HAbilits = Program.TicketDB.ProcuraHabilitacoes();
                 foreach (Habilitacao habilit in HAbilits)
                 {
                     cbxPerfilHabilit.Items.Add(habilit.ToString());
                 }
-                LoadlstView(lstPerfil, Program.TicketDB.ProcuraPerfis().ToArray());
-            
-            
+ //               LoadlstView(lstPerfil, Program.TicketDB.ProcuraPerfis().ToArray());
         }
 
         private void TicketsTabular_Click(object sender, EventArgs e)
@@ -231,11 +227,6 @@ namespace ProjectoFinal
         private void tabRequesicoes_Enter(object sender, EventArgs e)
         {
             MessageBox.Show("You have Raised event tabRequesicoes_Enter");
-        }
-
-        private void tabAuxs_Enter(object sender, EventArgs e)
-        {
-            MessageBox.Show("You have Raised event tabAuxs_Enter");
         }
 
         private void tabTickets_Enter(object sender, EventArgs e)
@@ -375,6 +366,33 @@ namespace ProjectoFinal
         private void tabRequesicoes_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbxTicketEstado_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            LoadlstTicket();
+        }
+
+        private void tbHabilit_Enter_1(object sender, EventArgs e)
+        {
+            LoadAuxs(tbHabilit);
+        }
+
+        private void tbPriority_Enter(object sender, EventArgs e)
+        {
+            LoadAuxs(tbPriority);
+        }
+
+        private void tbEquipamentos_Enter(object sender, EventArgs e)
+
+        {
+            LoadAuxs(tbEquipamentos);
+
+        }
+
+        private void lstMateriais_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          //  lstMateriais.SelectedItems[0].
         }
     }
 }

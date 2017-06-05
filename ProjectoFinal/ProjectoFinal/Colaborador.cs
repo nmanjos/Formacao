@@ -15,5 +15,9 @@ namespace ProjectoFinal
         {
 
         }
+        public override string ToString()
+        {
+            return base.NIF.ToString() + " - " + base.Nome;
+        }
     }
 }
