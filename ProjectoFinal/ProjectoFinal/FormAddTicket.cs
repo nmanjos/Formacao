@@ -54,7 +54,7 @@ namespace ProjectoFinal
             TK.Description = rtxDescr.Text;
             TK.Createdate = DateTime.Now;
             TK.Areaintre = new Area(cbxTAvaria.Text);
-            Equip.Inventcode = cbxEquipamento.Text.Split('-')[0].Trim() ;
+            Equip.Inventcode = int.Parse(cbxEquipamento.Text.Split('-')[0].Trim()) ;
             TK.Equipamento = Equip;
 
             if (Program.TicketDB.InsereTicket(TK))

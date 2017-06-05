@@ -13,7 +13,7 @@ namespace ProjectoFinal
         private DateTime lastupdate;   // data do ultimo update
         private Colaborador requester;     //Colaborador que criou o Ticket
         private Area areaintre; //Area de Intrevencao, Define o tipo de Intreveção a ser realizado, só pode ser alterada na criacao do registo e pelo Administrador atravez do processo de atribuição.
-        private int priority;//Nível de Urgência P1 P2 P3 P4
+        private Prioridade priority;//Nível de Urgência P1 P2 P3 P4
         private Equipamento equipamento;   //Elemento que gerou a anomalia
         private string description;    //Descrição da anomalia
         private List<Tecnico> tecnicos;   //Técnico ou técnicos associados
@@ -27,7 +27,7 @@ namespace ProjectoFinal
         {
 
         }
-        public Ticket(int Num, DateTime Createdate, DateTime Lastupdate, Colaborador Requester, Area Areaintre, int priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
+        public Ticket(int Num, DateTime Createdate, DateTime Lastupdate, Colaborador Requester, Area Areaintre, Prioridade priority, Equipamento Equipamento, string Description, List<Tecnico> Tecnicos, Status Estado, List<MaterialRequest> Encomendas, int Horas, string Resolution, Tecnico Quemfechou)
         {
             this.num = Num;
             this.createdate = Createdate;
@@ -110,7 +110,7 @@ namespace ProjectoFinal
             }
         }
 
-        public int Priority
+        public Prioridade Priority
         {
             get
             {

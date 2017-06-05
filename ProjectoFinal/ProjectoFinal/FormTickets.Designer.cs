@@ -31,6 +31,8 @@
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.TicketsTabular = new System.Windows.Forms.TabControl();
             this.tabTickets = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cbxTicketEstado = new System.Windows.Forms.ComboBox();
             this.btnNovo = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.rdbRedes = new System.Windows.Forms.RadioButton();
@@ -75,17 +77,43 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lstPrio = new System.Windows.Forms.ListView();
             this.tbMateriais = new System.Windows.Forms.TabPage();
+            this.btnMatNovo = new System.Windows.Forms.Button();
             this.btnMatSave = new System.Windows.Forms.Button();
             this.chkMatIsSoftware = new System.Windows.Forms.CheckBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtMatPrice = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtMatSupplier = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txtMatNome = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.txtMatPartnumber = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.lstMateriais = new System.Windows.Forms.ListView();
+            this.tbEquipamentos = new System.Windows.Forms.TabPage();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.txtEquipLocation = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.txtPartNum = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtModel = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtSupplier = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtIventCode = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.lstEquip = new System.Windows.Forms.ListView();
             this.tabPerfil = new System.Windows.Forms.TabPage();
             this.btnAreaDel = new System.Windows.Forms.Button();
             this.btnAreaAdd = new System.Windows.Forms.Button();
@@ -117,6 +145,7 @@
             this.tbStates.SuspendLayout();
             this.tbPriority.SuspendLayout();
             this.tbMateriais.SuspendLayout();
+            this.tbEquipamentos.SuspendLayout();
             this.tabPerfil.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,6 +170,8 @@
             // 
             // tabTickets
             // 
+            this.tabTickets.Controls.Add(this.label19);
+            this.tabTickets.Controls.Add(this.cbxTicketEstado);
             this.tabTickets.Controls.Add(this.btnNovo);
             this.tabTickets.Controls.Add(this.listView2);
             this.tabTickets.Controls.Add(this.rdbRedes);
@@ -158,6 +189,23 @@
             this.tabTickets.Text = "Tickets";
             this.tabTickets.UseVisualStyleBackColor = true;
             this.tabTickets.Enter += new System.EventHandler(this.tabTickets_Enter);
+            // 
+            // label19
+            // 
+            this.label19.Location = new System.Drawing.Point(130, 3);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(51, 20);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "Estado";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbxTicketEstado
+            // 
+            this.cbxTicketEstado.FormattingEnabled = true;
+            this.cbxTicketEstado.Location = new System.Drawing.Point(187, 2);
+            this.cbxTicketEstado.Name = "cbxTicketEstado";
+            this.cbxTicketEstado.Size = new System.Drawing.Size(139, 21);
+            this.cbxTicketEstado.TabIndex = 9;
             // 
             // btnNovo
             // 
@@ -256,6 +304,7 @@
             this.tabRequesicoes.TabIndex = 2;
             this.tabRequesicoes.Text = "Requesições";
             this.tabRequesicoes.UseVisualStyleBackColor = true;
+            this.tabRequesicoes.Click += new System.EventHandler(this.tabRequesicoes_Click);
             this.tabRequesicoes.Enter += new System.EventHandler(this.tabRequesicoes_Enter);
             // 
             // listView3
@@ -284,6 +333,7 @@
             this.tbAuxs.Controls.Add(this.tbStates);
             this.tbAuxs.Controls.Add(this.tbPriority);
             this.tbAuxs.Controls.Add(this.tbMateriais);
+            this.tbAuxs.Controls.Add(this.tbEquipamentos);
             this.tbAuxs.Location = new System.Drawing.Point(7, 3);
             this.tbAuxs.Multiline = true;
             this.tbAuxs.Name = "tbAuxs";
@@ -581,15 +631,16 @@
             // 
             // tbMateriais
             // 
+            this.tbMateriais.Controls.Add(this.btnMatNovo);
             this.tbMateriais.Controls.Add(this.btnMatSave);
             this.tbMateriais.Controls.Add(this.chkMatIsSoftware);
-            this.tbMateriais.Controls.Add(this.textBox5);
+            this.tbMateriais.Controls.Add(this.txtMatPrice);
             this.tbMateriais.Controls.Add(this.label16);
-            this.tbMateriais.Controls.Add(this.textBox3);
+            this.tbMateriais.Controls.Add(this.txtMatSupplier);
             this.tbMateriais.Controls.Add(this.label11);
-            this.tbMateriais.Controls.Add(this.textBox8);
+            this.tbMateriais.Controls.Add(this.txtMatNome);
             this.tbMateriais.Controls.Add(this.label14);
-            this.tbMateriais.Controls.Add(this.textBox9);
+            this.tbMateriais.Controls.Add(this.txtMatPartnumber);
             this.tbMateriais.Controls.Add(this.label15);
             this.tbMateriais.Controls.Add(this.lstMateriais);
             this.tbMateriais.Location = new System.Drawing.Point(23, 4);
@@ -601,15 +652,27 @@
             this.tbMateriais.UseWaitCursor = true;
             this.tbMateriais.Enter += new System.EventHandler(this.tbMateriais_Enter);
             // 
+            // btnMatNovo
+            // 
+            this.btnMatNovo.Location = new System.Drawing.Point(1002, 3);
+            this.btnMatNovo.Name = "btnMatNovo";
+            this.btnMatNovo.Size = new System.Drawing.Size(61, 23);
+            this.btnMatNovo.TabIndex = 26;
+            this.btnMatNovo.Text = "Novo";
+            this.btnMatNovo.UseVisualStyleBackColor = true;
+            this.btnMatNovo.UseWaitCursor = true;
+            this.btnMatNovo.Click += new System.EventHandler(this.btnMatNovo_Click);
+            // 
             // btnMatSave
             // 
             this.btnMatSave.Location = new System.Drawing.Point(1069, 3);
             this.btnMatSave.Name = "btnMatSave";
-            this.btnMatSave.Size = new System.Drawing.Size(61, 61);
+            this.btnMatSave.Size = new System.Drawing.Size(61, 23);
             this.btnMatSave.TabIndex = 25;
             this.btnMatSave.Text = "Gravar";
             this.btnMatSave.UseVisualStyleBackColor = true;
             this.btnMatSave.UseWaitCursor = true;
+            this.btnMatSave.Click += new System.EventHandler(this.btnMatSave_Click);
             // 
             // chkMatIsSoftware
             // 
@@ -622,13 +685,13 @@
             this.chkMatIsSoftware.UseVisualStyleBackColor = true;
             this.chkMatIsSoftware.UseWaitCursor = true;
             // 
-            // textBox5
+            // txtMatPrice
             // 
-            this.textBox5.Location = new System.Drawing.Point(610, 111);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(433, 20);
-            this.textBox5.TabIndex = 23;
-            this.textBox5.UseWaitCursor = true;
+            this.txtMatPrice.Location = new System.Drawing.Point(610, 111);
+            this.txtMatPrice.Name = "txtMatPrice";
+            this.txtMatPrice.Size = new System.Drawing.Size(79, 20);
+            this.txtMatPrice.TabIndex = 23;
+            this.txtMatPrice.UseWaitCursor = true;
             // 
             // label16
             // 
@@ -640,13 +703,13 @@
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label16.UseWaitCursor = true;
             // 
-            // textBox3
+            // txtMatSupplier
             // 
-            this.textBox3.Location = new System.Drawing.Point(610, 76);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(433, 20);
-            this.textBox3.TabIndex = 21;
-            this.textBox3.UseWaitCursor = true;
+            this.txtMatSupplier.Location = new System.Drawing.Point(610, 76);
+            this.txtMatSupplier.Name = "txtMatSupplier";
+            this.txtMatSupplier.Size = new System.Drawing.Size(433, 20);
+            this.txtMatSupplier.TabIndex = 21;
+            this.txtMatSupplier.UseWaitCursor = true;
             // 
             // label11
             // 
@@ -658,13 +721,13 @@
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label11.UseWaitCursor = true;
             // 
-            // textBox8
+            // txtMatNome
             // 
-            this.textBox8.Location = new System.Drawing.Point(610, 41);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(433, 20);
-            this.textBox8.TabIndex = 19;
-            this.textBox8.UseWaitCursor = true;
+            this.txtMatNome.Location = new System.Drawing.Point(610, 41);
+            this.txtMatNome.Name = "txtMatNome";
+            this.txtMatNome.Size = new System.Drawing.Size(433, 20);
+            this.txtMatNome.TabIndex = 19;
+            this.txtMatNome.UseWaitCursor = true;
             // 
             // label14
             // 
@@ -676,13 +739,13 @@
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label14.UseWaitCursor = true;
             // 
-            // textBox9
+            // txtMatPartnumber
             // 
-            this.textBox9.Location = new System.Drawing.Point(610, 6);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(63, 20);
-            this.textBox9.TabIndex = 17;
-            this.textBox9.UseWaitCursor = true;
+            this.txtMatPartnumber.Location = new System.Drawing.Point(610, 6);
+            this.txtMatPartnumber.Name = "txtMatPartnumber";
+            this.txtMatPartnumber.Size = new System.Drawing.Size(63, 20);
+            this.txtMatPartnumber.TabIndex = 17;
+            this.txtMatPartnumber.UseWaitCursor = true;
             // 
             // label15
             // 
@@ -702,6 +765,257 @@
             this.lstMateriais.TabIndex = 15;
             this.lstMateriais.UseCompatibleStateImageBehavior = false;
             this.lstMateriais.UseWaitCursor = true;
+            this.lstMateriais.View = System.Windows.Forms.View.Details;
+            // 
+            // tbEquipamentos
+            // 
+            this.tbEquipamentos.Controls.Add(this.comboBox1);
+            this.tbEquipamentos.Controls.Add(this.txtEquipLocation);
+            this.tbEquipamentos.Controls.Add(this.label29);
+            this.tbEquipamentos.Controls.Add(this.label28);
+            this.tbEquipamentos.Controls.Add(this.txtPartNum);
+            this.tbEquipamentos.Controls.Add(this.label27);
+            this.tbEquipamentos.Controls.Add(this.txtModel);
+            this.tbEquipamentos.Controls.Add(this.label26);
+            this.tbEquipamentos.Controls.Add(this.button2);
+            this.tbEquipamentos.Controls.Add(this.button3);
+            this.tbEquipamentos.Controls.Add(this.label24);
+            this.tbEquipamentos.Controls.Add(this.listBox1);
+            this.tbEquipamentos.Controls.Add(this.label25);
+            this.tbEquipamentos.Controls.Add(this.listBox2);
+            this.tbEquipamentos.Controls.Add(this.button1);
+            this.tbEquipamentos.Controls.Add(this.textBox2);
+            this.tbEquipamentos.Controls.Add(this.label20);
+            this.tbEquipamentos.Controls.Add(this.txtSupplier);
+            this.tbEquipamentos.Controls.Add(this.label21);
+            this.tbEquipamentos.Controls.Add(this.textBox6);
+            this.tbEquipamentos.Controls.Add(this.label22);
+            this.tbEquipamentos.Controls.Add(this.txtIventCode);
+            this.tbEquipamentos.Controls.Add(this.label23);
+            this.tbEquipamentos.Controls.Add(this.lstEquip);
+            this.tbEquipamentos.Location = new System.Drawing.Point(23, 4);
+            this.tbEquipamentos.Name = "tbEquipamentos";
+            this.tbEquipamentos.Size = new System.Drawing.Size(1133, 456);
+            this.tbEquipamentos.TabIndex = 5;
+            this.tbEquipamentos.Text = "Equipamentos";
+            this.tbEquipamentos.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(610, 109);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(433, 21);
+            this.comboBox1.TabIndex = 51;
+            // 
+            // txtEquipLocation
+            // 
+            this.txtEquipLocation.Location = new System.Drawing.Point(842, 84);
+            this.txtEquipLocation.Name = "txtEquipLocation";
+            this.txtEquipLocation.Size = new System.Drawing.Size(201, 20);
+            this.txtEquipLocation.TabIndex = 50;
+            this.txtEquipLocation.UseWaitCursor = true;
+            // 
+            // label29
+            // 
+            this.label29.Location = new System.Drawing.Point(759, 84);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(77, 20);
+            this.label29.TabIndex = 49;
+            this.label29.Text = "Localização:";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label29.UseWaitCursor = true;
+            // 
+            // label28
+            // 
+            this.label28.Location = new System.Drawing.Point(475, 110);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(129, 20);
+            this.label28.TabIndex = 47;
+            this.label28.Text = "Responsavel:";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label28.UseWaitCursor = true;
+            // 
+            // txtPartNum
+            // 
+            this.txtPartNum.Location = new System.Drawing.Point(980, 6);
+            this.txtPartNum.Name = "txtPartNum";
+            this.txtPartNum.Size = new System.Drawing.Size(63, 20);
+            this.txtPartNum.TabIndex = 46;
+            this.txtPartNum.UseWaitCursor = true;
+            // 
+            // label27
+            // 
+            this.label27.Location = new System.Drawing.Point(896, 6);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(73, 20);
+            this.label27.TabIndex = 45;
+            this.label27.Text = "PartNumber:";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label27.UseWaitCursor = true;
+            // 
+            // txtModel
+            // 
+            this.txtModel.Location = new System.Drawing.Point(828, 6);
+            this.txtModel.Name = "txtModel";
+            this.txtModel.Size = new System.Drawing.Size(63, 20);
+            this.txtModel.TabIndex = 44;
+            this.txtModel.UseWaitCursor = true;
+            // 
+            // label26
+            // 
+            this.label26.Location = new System.Drawing.Point(746, 6);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(71, 20);
+            this.label26.TabIndex = 43;
+            this.label26.Text = "ModelNum:";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label26.UseWaitCursor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(809, 213);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(32, 32);
+            this.button2.TabIndex = 42;
+            this.button2.Text = "<";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Location = new System.Drawing.Point(809, 175);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(32, 32);
+            this.button3.TabIndex = 41;
+            this.button3.Text = ">";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.Location = new System.Drawing.Point(852, 147);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(191, 21);
+            this.label24.TabIndex = 40;
+            this.label24.Text = "Peças do Equipamento";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(610, 175);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(191, 225);
+            this.listBox1.TabIndex = 39;
+            // 
+            // label25
+            // 
+            this.label25.Location = new System.Drawing.Point(610, 147);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(191, 21);
+            this.label25.TabIndex = 38;
+            this.label25.Text = "Materiais";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(852, 175);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(191, 225);
+            this.listBox2.TabIndex = 37;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1069, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 61);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "Gravar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseWaitCursor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(610, 84);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(143, 20);
+            this.textBox2.TabIndex = 34;
+            this.textBox2.UseWaitCursor = true;
+            // 
+            // label20
+            // 
+            this.label20.Location = new System.Drawing.Point(475, 84);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(129, 20);
+            this.label20.TabIndex = 33;
+            this.label20.Text = "Preço:";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label20.UseWaitCursor = true;
+            // 
+            // txtSupplier
+            // 
+            this.txtSupplier.Location = new System.Drawing.Point(610, 58);
+            this.txtSupplier.Name = "txtSupplier";
+            this.txtSupplier.Size = new System.Drawing.Size(433, 20);
+            this.txtSupplier.TabIndex = 32;
+            this.txtSupplier.UseWaitCursor = true;
+            // 
+            // label21
+            // 
+            this.label21.Location = new System.Drawing.Point(475, 58);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(129, 20);
+            this.label21.TabIndex = 31;
+            this.label21.Text = "Fornecedor:";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label21.UseWaitCursor = true;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(610, 32);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(433, 20);
+            this.textBox6.TabIndex = 30;
+            this.textBox6.UseWaitCursor = true;
+            // 
+            // label22
+            // 
+            this.label22.Location = new System.Drawing.Point(475, 32);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(129, 20);
+            this.label22.TabIndex = 29;
+            this.label22.Text = "Nome do Equipamento:";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label22.UseWaitCursor = true;
+            // 
+            // txtIventCode
+            // 
+            this.txtIventCode.Location = new System.Drawing.Point(610, 6);
+            this.txtIventCode.Name = "txtIventCode";
+            this.txtIventCode.Size = new System.Drawing.Size(63, 20);
+            this.txtIventCode.TabIndex = 28;
+            this.txtIventCode.UseWaitCursor = true;
+            // 
+            // label23
+            // 
+            this.label23.Location = new System.Drawing.Point(475, 6);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(129, 20);
+            this.label23.TabIndex = 27;
+            this.label23.Text = "Num. Inventário:";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label23.UseWaitCursor = true;
+            // 
+            // lstEquip
+            // 
+            this.lstEquip.Location = new System.Drawing.Point(0, 0);
+            this.lstEquip.Name = "lstEquip";
+            this.lstEquip.Size = new System.Drawing.Size(464, 400);
+            this.lstEquip.TabIndex = 26;
+            this.lstEquip.UseCompatibleStateImageBehavior = false;
+            this.lstEquip.UseWaitCursor = true;
             // 
             // tabPerfil
             // 
@@ -948,6 +1262,8 @@
             this.tbPriority.PerformLayout();
             this.tbMateriais.ResumeLayout(false);
             this.tbMateriais.PerformLayout();
+            this.tbEquipamentos.ResumeLayout(false);
+            this.tbEquipamentos.PerformLayout();
             this.tabPerfil.ResumeLayout(false);
             this.tabPerfil.PerformLayout();
             this.ResumeLayout(false);
@@ -1006,9 +1322,9 @@
         private System.Windows.Forms.TextBox txtPrioLevel;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ListView lstPrio;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox txtMatNome;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox txtMatPartnumber;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ListView lstMateriais;
         private System.Windows.Forms.CheckBox chkStateIsRequest;
@@ -1016,9 +1332,9 @@
         private System.Windows.Forms.CheckBox chkStateIsReject;
         private System.Windows.Forms.CheckBox chkStateIsFinal;
         private System.Windows.Forms.CheckBox chkMatIsSoftware;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtMatPrice;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtMatSupplier;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnHabilitSave;
         private System.Windows.Forms.Button btnAreasSave;
@@ -1036,6 +1352,34 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ListBox lsbAreas;
         private System.Windows.Forms.ListBox lsbAreasIntre;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cbxTicketEstado;
+        private System.Windows.Forms.TabPage tbEquipamentos;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtSupplier;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox txtIventCode;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.ListView lstEquip;
+        private System.Windows.Forms.TextBox txtPartNum;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox txtModel;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txtEquipLocation;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button btnMatNovo;
     }
 }
 

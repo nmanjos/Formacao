@@ -10,7 +10,7 @@ namespace ProjectoFinal
     {
         string partnumber;
         string modelnum;
-        string inventcode;
+        int inventcode;
         string description;
         List<Material> pecas;
         string localizacao;
@@ -20,7 +20,7 @@ namespace ProjectoFinal
         {
 
         }
-        public Equipamento(string InventCode,string PartNumber, string ModelNum,  string Descr, List<Material> Pecas, string Localizacao, Perfil Empregado, double Price)
+                public Equipamento(int InventCode,string PartNumber, string ModelNum,  string Descr, List<Material> Pecas, string Localizacao, Perfil Empregado, double Price)
         {
             partnumber = PartNumber;
             modelnum = ModelNum;
@@ -58,7 +58,7 @@ namespace ProjectoFinal
             }
         }
 
-        public string Inventcode
+        public int Inventcode
         {
             get
             {

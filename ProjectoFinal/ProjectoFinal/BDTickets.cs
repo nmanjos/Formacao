@@ -63,6 +63,64 @@ namespace ProjectoFinal
             myCommand.Dispose();
 
         }
+        private SqlDataReader ProcuraSQL(string Table, string[] Fields, List<string[]> condition)
+        {
+            int i = condition.Count();
+            int j = condition[0].Length;
+            string[,] cond = new string[i,j];
+            
+
+            for (int s = 0; s < i; s++)
+            {
+                for (int k = 0; k < j; k++)
+                {
+                    cond[s, k] = condition[s][k];
+                }
+            }
+            return ProcuraSQL(Table, Fields, cond);
+        }
+
+        private SqlDataReader ProcuraSQL(string Table, string[] Fields)
+        {
+            SqlDataReader Reader;
+            SqlCommand myCommand = new SqlCommand();
+
+            string qry = "SELECT ";
+            if (Fields != null)
+            {
+                for (int i = 0; i < Fields.Length; i++)
+                {
+                    qry += Fields[i];
+                    if (i < Fields.Length - 1)
+                    {
+                        qry += ", ";
+                    }
+                }
+            }
+            else
+            {
+                qry += "*";
+            }
+            qry += " FROM " + Table;
+            
+            qry += ";";
+            myCommand.CommandText = qry;
+            myCommand.Connection = OpenConnection(DBNAME);
+            try
+            {
+                Reader = myCommand.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                Errors.Push(e.Message);  // write to app log
+                Reader = null;
+                myCommand.Connection.Close();
+                myCommand.Dispose();
+
+
+            }
+            return Reader;
+        }
         /// <summary>
         /// Procura uma só tabela, devolve os campos definidos no segundo array, segundo a condição do terceiro array
         /// o unico parametro que não poder ser null é o primeiro, nesse caso devolve todos os registos da tabela!
@@ -179,10 +237,12 @@ namespace ProjectoFinal
             if (Condition != null)
             {
                 qry += " WHERE ";
+
                 for (int i = 0; i < Condition.GetLength(0); i++)
                 {
-                    myCommand.Parameters.AddWithValue("@" + Condition[i, 0], Condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value
-                    qry += Condition[i, 0] + " " + Condition[i, 1] + " @" + Condition[i, 0];
+                    
+                    myCommand.Parameters.AddWithValue("@" + Condition[i, 0].Replace(".", ""), Condition[i, 2]); // Condition has 3 columns 0=Field, 1=Operand 2=Value
+                    qry += Condition[i, 0] + " " + Condition[i, 1] + " @" + Condition[i, 0].Replace(".", "");
                     if (i < (Condition.GetLength(0) - 1))
                     {
                         qry += " AND "; // Add the condition 
@@ -749,19 +809,70 @@ namespace ProjectoFinal
 
         public Ticket ProcuraTicket(int Id)
         {
-            throw new NotImplementedException();
+            
+            SqlDataReader Reader = ProcuraSQL("Tickets", new string[] { "Id", "prioridade", "createdate", "Requester", "horas", "State", "Equipamento", "lastupdate", "quemfechou", "Descricao", "Resolucao","Area_Id" }, new string[,]{ { "Id","=",Id.ToString()} });
+            Ticket TK = new Ticket();
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+
+                    TK.Num = Reader.GetInt32(0);
+                    TK.Priority = ProcuraPrioridade(Reader.GetInt32(1));
+                    TK.Createdate = Reader.GetDateTime(2);
+                    TK.Requester = (Colaborador)ProcuraPerfil(Reader.GetInt32(3));
+                    TK.Horas = Reader.GetInt32(4);
+                    TK.Estado = ProcuraEstado(Reader.GetInt32(5));
+                    TK.Num = Reader.GetInt32(0);
+                        
+                }
+            }
+            return TK;
         }
 
         public List<Ticket> ProcuraTicketsEncomendaPendente()
         {
             throw new NotImplementedException();
         }
-        public List<Ticket> ProcuraTicketsPorEstado(String Estado)
+        public List<Ticket> ProcuraTicketsPorEstadoTipo(string Estado, int tipo)
         {
-            throw new NotImplementedException();
+            List<string[]> cond = new List<string[]>();
+
+
+
+            if (tipo > 0) cond.Add(new string[] { "Area_Id", "=", tipo.ToString() });
+            cond.Add(new string[] { "State", "=", GetID("States", "name", "Id", Estado).ToString() });
+            
+
+
+
+            SqlDataReader Reader = ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, cond );
+            List<Ticket> lstTK = new List<Ticket>();
+            if (Reader != null)
+            {
+
+
+                if (Reader.HasRows)
+                {
+                    while (Reader.Read())
+                    {
+                        Ticket tk = new Ticket();
+                        tk.Num = Reader.GetInt32(0);
+                        tk.Num = Reader.GetInt32(1);
+                        tk.Num = Reader.GetInt32(2);
+                        tk.Num = Reader.GetInt32(3);
+                        tk.Num = Reader.GetInt32(4);
+                        tk.Num = Reader.GetInt32(5);
+                        tk.Num = Reader.GetInt32(0);
+                        lstTK.Add(tk);
+                    }
+                }
+            }
+            return lstTK;
         }
         /// <summary>
-        /// Esta função usa a ProcuraTicketsPorEstado é mantida para compatibilidade com versões antigas do interface
+        /// Esta função usa a ProcuraTicketsPorEstadoTipo é mantida para compatibilidade com versões antigas do interface
         /// O estado Por Associar é Hardcoded na base de dados devido a isso 
         /// </summary>
         /// <returns></returns>
@@ -775,42 +886,36 @@ namespace ProjectoFinal
             throw new NotImplementedException();
         }
 
-        public List<Ticket> ProcuraTicketsTipo(int tipo)
+        public Status ProcuraEstado(int Id)
         {
+            Status ST = new Status();
             string[,] cond = new string[1, 3];
-            cond[0, 0] = "Area_Id";
+            cond[0, 0] = "Id";
             cond[0, 1] = "=";
-            cond[0, 2] = tipo.ToString();
+            cond[0, 2] = Id.ToString();
 
-            SqlDataReader Reader = ProcuraSQL("Tickets", new string[] { "ID", "Descricao", "Equipamento", "lastupdate" }, cond);
-            List<Ticket> lstTK = new List<Ticket>();
+            SqlDataReader Reader = ProcuraSQL("States", new string[] { "Name", "IsFinalState", "IsRejectState", "Is_Ticket", "Is_Request" }, cond);
+            List<Status> lstST = new List<Status>();
             if (Reader != null)
             {
-
-
                 if (Reader.HasRows)
                 {
-                    while (Reader.Read())
-                    {
-                        Ticket tk = new Ticket();
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        tk.Num = Reader.GetInt32(0);
-                        lstTK.Add(tk);
-                    }
+                    Reader.Read();
+                    ST.Descr = Reader.GetString(0);
+                    ST.Is_final = Reader.GetBoolean(1);
+                    ST.Is_rejected = Reader.GetBoolean(2);
+                    ST.Is_request = Reader.GetBoolean(3);
+                    ST.Is_ticket = Reader.GetBoolean(4);
                 }
+                Reader.Close();
             }
-            return lstTK;
+            return ST;
         }
 
         public Status ProcuraEstado(string name)
         {
             Status ST = new Status();
-            string[,] cond = new string[2, 3];
+            string[,] cond = new string[1, 3];
             cond[0, 0] = "name";
             cond[0, 1] = "=";
             cond[0, 2] = name;
@@ -834,15 +939,16 @@ namespace ProjectoFinal
         }
         public List<Status> ProcuraEstados(bool is_Ticket, bool is_Request)
         {
-            string[,] cond = new string[2, 3];
-            cond[0, 0] = "Is_Ticket";
-            cond[0, 1] = "=";
-            cond[0, 2] = "0";
-            if (is_Ticket) cond[0, 2] = "1";
-            cond[1, 0] = "Is_Request";
-            cond[1, 1] = "=";
-            cond[1, 2] = "0";
-            if (is_Request) cond[1, 2] = "1";
+            List<string[]> cond = new List<string[]>();
+            if (is_Ticket)
+            {
+                cond.Add(new string[] { "Is_Ticket", "=", "1" });
+            }
+            if (is_Request)
+            {
+                cond.Add(new string[] { "Is_Request", "=", "1" });
+            }
+
             SqlDataReader Reader = ProcuraSQL("States", new string[] { "Name", "IsFinalState", "IsRejectState", "Is_Ticket", "Is_Request" }, cond);
             List<Status> lstST = new List<Status>();
             if (Reader != null)
@@ -881,23 +987,33 @@ namespace ProjectoFinal
 
         public bool InsereEquipamento(Equipamento Equip)
         {
-            return InsereRegisto("Equipamento", new string[] { "Inventcode", "Descricao" }, new string[] { Equip.Inventcode.ToString(), Equip.Descr.ToString() });
+            return InsereRegisto("Equipamento", new string[] { "Descricao", "PartNum", "ModelNum", "Location", "Price", "Employee" }, new string[] {Equip.Descr, Equip.Partnumber, Equip.Modelnum,Equip.Localizacao,Equip.Price.ToString(),Equip.Empregado.NIF.ToString()});
         }
 
         public List<Equipamento> ProcuraEquipamentos()
         {
             List<Equipamento> Equipamentos = new List<Equipamento>();
 
-            SqlDataReader Reader = ProcuraSQL("Equipamento", new string[] { "Descricao", "NivelMinimo" }, null);
+            SqlDataReader Reader = ProcuraSQL("Equipamento", new string[] { "InventCode",  "Descricao", "PartNum", "ModelNum", "Location", "Price", "Employee" });
             if (Reader != null)
             {
                 if (Reader.HasRows)
                 {
                     while (Reader.Read())
                     {
-                        Perfil user = ProcuraPerfil(Reader.GetInt32(0));
-                        List<Material> pecas = ProcuraPecas(Reader.GetString(0));
-                        Equipamentos.Add(new Equipamento(Reader.GetString(0), Reader.GetString(0), Reader.GetString(0), Reader.GetString(0), pecas, Reader.GetString(0), user, Reader.GetDouble(1)));
+                        Perfil user = ProcuraPerfil(Reader.GetInt32(6));
+                        
+                        List<Material> pecas = ProcuraPecas(Reader.GetInt32(0));
+                        Equipamento equip = new Equipamento();
+                        equip.Inventcode = Reader.GetInt32(0);
+                        equip.Partnumber = Reader.GetString(2);
+                        equip.Modelnum = Reader.GetString(3);
+                        equip.Descr = Reader.GetString(1);
+                        equip.Pecas = pecas;
+                        equip.Localizacao = Reader.GetString(4);
+                        equip.Empregado = user;
+                        equip.Price = (double)Reader.GetValue(5);
+                        Equipamentos.Add(equip);
                     }
                 }
             }
@@ -950,7 +1066,7 @@ namespace ProjectoFinal
         {
             List<Area> Areas = new List<Area>();
 
-            SqlDataReader Reader = ProcuraSQL("Areas", new string[] { "Descricao", "NivelMinimo" }, null);
+            SqlDataReader Reader = ProcuraSQL("Areas", new string[] { "Descricao", "NivelMinimo" });
             if (Reader != null)
             {
                 if (Reader.HasRows)
@@ -1025,7 +1141,7 @@ namespace ProjectoFinal
         {
             List<Habilitacao> Habilitacoes = new List<Habilitacao>();
 
-            SqlDataReader Reader = ProcuraSQL("Habilitacoes", new string[] { "Nivel", "Descricao" }, null);
+            SqlDataReader Reader = ProcuraSQL("Habilitacoes", new string[] { "Nivel", "Descricao" });
             if (Reader != null)
             {
                 if (Reader.HasRows)
@@ -1054,24 +1170,31 @@ namespace ProjectoFinal
             return InsereRegisto("Materiais", new string[] { "partnumber", "price", "issoftware", "name", "supplier" }, new string[] { Material.Partnumber.ToString(), Material.Price.ToString(), Material.Issoftware.ToString(), Material.Descr.ToString(), Material.Supplier.ToString() });
 
         }
-        public List<Material> ProcuraPecas(string InventCode)
+        public List<Material> ProcuraPecas(int InventCode)
         {
             List<Material> Materiais = new List<Material>();
 
-            SqlDataReader Reader = ProcuraSQL(new string[] { "Materiais", "EquipPart" }, new string[,] { { "Materiais.partnumber", "=", "EquipPart.PartNumber" } }, new string[] { "Materiais.partnumber", "Materiais.name", "Materiais.supplier", "Materiais.price", "Materiais.issoftware" }, new string[,] { { "EquipPart.InventCode", "=", InventCode } });
+            SqlDataReader Reader = ProcuraSQL(new string[] { "EquipPart", "Materiais"}, new string[,] { { "EquipPart.PartNumber", "Materiais.partnumber" } }, new string[] { "Materiais.partnumber", "Materiais.name", "Materiais.supplier", "Materiais.price", "Materiais.issoftware" }, new string[,] { { "EquipPart.InventCode", "=", InventCode.ToString() } });
             if (Reader != null)
             {
                 if (Reader.HasRows)
                 {
                     while (Reader.Read())
                     {
-                        Materiais.Add(new Material(Reader.GetString(0), Reader.GetString(1), Reader.GetString(2), Reader.GetDouble(3), Reader.GetBoolean(4)));
+                        Material mat = new Material();
+                        mat.Partnumber = Reader.GetString(0);
+                        mat.Descr = Reader.GetString(1);
+                        mat.Supplier = Reader.GetString(2);
+                        mat.Price = (double)Reader.GetValue(3);
+                        mat.Issoftware = Reader.GetBoolean(4);
+                        Materiais.Add(mat);
                     }
                 }
+                Reader.Close();
             }
 
-            Reader.Close();
-            Reader = null;
+            
+            
             return Materiais;
         }
         public Material ProcuraMaterial(string partnumber )
@@ -1100,7 +1223,7 @@ namespace ProjectoFinal
         {
             List<Material> Materiais = new List<Material>();
 
-            SqlDataReader Reader = ProcuraSQL("Materiais", new string[] { "partnumber", "name", "supplier", "price", "issoftware" }, null);
+            SqlDataReader Reader = ProcuraSQL("Materiais", new string[] { "partnumber", "name", "supplier", "price", "issoftware" });
             if (Reader != null)
             {
                 if (Reader.HasRows)
@@ -1134,6 +1257,27 @@ namespace ProjectoFinal
         {
             return InsereRegisto("Priority", new string[] { "Nivel", "Descr" }, new string[] { Prioridade.Nivel.ToString(), Prioridade.Descr.ToString() });
         }
+        public Prioridade ProcuraPrioridade(int Id)
+        {
+            Prioridade Prio = new Prioridade();
+
+            SqlDataReader Reader = ProcuraSQL("Priority", new string[] { "Nivel", "SmallName", "Descr" }, new string[,] { { "Id", "=", Id.ToString() } });
+            if (Reader != null)
+            {
+                if (Reader.HasRows)
+                {
+                    Reader.Read();
+                    Prio.Nivel = Reader.GetInt32(0);
+                    Prio.Smallname = Reader.GetString(1);
+                    Prio.Descr = Reader.GetString(2);
+
+                }
+            }
+
+            Reader.Close();
+            Reader = null;
+            return Prio;
+        }
         public Prioridade ProcuraPrioridade(string SmallName)
         {
             Prioridade Prio = new Prioridade();
@@ -1159,7 +1303,7 @@ namespace ProjectoFinal
         {
             List<Prioridade> Prioridades = new List<Prioridade>();
 
-            SqlDataReader Reader = ProcuraSQL("Priority", new string[] { "Nivel", "SmallName", "Descr" }, null);
+            SqlDataReader Reader = ProcuraSQL("Priority", new string[] { "Nivel", "SmallName", "Descr" });
             if (Reader != null)
             {
                 if (Reader.HasRows)

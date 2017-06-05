@@ -14,8 +14,51 @@ namespace ProjectoFinal
 {
     public partial class FormTickets : Form
     {
-        List<Ticket> lTickets;
-        string EditMode;     // variavel para controlar em que estado está o ecran "New" para novo Registo, "Edit" para modo de Actualização, qualquer outro para não fazer alterações. 
+        List<Ticket> lTickets = new List<Ticket>();
+
+        private void LoadlstTicket()
+        {
+            
+            int tipo = 0;
+            if (rdbSoftware.Checked) tipo = 3;
+            if (rdbRedes.Checked) tipo = 2;
+            if (rdbEquipamento.Checked) tipo = 1;
+
+            lTickets = Program.TicketDB.ProcuraTicketsPorEstadoTipo(cbxTicketEstado.Text ,tipo);
+            lstTickets.Clear();
+            lstTickets.View = View.Details;
+
+            lstTickets.Columns.Add("Num")
+                .Width = lstTickets.Width / 6;
+            lstTickets.Columns.Add("Create Date")
+                .Width = lstTickets.Width / 6;
+            lstTickets.Columns.Add("Requester")
+                .Width = lstTickets.Width / 6;
+            lstTickets.Columns.Add("Priority")
+                .Width = lstTickets.Width / 6;
+            lstTickets.Columns.Add("Description")
+                .Width = lstTickets.Width / 6;
+            lstTickets.Columns.Add("Status")
+                .Width = lstTickets.Width / 6;
+
+
+
+            foreach (Ticket TK in lTickets)
+            {
+                 
+                ListViewItem lvi = new ListViewItem(TK.Num.ToString());
+                lvi.SubItems.Add(TK.Createdate.ToString("dd-MM-yyyy"));
+                lvi.SubItems.Add(TK.Requester.Nome);
+                lvi.SubItems.Add(TK.Priority.Smallname);
+                lvi.SubItems.Add(TK.Description);
+                lvi.SubItems.Add(TK.Estado.Descr);
+                lstTickets.Items.Add(lvi);
+            }
+            lstTickets.Refresh();
+            
+
+
+        }
 
         private static void LoadlstView(ListView lstv, object[] lstobj)
         {
@@ -50,15 +93,29 @@ namespace ProjectoFinal
 
             
         }
-        private void ValidaTab( TabPage Tab)
+        /// <summary>
+        /// Função para ser expandida com mais um parametro, TabReplace do tip TabPage 
+        /// </summary>
+        /// <param name="Tab"></param>
+        /// <returns></returns>
+        private bool ValidaTab(TabPage Tab)
         {
-            Tab.Hide();
+            bool result = false;
+            TicketsTabular.TabPages.Remove(Tab);
             if (Program.TicketDB.CurrentUser != null)
             {
-                if (((Tecnico)Program.TicketDB.CurrentUser).Is_Admin) Tab.Show();
+                if (Program.TicketDB.CurrentUser is Tecnico)
+                {
+                    if (((Tecnico)Program.TicketDB.CurrentUser).Is_Admin)
+                    {
+                        TicketsTabular.TabPages.Add(Tab);
+                        result = false;
+                    }
+                }
+                
 
             }
-
+            return result;
         }
 
         public FormTickets()
@@ -80,6 +137,8 @@ namespace ProjectoFinal
             this.Update();
             if (lTickets != null) LoadlstView(lstTickets,lTickets.ToArray());
             ValidaTab(tabPerfil);
+            
+
             Application.DoEvents();
             if (Program.TicketDB.CurrentUser == null)
             {
@@ -143,12 +202,15 @@ namespace ProjectoFinal
 
         private void tabPerfil_Enter(object sender, EventArgs e)
         {
-            List<Habilitacao> HAbilits = Program.TicketDB.ProcuraHabilitacoes();
-            foreach (Habilitacao habilit in HAbilits)
-            {
-                cbxPerfilHabilit.Items.Add(habilit.ToString());
-            }
-            LoadlstView(lstPerfil, Program.TicketDB.ProcuraPerfis().ToArray());
+            
+                List<Habilitacao> HAbilits = Program.TicketDB.ProcuraHabilitacoes();
+                foreach (Habilitacao habilit in HAbilits)
+                {
+                    cbxPerfilHabilit.Items.Add(habilit.ToString());
+                }
+                LoadlstView(lstPerfil, Program.TicketDB.ProcuraPerfis().ToArray());
+            
+            
         }
 
         private void TicketsTabular_Click(object sender, EventArgs e)
@@ -178,16 +240,14 @@ namespace ProjectoFinal
 
         private void tabTickets_Enter(object sender, EventArgs e)
         {
-            List<Ticket> TKs = Program.TicketDB.ProcuraTicketsTipo(1);
-            if (TKs.Count() != 0)
+            List<Status> estados = Program.TicketDB.ProcuraEstados(true, false);
+            foreach (Status estado in estados)
             {
-                LoadlstView(lstStates, TKs.ToArray());
+                cbxTicketEstado.Items.Add(estado.Descr);
             }
-            else
-            {
-                StatusBar.Text = Program.TicketDB.GetError();
-            }
-            // LoadlstView(lstTickets, Program.TicketDB.ProcuraTicketsTipo(1).ToArray());
+
+            
+            LoadlstTicket();
         }
 
         private void lstTickets_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,38 +272,37 @@ namespace ProjectoFinal
 
         private void btnPerfilNovo_Click(object sender, EventArgs e)
         {
-            EditMode = "New";
+            
             txtPerfilNIF.Text = "";
             txtPerfilNome.Text = "";
             txtPerfilSenha.Text = "";
             lsbAreasIntre.Items.Clear();
+            lsbAreas.Items.Clear();
             lsbAreas.Items.AddRange(Program.TicketDB.ProcuraAreas().ToArray());
         }
 
         private void btnPerfilSave_Click(object sender, EventArgs e)
         {
-            if (EditMode == "New" )
+            Habilitacao habilit = new Habilitacao();
+            habilit.Nivel = int.Parse(cbxPerfilHabilit.Text.Split('-')[0]);
+            habilit.Descr = cbxPerfilHabilit.Text.Split('-')[1].Trim();
+            if (chkIsTec.Checked)
             {
-                Habilitacao habilit = new Habilitacao();
-                habilit.Nivel = int.Parse(cbxPerfilHabilit.Text.Split('-')[0]);
-                habilit.Descr = cbxPerfilHabilit.Text.Split('-')[1].Trim();
-                if (chkIsTec.Checked)
-                {
 
-                    List<Area> AreasIntre = new List<Area>();
-                    foreach (object item in lsbAreasIntre.Items)
-                    {
-                        AreasIntre.Add(new Area(item.ToString()));
-                    }
-                    
-                    Program.TicketDB.InsereTecnico(new Tecnico(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit, AreasIntre, chkIsAdmin.Checked,false));
-                }
-                else
+                List<Area> AreasIntre = new List<Area>();
+                foreach (object item in lsbAreasIntre.Items)
                 {
-                    Program.TicketDB.InsereColaborador(new Colaborador(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit));
+                    AreasIntre.Add(new Area(item.ToString()));
                 }
-                
+
+                Program.TicketDB.InsereTecnico(new Tecnico(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit, AreasIntre, chkIsAdmin.Checked, false));
             }
+            else
+            {
+                Program.TicketDB.InsereColaborador(new Colaborador(txtPerfilNome.Text, int.Parse(txtPerfilNIF.Text), txtPerfilSenha.Text, habilit));
+            }
+                
+            
         }
 
         private void btnAreaAdd_Click(object sender, EventArgs e)
@@ -283,6 +342,37 @@ namespace ProjectoFinal
         }
 
         private void tabTickets_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMatSave_Click(object sender, EventArgs e)
+        {
+            Material Mat = new Material();
+            Mat.Descr = txtMatNome.Text;
+            Mat.Supplier  = txtMatSupplier.Text;
+            Mat.Price = double.Parse(txtMatPrice.Text);
+            Mat.Issoftware = chkMatIsSoftware.Checked;
+
+            Program.TicketDB.InsereMaterial(Mat);
+            txtMatPartnumber.Enabled = true;
+            btnMatNovo.Enabled = true;
+
+        }
+
+        private void btnMatNovo_Click(object sender, EventArgs e)
+        {
+            txtMatPartnumber.Text = "";
+            txtMatPartnumber.Enabled = false;
+            txtMatNome.Text = "";
+            chkMatIsSoftware.Checked = false;
+            txtMatSupplier.Text = "";
+            txtMatPrice.Text = "";
+            lstMateriais.Clear();
+            btnMatNovo.Enabled = false;
+        }
+
+        private void tabRequesicoes_Click(object sender, EventArgs e)
         {
 
         }
